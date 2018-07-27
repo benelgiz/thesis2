@@ -1,0 +1,271 @@
+\begin{thebibliography}{10}
+
+\bibitem{ADDSAFE}
+{ADDSAFE FP7 Project}.
+\newblock \url{http://addsafe.deimos-space.com/}, Accessed: 2016-07-09.
+
+\bibitem{angelov2012sense}
+Plamen Angelov.
+\newblock {\em Sense and avoid in UAS: research and applications}.
+\newblock John Wiley \& Sons, 2012.
+
+\bibitem{asimov1985grand}
+Daniel Asimov.
+\newblock The grand tour: a tool for viewing multidimensional data.
+\newblock {\em SIAM journal on scientific and statistical computing},
+  6(1):128--143, 1985.
+
+\bibitem{bak1999spacecraft}
+Thomas Bak.
+\newblock Spacecraft attitude determination.
+\newblock 1999.
+
+\bibitem{baskaya2016flexible}
+Elgiz Baskaya, Guido Manfredi, Murat Bronz, and Daniel Delahaye.
+\newblock Flexible open architecture for uass integration into the airspace:
+  Paparazzi autopilot system.
+\newblock In {\em IEEE/AIAA 35th Digital Avionics Systems Conference (DASC)}.
+  IEEE, 2016.
+
+\bibitem{blanke2000fault}
+Mogens Blanke, Christian~W Frei, Franta Kraus, Ron~J Patton, and Marcel
+  Staroswiecki.
+\newblock What is fault-tolerant control.
+\newblock In {\em Preprints of 4th IFAC Symposium on Fault Detection
+  Supervision ans Safety for Technical Processes, SAFEPROCESS}, pages 40--51,
+  2000.
+
+\bibitem{bronz2017flight}
+Murat Bronz, Hector Garcia~de Marina, and Gautier Hattenberger.
+\newblock In-flight thrust measurement using on-board force sensor.
+\newblock In {\em AIAA Atmospheric Flight Mechanics Conference}, page 0698,
+  2017.
+
+\bibitem{bronz2016aerodynamic}
+Murat Bronz and Gautier Hattenberger.
+\newblock Aerodynamic characterization of an off-the-shelf aircraft via flight
+  test and numerical simulation.
+\newblock In {\em AIAA Flight Testing Conference}, page 3979, 2016.
+
+\bibitem{chow1984analytical}
+E~Chow and A~Willsky.
+\newblock Analytical redundancy and the design of robust failure detection
+  systems.
+\newblock {\em IEEE Transactions on Automatic control}, 29(7):603--614, 1984.
+
+\bibitem{condomines2015developpement}
+Jean-Philippe Condomines.
+\newblock {\em D{\'e}veloppement d?un estimateur d?{\'e}tat non lin{\'e}aire
+  embarqu{\'e} pour le pilotage-guidage robuste d?un micro-drone en milieu
+  complexe}.
+\newblock PhD thesis, INSTITUT SUPERIEUR DE L'AERONAUTIQUE ET DE L'ESPACE
+  (ISAE), 2015.
+
+\bibitem{cook1997manual}
+Dianne Cook and Andreas Buja.
+\newblock Manual controls for high-dimensional data projections.
+\newblock {\em Journal of computational and Graphical Statistics},
+  6(4):464--480, 1997.
+
+\bibitem{cook1995grand}
+Dianne Cook, Andreas Buja, Javier Cabrera, and Catherine Hurley.
+\newblock Grand tour and projection pursuit.
+\newblock {\em Journal of Computational and Graphical Statistics},
+  4(3):155--172, 1995.
+
+\bibitem{cook2007interactive}
+Dianne Cook and Deborah~F Swayne.
+\newblock {\em Interactive and dynamic graphics for data analysis: with R and
+  GGobi}.
+\newblock Springer Science \& Business Media, 2007.
+
+\bibitem{droneDisasters}
+{12 drone disasters that show why the FAA hates drones}.
+\newblock
+  \url{http://www.techrepublic.com/article/12-drone-disasters-that-show-why-the-faa-hates-drones/},
+  March 20, 2015.
+
+\bibitem{ducard2009fault}
+Guillaume~JJ Ducard.
+\newblock {\em Fault-tolerant flight control and guidance systems: Practical
+  methods for small unmanned aerial vehicles}.
+\newblock Springer Science \& Business Media, 2009.
+
+\bibitem{A_NPA_EASA2015}
+{Introduction of a regulatory framework for the operation of drones}, 2015.
+
+\bibitem{erzberger_4D_2002}
+Heinz Erzberger and Russel~A Paielli.
+\newblock Concept for next generation air traffic control system.
+\newblock {\em Air Traffic Control Quarterly}, 10(4):355--378, 2002.
+
+\bibitem{foina_air_parcelle_2015}
+Aislan~Gomide Foina, Clemens Krainer, and Raja Sengupta.
+\newblock An unmanned aerial traffic management solution for cities using an
+  air parcel model.
+\newblock In {\em Unmanned Aircraft Systems (ICUAS), 2015 International
+  Conference on}, pages 1295--1300. IEEE, 2015.
+
+\bibitem{droneImageProblem}
+Ulrike~Esther Franke.
+\newblock Civilian drones: Fixing an image problem?
+\newblock
+  \url{http://isnblog.ethz.ch/security/civilian-drones-fixing-an-image-problem},
+  2015.
+
+\bibitem{goupil2015overview}
+Philippe Goupil, Josep Boada-Bauxell, Andres Marcos, Paulo Rosa, Murray Kerr,
+  and Laurent Dalbies.
+\newblock An overview of the fp7 reconfigure project: industrial, scientific
+  and technological objectives.
+\newblock {\em IFAC-PapersOnLine}, 48(21):976--981, 2015.
+
+\bibitem{gui2002fault}
+Wei-hua Gui and Xiao-ying Liu.
+\newblock Fault diagnosis technologies based on artificial intelligence for
+  complex process.
+\newblock {\em Basic Automation}, 4:000, 2002.
+
+\bibitem{gunn1998support}
+Steve~R Gunn et~al.
+\newblock Support vector machines for classification and regression.
+\newblock {\em ISIS technical report}, 14:85--86, 1998.
+
+\bibitem{hagenblad2004comparison}
+Anna Hagenblad, Fredrik Gustafsson, and Inger Klein.
+\newblock A comparison of two methods for stochastic fault detection: the
+  parity space approach and principal component analysis, 2004.
+
+\bibitem{hajiyev2005sensor}
+Chingiz Hajiyev and Fikret Caliskan.
+\newblock Sensor and control surface/actuator failure detection and isolation
+  applied to f-16 flight dynamic.
+\newblock {\em Aircraft Engineering and aerospace technology}, 77(2):152--160,
+  2005.
+
+\bibitem{ICAO_Circular}
+{ICAO Cir 328, Unmanned Aircraft Systems (UAS)}, 2011.
+
+\bibitem{isermann1997trends}
+Rolf Isermann and Peter Ball{\'e}.
+\newblock Trends in the application of model-based fault detection and
+  diagnosis of technical processes.
+\newblock {\em Control engineering practice}, 5(5):709--719, 1997.
+
+\bibitem{kopardekarunmanned}
+Parimal Kopardekar, Joseph Rios, Thomas Prevot, Marcus Johnson, Jaewoo Jung,
+  and John E~Robinson III.
+\newblock Unmanned aircraft system traffic management (utm) concept of
+  operations.
+\newblock In {\em 16th AIAA Aviation Technology, Integration, and Operations
+  Conference}. AIAA Aviation, 2016.
+
+\bibitem{li2016data}
+Minghu Li, Gang Li, and Maiying Zhong.
+\newblock A data driven fault detection and isolation scheme for uav flight
+  control system.
+\newblock In {\em Control Conference (CCC), 2016 35th Chinese}, pages
+  6778--6783. TCCT, 2016.
+
+\bibitem{FAA_UASintegration}
+Sherri Magyarits.
+\newblock {FAA\textsc{\char13}s Approach to Unmanned Aircraft Systems (UAS)
+  Concept Maturation, Validation \& Requirements Development}, 2015.
+
+\bibitem{melody2001h}
+James~W Melody, Thomas Hillbrand, Tamer Ba{\c{s}}ar, and William~R Perkins.
+\newblock {$H_{\infty}$} parameter identification for inflight detection of
+  aircraft icing: The time-varying case.
+\newblock {\em Control Engineering Practice}, 9(12):1327--1335, 2001.
+
+\bibitem{pandita2013closed}
+Rohit Pandita, J{\'o}zsef Bokor, and Gary Balas.
+\newblock Closed-loop performance metrics for fault detection and isolation
+  filter and controller interaction.
+\newblock {\em International Journal of Robust and Nonlinear Control},
+  23(4):419--438, 2013.
+
+\bibitem{platt1998sequential}
+John Platt.
+\newblock Sequential minimal optimization: A fast algorithm for training
+  support vector machines.
+\newblock 1998.
+
+\bibitem{platt1999probabilistic}
+John Platt et~al.
+\newblock Probabilistic outputs for support vector machines and comparisons to
+  regularized likelihood methods.
+\newblock {\em Advances in large margin classifiers}, 10(3):61--74, 1999.
+
+\bibitem{europe_report_civilian_drone}
+Laurent Probst, Laurent Frideres, Bertrand Pedersen, and Christian
+  Martinez-Diaz.
+\newblock Uav systems for civilian applications.
+\newblock \url{http://ec.europa.eu/DocsRoom/documents/13430}, 2015.
+
+\bibitem{RECONFIGURE}
+{RECONFIGURE FP7 Project}.
+\newblock \url{reconfigure.deimos-space.com/}, Accessed: 2016-07-19.
+
+\bibitem{UAVreliabilityStudy}
+{Unmanned Aerial Vehicle Reliability Study}, 2003.
+
+\bibitem{UnmannedSystemsRoadmapDoD}
+{Unmanned Systems Roadmap 2005 - 2030}, 2005.
+
+\bibitem{rotstein2006fault}
+Hector Rotstein, Ryan Ingvalson, Tamas Keviczky, and Gary~J Balas.
+\newblock Fault-detection design for uninhabited aerial vehicles.
+\newblock {\em Journal of guidance, control, and dynamics}, 29(5):1051--1060,
+  2006.
+
+\bibitem{sharma2007fault}
+R~Sharma and M~Aldeen.
+\newblock Fault detection in nonlinear systems with unknown inputs using
+  sliding mode observer.
+\newblock In {\em 2007 American Control Conference}, pages 432--437. IEEE,
+  2007.
+
+\bibitem{stuelpnagel1964parametrization}
+John Stuelpnagel.
+\newblock On the parametrization of the three-dimensional rotation group.
+\newblock {\em SIAM review}, 6(4):422--430, 1964.
+
+\bibitem{dataCentricDiagOffline}
+John Stutz.
+\newblock On data-centric diagnosis of aircraft systems.
+\newblock {\em IEEE Transactions on Systems, Man and Cybernetics}, 2010.
+
+\bibitem{thomas_4D_2015}
+Eric Thomas and Okko Bleeker.
+\newblock Options for insertion of rpas into the air traffic system.
+\newblock In {\em Digital Avionics Systems Conference (DASC), 2015 IEEE/AIAA
+  34th}, pages 5B4--1. IEEE, 2015.
+
+\bibitem{wargo_complex_2015}
+Chris~A Wargo, George Hunter, Kenneth Leiden, Jason Glaneuski, Brandon
+  Van~Acker, and Kevin Hatton.
+\newblock New entrants (rpa/space vehicles) operational impacts upon nas atm
+  and atc.
+\newblock In {\em Digital Avionics Systems Conference (DASC), 2015 IEEE/AIAA
+  34th}, pages 5B2--1. IEEE, 2015.
+
+\bibitem{wie1998space}
+Bong Wie.
+\newblock {\em Space vehicle dynamics and control}.
+\newblock Aiaa, 1998.
+
+\bibitem{yin2014study}
+Shen Yin, Xin Gao, Hamid~Reza Karimi, and Xiangping Zhu.
+\newblock Study on support vector machine-based fault detection in tennessee
+  eastman process.
+\newblock In {\em Abstract and Applied Analysis}, volume 2014. Hindawi
+  Publishing Corporation, 2014.
+
+\bibitem{zhang2008bibliographical}
+Youmin Zhang and Jin Jiang.
+\newblock Bibliographical review on reconfigurable fault-tolerant control
+  systems.
+\newblock {\em Annual reviews in control}, 32(2):229--252, 2008.
+
+\end{thebibliography}

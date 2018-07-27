@@ -1,0 +1,97 @@
+\contentsline {chapter}{\numberline {1}Introduction}{17}{chapter.1}
+\contentsline {section}{\numberline {1.1}Motivation}{17}{section.1.1}
+\contentsline {section}{\numberline {1.2}Terminology}{18}{section.1.2}
+\contentsline {section}{\numberline {1.3}Conventions for a Safe Flight}{19}{section.1.3}
+\contentsline {section}{\numberline {1.4}Methods for Fault Tolerant Control Systems}{20}{section.1.4}
+\contentsline {subsection}{\numberline {1.4.1}Fault Detection and Diagnosis}{22}{subsection.1.4.1}
+\contentsline {subsubsection}{Model Based Methods}{22}{section*.6}
+\contentsline {subsubsection}{Data-Driven Methods}{24}{section*.7}
+\contentsline {chapter}{\numberline {2}Safe Integration of Drones into Airpace}{25}{chapter.2}
+\contentsline {section}{\numberline {2.1}UAVs populating airspace}{26}{section.2.1}
+\contentsline {section}{\numberline {2.2}Modularity}{27}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Airspace Categorization}{27}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}National Regulations}{28}{subsection.2.2.2}
+\contentsline {subsection}{\numberline {2.2.3}Accommodating evolution of regulations}{28}{subsection.2.2.3}
+\contentsline {section}{\numberline {2.3}Congestion management}{28}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}4-D Trajectory Management}{29}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}Safety Nets}{29}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.3}Geofencing}{29}{subsection.2.3.3}
+\contentsline {subsection}{\numberline {2.3.4}Complex Operations}{30}{subsection.2.3.4}
+\contentsline {section}{\numberline {2.4}Reliability}{30}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}\gls {sme}s and Certification Costs}{31}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.2}Individuals and Education}{31}{subsection.2.4.2}
+\contentsline {subsection}{\numberline {2.4.3}Flight Heritage for Risk Assessment}{32}{subsection.2.4.3}
+\contentsline {subsection}{\numberline {2.4.4}Support for real time planning and onboard vehicle automation}{32}{subsection.2.4.4}
+\contentsline {section}{\numberline {2.5}Certification of analytical approaches NOT FINISHED }{32}{section.2.5}
+\contentsline {chapter}{\numberline {3}State of the Art}{37}{chapter.3}
+\contentsline {chapter}{\numberline {4}Nonlinear Aircraft Model}{39}{chapter.4}
+\contentsline {section}{\numberline {4.1}Attitude motion modeling}{39}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Attitude representations}{40}{subsection.4.1.1}
+\contentsline {subsubsection}{Euler Angles}{42}{section*.8}
+\contentsline {subsubsection}{Quaternions}{43}{section*.9}
+\contentsline {subsubsection}{Attitude parametrization selection}{45}{section*.10}
+\contentsline {subsection}{\numberline {4.1.2}Attitude kinematics}{48}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}Attitude dynamics}{51}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}UAVs simulated}{54}{subsection.4.1.4}
+\contentsline {subsection}{\numberline {4.1.5}Attitude kinematics of aircraft}{55}{subsection.4.1.5}
+\contentsline {subsection}{\numberline {4.1.6}Attitude dynamics of aircraft}{58}{subsection.4.1.6}
+\contentsline {subsubsection}{Model of aerodynamic moments}{59}{section*.11}
+\contentsline {section}{\numberline {4.2}Translational motion modeling}{61}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Translational kinematics}{61}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}Translational dynamics}{61}{subsection.4.2.2}
+\contentsline {subsubsection}{Model of aerodynamic forces}{61}{section*.12}
+\contentsline {subsubsection}{Thrust force model}{62}{section*.13}
+\contentsline {section}{\numberline {4.3}Shortcut to modeling}{63}{section.4.3}
+\contentsline {section}{\numberline {4.4}Verification with Matlab Simulink 6DOF block}{65}{section.4.4}
+\contentsline {section}{\numberline {4.5}Sensor Models}{65}{section.4.5}
+\contentsline {section}{\numberline {4.6}Fault Models}{66}{section.4.6}
+\contentsline {chapter}{\numberline {5}Methodology}{69}{chapter.5}
+\contentsline {section}{\numberline {5.1}Machine Learning}{69}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}Introduction}{69}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}Terminology}{71}{subsection.5.1.2}
+\contentsline {subsection}{\numberline {5.1.3}Steps towards the learning machine}{73}{subsection.5.1.3}
+\contentsline {subsubsection}{Visualizing the data}{73}{section*.14}
+\contentsline {subsubsection}{Feature Mapping}{76}{section*.15}
+\contentsline {subsubsection}{Selecting Model Structure}{78}{section*.16}
+\contentsline {subsubsection}{Scaling}{83}{section*.17}
+\contentsline {subsubsection}{Add Artificial Feature}{83}{section*.18}
+\contentsline {subsubsection}{Selection of the Cost Function and Calculating the Gradient }{84}{section*.19}
+\contentsline {subsubsection}{Modify the Cost Function by Adding Regularization Term}{85}{section*.20}
+\contentsline {subsubsection}{Cost Function Minimization}{88}{section*.21}
+\contentsline {subsubsection}{Visualizing the cost function}{91}{section*.22}
+\contentsline {subsubsection}{Visualizing the model/classifier (decision boundary) with respect to training data}{94}{section*.23}
+\contentsline {subsubsection}{Prediction}{94}{section*.24}
+\contentsline {section}{\numberline {5.2}Support Vector Machines}{94}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Introduction}{94}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}Application}{97}{subsection.5.2.2}
+\contentsline {subsubsection}{Training of the classifier}{97}{section*.25}
+\contentsline {subsubsection}{Tuning of the classifier}{99}{section*.26}
+\contentsline {subsubsection}{Evaluating the classifier}{105}{section*.27}
+\contentsline {chapter}{\numberline {6}Simulation Results}{109}{chapter.6}
+\contentsline {section}{\numberline {6.1}Fault detection from simulated flight data}{109}{section.6.1}
+\contentsline {section}{\numberline {6.2}Fault detection from real flight data}{115}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}Injecting faults in flight from Paparazzi GCS}{115}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.2}Modifications to \emph {Paparazzi} autopilot controls to inject faults during flight}{117}{subsection.6.2.2}
+\contentsline {subsection}{\numberline {6.2.3}Reading \& labeling flight data}{119}{subsection.6.2.3}
+\contentsline {subsection}{\numberline {6.2.4}Control surface stuck fault}{126}{subsection.6.2.4}
+\contentsline {subsection}{\numberline {6.2.5}Control surface loss of efficiency fault}{133}{subsection.6.2.5}
+\contentsline {subsection}{\numberline {6.2.6}Use of spinors as attributes}{136}{subsection.6.2.6}
+\contentsline {subsubsection}{Untuned classification superiority}{137}{section*.28}
+\contentsline {subsubsection}{Tuned classification Bayesian optimization efficiency}{138}{section*.29}
+\contentsline {chapter}{\numberline {7}Conclusion}{139}{chapter.7}
+\contentsline {chapter}{\numberline {A}Codes for FD from simulated data}{141}{appendix.A}
+\contentsline {section}{\numberline {A.1}Read Me file for the aircraft simulation codes in Matlab}{141}{section.A.1}
+\contentsline {section}{\numberline {A.2}configDrone.m}{143}{section.A.2}
+\contentsline {section}{\numberline {A.3}modelDrone.m}{146}{section.A.3}
+\contentsline {section}{\numberline {A.4}quat\_to\_euler.m}{152}{section.A.4}
+\contentsline {section}{\numberline {A.5}rungeKutta4.m}{153}{section.A.5}
+\contentsline {section}{\numberline {A.6}simDrone.m}{154}{section.A.6}
+\contentsline {chapter}{\numberline {B}Codes for FD from flight data}{157}{appendix.B}
+\contentsline {section}{\numberline {B.1}dataRead.m}{157}{section.B.1}
+\contentsline {section}{\numberline {B.2}selectDataToInvest.m}{162}{section.B.2}
+\contentsline {section}{\numberline {B.3}arrangeDataSet.m}{167}{section.B.3}
+\contentsline {section}{\numberline {B.4}svmFD.m}{169}{section.B.4}
+\contentsline {section}{\numberline {B.5}svmFDtuningViaHeuristic.m}{173}{section.B.5}
+\contentsline {section}{\numberline {B.6}svmFDtuningViaOptim.m}{176}{section.B.6}
+\contentsline {section}{\numberline {B.7}calcF1score.m}{179}{section.B.7}
+\contentsline {section}{\numberline {B.8}addFeaturesBefore.m}{179}{section.B.8}

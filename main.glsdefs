@@ -1,0 +1,390 @@
+\ifglsentryexists{utm}{}%
+{%
+\gls@defglossaryentry{utm}%
+{%
+name={UTM},%
+sort={UTM},%
+type={acronym},%
+first={Unmanned Aircraft System Traffic Management\glsspace (UTM)},%
+firstplural={Unmanned Aircraft System Traffic Managements\glsspace (UTMs)},%
+text={UTM},%
+plural={UTMs},%
+description={Unmanned Aircraft System Traffic Management},%
+descriptionplural={Unmanned Aircraft System Traffic Management\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Unmanned Aircraft System Traffic Management},%
+longplural={Unmanned Aircraft System Traffic Managements},%
+short={UTM},%
+shortplural={UTMs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{uav}{}%
+{%
+\gls@defglossaryentry{uav}%
+{%
+name={UAV},%
+sort={UAV},%
+type={acronym},%
+first={Unmanned Air Vehicle\glsspace (UAV)},%
+firstplural={Unmanned Air Vehicles\glsspace (UAVs)},%
+text={UAV},%
+plural={UAVs},%
+description={Unmanned Air Vehicle},%
+descriptionplural={Unmanned Air Vehicle\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Unmanned Air Vehicle},%
+longplural={Unmanned Air Vehicles},%
+short={UAV},%
+shortplural={UAVs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{uas}{}%
+{%
+\gls@defglossaryentry{uas}%
+{%
+name={UAS},%
+sort={UAS},%
+type={acronym},%
+first={Unmanned Aircraft System\glsspace (UAS)},%
+firstplural={Unmanned Aircraft Systems\glsspace (UASs)},%
+text={UAS},%
+plural={UASs},%
+description={Unmanned Aircraft System},%
+descriptionplural={Unmanned Aircraft System\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Unmanned Aircraft System},%
+longplural={Unmanned Aircraft Systems},%
+short={UAS},%
+shortplural={UASs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{nas}{}%
+{%
+\gls@defglossaryentry{nas}%
+{%
+name={NAS},%
+sort={NAS},%
+type={acronym},%
+first={National Air Space\glsspace (NAS)},%
+firstplural={National Air Spaces\glsspace (NASs)},%
+text={NAS},%
+plural={NASs},%
+description={National Air Space},%
+descriptionplural={National Air Space\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={National Air Space},%
+longplural={National Air Spaces},%
+short={NAS},%
+shortplural={NASs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{fpv}{}%
+{%
+\gls@defglossaryentry{fpv}%
+{%
+name={FPV},%
+sort={FPV},%
+type={acronym},%
+first={First Person View\glsspace (FPV)},%
+firstplural={First Person Views\glsspace (FPVs)},%
+text={FPV},%
+plural={FPVs},%
+description={First Person View},%
+descriptionplural={First Person View\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={First Person View},%
+longplural={First Person Views},%
+short={FPV},%
+shortplural={FPVs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{vll}{}%
+{%
+\gls@defglossaryentry{vll}%
+{%
+name={VLL},%
+sort={VLL},%
+type={acronym},%
+first={Very Low Level\glsspace (VLL)},%
+firstplural={Very Low Levels\glsspace (VLLs)},%
+text={VLL},%
+plural={VLLs},%
+description={Very Low Level},%
+descriptionplural={Very Low Level\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Very Low Level},%
+longplural={Very Low Levels},%
+short={VLL},%
+shortplural={VLLs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{sme}{}%
+{%
+\gls@defglossaryentry{sme}%
+{%
+name={SME},%
+sort={SME},%
+type={acronym},%
+first={Small and Medium Enterprise\glsspace (SME)},%
+firstplural={Small and Medium Enterprises\glsspace (SMEs)},%
+text={SME},%
+plural={SMEs},%
+description={Small and Medium Enterprise},%
+descriptionplural={Small and Medium Enterprise\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Small and Medium Enterprise},%
+longplural={Small and Medium Enterprises},%
+short={SME},%
+shortplural={SMEs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{tcas}{}%
+{%
+\gls@defglossaryentry{tcas}%
+{%
+name={TCAS},%
+sort={TCAS},%
+type={acronym},%
+first={Traffic Collision Avoidance System\glsspace (TCAS)},%
+firstplural={Traffic Collision Avoidance Systems\glsspace (TCASs)},%
+text={TCAS},%
+plural={TCASs},%
+description={Traffic Collision Avoidance System},%
+descriptionplural={Traffic Collision Avoidance System\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Traffic Collision Avoidance System},%
+longplural={Traffic Collision Avoidance Systems},%
+short={TCAS},%
+shortplural={TCASs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{gcs}{}%
+{%
+\gls@defglossaryentry{gcs}%
+{%
+name={GCS},%
+sort={GCS},%
+type={acronym},%
+first={Ground Control Station\glsspace (GCS)},%
+firstplural={Ground Control Stations\glsspace (GCSs)},%
+text={GCS},%
+plural={GCSs},%
+description={Ground Control Station},%
+descriptionplural={Ground Control Station\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Ground Control Station},%
+longplural={Ground Control Stations},%
+short={GCS},%
+shortplural={GCSs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{icao}{}%
+{%
+\gls@defglossaryentry{icao}%
+{%
+name={ICAO},%
+sort={ICAO},%
+type={acronym},%
+first={International Civil Aviation Organization\glsspace (ICAO)},%
+firstplural={International Civil Aviation Organizations\glsspace (ICAOs)},%
+text={ICAO},%
+plural={ICAOs},%
+description={International Civil Aviation Organization},%
+descriptionplural={International Civil Aviation Organization\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={International Civil Aviation Organization},%
+longplural={International Civil Aviation Organizations},%
+short={ICAO},%
+shortplural={ICAOs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{faa}{}%
+{%
+\gls@defglossaryentry{faa}%
+{%
+name={FAA},%
+sort={FAA},%
+type={acronym},%
+first={Federal Aviation Administration\glsspace (FAA)},%
+firstplural={Federal Aviation Administrations\glsspace (FAAs)},%
+text={FAA},%
+plural={FAAs},%
+description={Federal Aviation Administration},%
+descriptionplural={Federal Aviation Administration\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Federal Aviation Administration},%
+longplural={Federal Aviation Administrations},%
+short={FAA},%
+shortplural={FAAs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{nasa}{}%
+{%
+\gls@defglossaryentry{nasa}%
+{%
+name={NASA},%
+sort={NASA},%
+type={acronym},%
+first={National Aeronautics and Space Administration\glsspace (NASA)},%
+firstplural={National Aeronautics and Space Administrations\glsspace (NASAs)},%
+text={NASA},%
+plural={NASAs},%
+description={National Aeronautics and Space Administration},%
+descriptionplural={National Aeronautics and Space Administration\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={National Aeronautics and Space Administration},%
+longplural={National Aeronautics and Space Administrations},%
+short={NASA},%
+shortplural={NASAs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{easa}{}%
+{%
+\gls@defglossaryentry{easa}%
+{%
+name={EASA},%
+sort={EASA},%
+type={acronym},%
+first={European Aviation Safety Agency\glsspace (EASA)},%
+firstplural={European Aviation Safety Agencys\glsspace (EASAs)},%
+text={EASA},%
+plural={EASAs},%
+description={European Aviation Safety Agency},%
+descriptionplural={European Aviation Safety Agency\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={European Aviation Safety Agency},%
+longplural={European Aviation Safety Agencys},%
+short={EASA},%
+shortplural={EASAs},%
+counter={page},%
+parent={},%
+%
+}%
+}%

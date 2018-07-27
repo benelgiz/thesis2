@@ -1,0 +1,67 @@
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {1-1}{\ignorespaces Faults altering the system }}{19}{figure.1.1}
+\contentsline {figure}{\numberline {1-2}{\ignorespaces Variations of fault tolerant control systems }}{21}{figure.1.2}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2-1}{\ignorespaces SORA structure: threats, threat barriers, hazard, harm barriers, harms}}{35}{figure.2.1}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4-1}{\ignorespaces Attitude representation is simply specifying the orientation of aircraft body axes $b_1, b_2, b_3$ in the reference frame A}}{40}{figure.4.1}
+\contentsline {figure}{\numberline {4-2}{\ignorespaces Rigid body rotating about an arbitrary point O, given in the N frame}}{51}{figure.4.2}
+\contentsline {figure}{\numberline {4-3}{\ignorespaces Rigid body rotating about an arbitrary point O, given in the N frame}}{52}{figure.4.3}
+\contentsline {figure}{\numberline {4-4}{\ignorespaces MAKO}}{54}{figure.4.4}
+\contentsline {figure}{\numberline {4-5}{\ignorespaces Moments of inertia measurements for each axis, $I_{xx} , I_{yy} , I_{zz} $.}}{55}{figure.4.5}
+\contentsline {figure}{\numberline {4-6}{\ignorespaces Body fixed frame and North East Down (NED) frame representations \cite {ducard2009fault}}}{56}{figure.4.6}
+\contentsline {figure}{\numberline {4-7}{\ignorespaces Wind frame, airspeed vector $\bm {V}_T$, angle of attack $\alpha $ and side slip angle $\beta $ representation \cite {ducard2009fault}}}{56}{figure.4.7}
+\contentsline {figure}{\numberline {4-8}{\ignorespaces Relation revealed between the inertial velocity vector $\bm {v}$, airspeed vector $\bm {V}_T$ and wind disturbance $\bm {W}$ \cite {ducard2009fault}}}{57}{figure.4.8}
+\contentsline {figure}{\numberline {4-9}{\ignorespaces Euler angle sequence \cite {ducard2009fault}}}{57}{figure.4.9}
+\contentsline {figure}{\numberline {4-10}{\ignorespaces Euler angle sequence \cite {ducard2009fault}}}{58}{figure.4.10}
+\contentsline {figure}{\numberline {4-11}{\ignorespaces Validation with Simulink 6DOF aircraft model}}{66}{figure.4.11}
+\contentsline {figure}{\numberline {4-12}{\ignorespaces Probable sensor faults \cite {ducard2009fault}}}{67}{figure.4.12}
+\contentsline {figure}{\numberline {4-13}{\ignorespaces Probable actuator faults \cite {ducard2009fault}}}{68}{figure.4.13}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5-1}{\ignorespaces Common machine learning methodologies}}{70}{figure.5.1}
+\contentsline {figure}{\numberline {5-2}{\ignorespaces Supervised learning basics }}{71}{figure.5.2}
+\contentsline {figure}{\numberline {5-3}{\ignorespaces Linear regression example - Housing prices as a function of area of the house}}{74}{figure.5.3}
+\contentsline {figure}{\numberline {5-4}{\ignorespaces Classification example}}{75}{figure.5.4}
+\contentsline {figure}{\numberline {5-5}{\ignorespaces Classification example}}{76}{figure.5.5}
+\contentsline {figure}{\numberline {5-6}{\ignorespaces Classification example}}{77}{figure.5.6}
+\contentsline {figure}{\numberline {5-7}{\ignorespaces Complex decision boundary}}{79}{figure.5.7}
+\contentsline {figure}{\numberline {5-8}{\ignorespaces Guide for feature mapping}}{80}{figure.5.8}
+\contentsline {figure}{\numberline {5-9}{\ignorespaces Guide for feature mapping}}{81}{figure.5.9}
+\contentsline {figure}{\numberline {5-10}{\ignorespaces Adding an artificial feature of 1s.}}{84}{figure.5.10}
+\contentsline {figure}{\numberline {5-11}{\ignorespaces Guide for feature mapping}}{85}{figure.5.11}
+\contentsline {figure}{\numberline {5-12}{\ignorespaces Procedure to detect overfitting}}{87}{figure.5.12}
+\contentsline {figure}{\numberline {5-13}{\ignorespaces Gradient descent convergence dependance on $theta_init$. Two different but close choice of $theta_init$ might converge to local or global minima }}{90}{figure.5.13}
+\contentsline {figure}{\numberline {5-14}{\ignorespaces Evolution of $J(\theta )$ with respect to number of iterations. Left two figures showing that the optimization problem is not converging. The figure in the far right is the $J(\theta )$ evolution expected}}{91}{figure.5.14}
+\contentsline {figure}{\numberline {5-15}{\ignorespaces Diagnosis the problem of machine learning by comparing the cost function for the training and cross-validation data sets}}{93}{figure.5.15}
+\contentsline {figure}{\numberline {5-16}{\ignorespaces SVM working principle}}{95}{figure.5.16}
+\contentsline {figure}{\numberline {5-17}{\ignorespaces Convergence of minimum objective function}}{100}{figure.5.17}
+\contentsline {figure}{\numberline {5-18}{\ignorespaces Objective function values for different box parameter and sigma values}}{101}{figure.5.18}
+\contentsline {figure}{\numberline {5-19}{\ignorespaces Objective function values for different box parameter and sigma values}}{102}{figure.5.19}
+\contentsline {figure}{\numberline {5-20}{\ignorespaces Objective function values for different box parameter and sigma values}}{103}{figure.5.20}
+\contentsline {figure}{\numberline {5-21}{\ignorespaces Objective function values for different box parameter and sigma values}}{104}{figure.5.21}
+\contentsline {figure}{\numberline {5-22}{\ignorespaces Confusion matrix}}{107}{figure.5.22}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {6-1}{\ignorespaces Loss of effectiveness fault simulation in aileron command and corresponding accelerometer x axis measurement}}{111}{figure.6.1}
+\contentsline {figure}{\numberline {6-2}{\ignorespaces Accelerometer simulation $a_x$ vs $a_y$ }}{111}{figure.6.2}
+\contentsline {figure}{\numberline {6-3}{\ignorespaces Reduced dimensional space features $z_1$ vs $z_2$ }}{112}{figure.6.3}
+\contentsline {figure}{\numberline {6-4}{\ignorespaces Supervised learning basics }}{113}{figure.6.4}
+\contentsline {figure}{\numberline {6-5}{\ignorespaces Posterior probability of loss in effectiveness fault for test set when a fault is injected at t = 120s.}}{114}{figure.6.5}
+\contentsline {figure}{\numberline {6-6}{\ignorespaces View of fault injection tool in Paparazzi ground control station view of in during flight}}{116}{figure.6.6}
+\contentsline {figure}{\numberline {6-7}{\ignorespaces Paparazzi autonomy modes}}{117}{figure.6.7}
+\contentsline {figure}{\numberline {6-8}{\ignorespaces Modifications on the control modes of \emph {Paparazzi} autopilot}}{118}{figure.6.8}
+\contentsline {figure}{\numberline {6-9}{\ignorespaces Conversion of raw flight data saved to SD card onboard to .data file to be used in further calculations}}{120}{figure.6.9}
+\contentsline {figure}{\numberline {6-10}{\ignorespaces A small part of the flight data corresponding to nominal and two different fault phases of the flight. \emph {Settings} message exists only if there is a change in the multiplicative and additive fault parameters via GCS}}{121}{figure.6.10}
+\contentsline {figure}{\numberline {6-11}{\ignorespaces The flying-wing: \emph {ZAGI}}}{122}{figure.6.11}
+\contentsline {figure}{\numberline {6-12}{\ignorespaces \emph {SETTINGS} \emph {Message} saves the multiplicative and additive fault values inserted from the GCS. [1.0 1.0 0.0 0.0] corresponds a command from the GCS to revert back to nominal phase}}{122}{figure.6.12}
+\contentsline {figure}{\numberline {6-13}{\ignorespaces SETTINGS message corresponding to stuck of right control surface}}{123}{figure.6.13}
+\contentsline {figure}{\numberline {6-14}{\ignorespaces Indexing SETTINGS, to find fault and nominal flight intervals, indexing GYRO measurements to AND with FAULT indexes to find the indexes of faulty gyro measurements}}{124}{figure.6.14}
+\contentsline {figure}{\numberline {6-15}{\ignorespaces Accelerometer readings along $x$-direction during flight interval just before control surface stuck (nominal, represented with blue) and during control surface stuck at $\SI {0}{\degree }$ until the safety pilot's intervention}}{126}{figure.6.15}
+\contentsline {figure}{\numberline {6-16}{\ignorespaces Accelerometer readings along $x$-direction during flight interval before control surface stuck (nominal, represented with blue) and during control surface stuck at $\SI {0}{\degree }$ until the safety pilot's intervention}}{127}{figure.6.16}
+\contentsline {figure}{\numberline {6-17}{\ignorespaces Accelerometer measurements along z direction $a_z$ for faulty and nominal flight data}}{128}{figure.6.17}
+\contentsline {figure}{\numberline {6-18}{\ignorespaces Angular velocity $w_x$ for faulty nominal flight data}}{128}{figure.6.18}
+\contentsline {figure}{\numberline {6-19}{\ignorespaces $a_x$ vs $a_z$ feature space for faulty nominal flight data}}{129}{figure.6.19}
+\contentsline {figure}{\numberline {6-20}{\ignorespaces $a_x$ vs $a_y$ feature space for faulty nominal flight data}}{130}{figure.6.20}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }

@@ -1,0 +1,6 @@
+# temporary latex/bibtex stuff
+*.log
+*.blg
+
+# sync
+*.synctex.gz

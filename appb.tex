@@ -1,0 +1,773 @@
+\chapter{Codes for FD from flight data}
+
+\lstset{frame=tb,
+  language=Matlab,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\section{dataRead.m}
+\begin{lstlisting}
+% Written by Ewoud Smeur 
+% Modified by Elgiz Baskaya
+
+%%%%%%% This part from Ewoud %%%%%%%%%
+% filename = '17_04_20__14_22_51_SD.data'; % Mulitplicative fault only
+filename = '17_07_06__10_21_07_SD.data'; % Muret with Michel
+% filename = '17_09_07__10_07_55_SD.data'; 
+
+formatSpec = '%f%f%s%f%s%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f';
+
+formatSpecHeader = '%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%[^\n\r]';
+delimiter = ' ,';
+startRow = 1;
+fileID = fopen(filename,'r');
+header = textscan(fileID, formatSpecHeader,1, 'Delimiter', delimiter, 'EmptyValue' ,NaN);
+dataArray = textscan(fileID, formatSpec, 'Delimiter', delimiter, 'EmptyValue' ,NaN,'HeaderLines' ,startRow, 'ReturnOnError', false);
+fclose(fileID);
+ 
+N = length(dataArray{1, 1})-1;
+
+%%%%%%% This part from Elgiz %%%%%%%%%
+
+% Selecting the drone with whose data you want to work with
+index_drone_select = find(dataArray{1,2}==52);
+drone_select_id = zeros(length(dataArray{1,1}),1);
+% Set indexes to 1s if it is the drone of interest
+drone_select_id(index_drone_select) = 1;
+
+% Finding flight interval
+index_altitude = find(dataArray{1,8}>190000);
+altitude_limit_id = zeros(length(dataArray{1,8}),1);
+% Sets indexes to 1s if the altitude is greater than the given limit
+altitude_limit_id(index_altitude) = 1;
+
+% dataArray{1,8} can be something else then GPS data so select the GPS 
+% indexed as well
+gps_id = strcmp(dataArray{1,3},'GPS');
+
+% find out the first time of pass of the altitude limit of drone of interest
+% and last time of pass of the altitude limit of the drone of interest
+% And indexes i. if it is GPS data
+%            ii. if it is greater than the altitude of interest
+%           iii. if it is drone of interest
+
+index_drone_gps_alt = altitude_limit_id & gps_id & drone_select_id;
+first_altPass = find(index_drone_gps_alt, 1, 'first');
+last_altPass = find(index_drone_gps_alt, 1, 'last');
+
+% All the times in between the first passing of altitude limit and last
+% passing of the altitude limit are assumed to be the flight duration
+flight_duration_id = zeros(length(dataArray{1,1}),1);
+flight_duration_id(first_altPass:last_altPass) = 1;
+
+%%%%%%%%% Ewoud again ! %%%%%%%%%%%%%
+array_col_5 = zeros(length(dataArray{1, 5}),1);
+for i = 1:length(dataArray{1, 5})
+    try
+        array_col_5(i) = str2num(dataArray{1,5}{i});
+    end
+end
+
+%%%%%%%% Here we welcome Elgiz %%%%%%%
+% The idea is to AND all the required indexes
+
+gyro_id_only = strcmp(dataArray{1,3},'IMU_GYRO');
+gyro_id = gyro_id_only & drone_select_id & flight_duration_id;
+gyro(:,1) = dataArray{1, 4}(gyro_id);
+gyro(:,2) = array_col_5(gyro_id);
+gyro(:,3) = dataArray{1, 6}(gyro_id);
+t_gyro = dataArray{1, 1}(gyro_id);
+
+accel_id_only = strcmp(dataArray{1,3},'IMU_ACCEL');
+accel_id = accel_id_only & drone_select_id & flight_duration_id;
+accel(:,1) = dataArray{1, 4}(accel_id);
+accel(:,2) = array_col_5(accel_id);
+accel(:,3) = dataArray{1, 6}(accel_id);
+t_accel = dataArray{1, 1}(accel_id);
+
+commands_id_only = strcmp(dataArray{1,3},'COMMANDS');
+commands_id = drone_select_id & commands_id_only & flight_duration_id;
+commands_index = find(commands_id == 1);
+commands(:,1) = dataArray{1, 7}(commands_id);
+commands(:,2) = dataArray{1, 8}(commands_id);
+t_commands = dataArray{1, 1}(commands_id);
+
+gps_id = drone_select_id & gps_id & flight_duration_id;
+altitude(:,1) = dataArray{1, 8}(gps_id)/1000;
+t_altitude = dataArray{1, 1}(gps_id);
+
+% Labeling outputs (Fault, Normal)
+
+% FAULT (Here different faults are all labeled under one category which is fault) 
+% Finding the faulty command indexes
+% SETTINGS give the multiplication factor that is used to inject the fault
+% to control surfaces. 
+
+% Each time a fault is injected from the ground station, there
+% appears a SETTINGS message, with the information on the fault signal.
+% An example : 535.8420 18 SETTINGS 1.000000 0.500000
+%              [time  droneNum typeMass leftContSurfaceEfficiency
+%              rightContSurfaceEfficiency]
+% The values 1.000000 and 0.500000 are manual inputs from GCS by operator.
+
+settings_id = strcmp(dataArray{1,3},'SETTINGS');
+settings_index = find(settings_id == 1);
+
+% Indexes of setting command where drone set to nominal control surface
+% condition (1.00 1.00 for multiplicative fault)
+set_nominal = settings_index((dataArray{1,4}(settings_index)==1)&...
+(array_col_5(settings_index)==1)&(dataArray{1,6}(settings_index)==0)&...
+(dataArray{1,7}(settings_index)==0));
+
+% number of fault sets 
+num_fault_set = length(settings_index) - length(set_nominal);
+
+% Initialization fault_start_stop and nominal_start_stop vectors
+fault_start_stop = zeros(2, num_fault_set);
+% adding the intervals before any fault injected (after an certain altitude
+% to first fault anf after the last fault finishes to a certain altitude)
+nominal_start_stop = zeros(2, length(set_nominal) + 1);
+j = 1;
+k = 2;
+for i = 1 : (length(settings_index) - 1)
+    if ~any(set_nominal==settings_index(i))
+        % fault_start_stop  rows : starting_index end_index
+        %                   coloum : each coloumn is for a different fault
+        %                   injected
+        fault_start_stop(1:2,j) = [settings_index(i) (settings_index(i + 1) - 1)]';
+        j = j + 1;
+        
+    else
+        nominal_start_stop(1:2,k) = [settings_index(i) (settings_index(i + 1) - 1)]';
+        k = k + 1;
+    end
+end
+% Adding the nominal intervals starting from passing an altitude to the
+% first falut injected (at start of the flight) and starting after the last
+% fault finishes until it descents until the same altitude limit (at the 
+% end of the flight) 
+nominal_start_stop(1:2,1) = [first_altPass (fault_start_stop(1,1) - 1)]';
+nominal_start_stop(1:2,length(set_nominal) + 1) = [fault_start_stop(2,num_fault_set)+1 last_altPass]';
+
+%%%%%%%%%  Hello Ewoud %%%%%%%%%%
+% act_id = strcmp(dataArray{1,3},'ROTORCRAFT_CMD');
+% u_in(:,1) = dataArray{1, 4}(act_id);
+% u_in(:,2) = array_col_5(act_id);
+% u_in(:,3) = dataArray{1, 6}(act_id);
+% u_in(:,4) = dataArray{1,  7}(act_id);
+% t_act = dataArray{1, 1}(act_id);
+% 
+% gps_id = strcmp(dataArray{1,3},'GPS_INT');
+% ecefv(:,1) = dataArray{1, 11}(gps_id)/100;
+% ecefv(:,2) = dataArray{1, 12}(gps_id)/100;
+% ecefv(:,3) = dataArray{1, 13}(gps_id)/100;
+% t_gps = dataArray{1, 1}(gps_id);
+ \end{lstlisting}
+ 
+\section{selectDataToInvest.m}
+\begin{lstlisting}
+% Copyright 2017 Elgiz Baskaya
+
+% This file is part of cureDDrone.
+
+% cureDDrone is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+% 
+% curedRone is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+% 
+% You should have received a copy of the GNU General Public License
+% along with curedRone.  If not, see <http://www.gnu.org/licenses/>.
+
+% FAULT DETECTION VIA SVM
+% This code assumes that you already have a data set of normal and faulty 
+% situation sensor outputs.
+
+%% FAULT SELECTION
+% to check available fault indexes (the index when they are set by
+% operator) setdiff(settings_index,set_nominal)
+% and their corresponding start_index end_index, check fault_start_stop
+
+fault_id = zeros(length(dataArray{1,1}),1);
+% Select which fault interval you would like to investigate
+% fault_id(fault_start_stop(1,FAULT_NUM_YOU_WANTTO_SIMULATE):...
+% fault_start_stop(2,FAULT_NUM_YOU_WANTTO_SIMULATE)) = 1;
+
+% % One surface stuck at zero fault
+% fault_id(fault_start_stop(1,23):fault_start_stop(2,23)) = 1;
+
+% One surface loss if efficiency fault
+fault_id(fault_start_stop(1,3):fault_start_stop(2,3)) = 1;
+
+% All faulty phase indexes
+% for i = 1 : length(fault_start_stop)
+%     fault_id(fault_start_stop(1,i):fault_start_stop(2,i)) = 1;
+% end
+
+gyro_fault_cond_id = fault_id & gyro_id_only;
+
+gyro_fault_cond(:,1) = dataArray{1, 4}(gyro_fault_cond_id);
+gyro_fault_cond(:,2) = array_col_5(gyro_fault_cond_id);
+gyro_fault_cond(:,3) = dataArray{1, 6}(gyro_fault_cond_id);
+t_gyro_fault_cond = dataArray{1, 1}(gyro_fault_cond_id);
+
+accel_fault_cond_id = fault_id & accel_id_only;
+
+accel_fault_cond(:,1) = dataArray{1, 4}(accel_fault_cond_id);
+accel_fault_cond(:,2) = array_col_5(accel_fault_cond_id);
+accel_fault_cond(:,3) = dataArray{1, 6}(accel_fault_cond_id);
+t_accel_fault_cond = dataArray{1, 1}(accel_fault_cond_id);
+
+% Selection of nominal condition
+% to check available fault indexes (the index when they are set by
+% operator) : see variable set_nominal
+% and their corresponding start_index end_index, check nominal_start_stop
+
+nominal_id = zeros(length(dataArray{1,1}),1);
+% Select which nominal phase interval you would like to investigate
+% nominal_id(nominal_start_stop(1,NOMINAL_COND_NUM_YOU_WANTTO_SIMULATE):...
+% nominal_start_stop(2,NOMINAL_COND_NUM_YOU_WANTTO_SIMULATE)) = 1;
+
+% % One surface stuck at zero fault
+% nominal_id(nominal_start_stop(1,5):nominal_start_stop(2,5)) = 1;
+
+% One surface loss if efficiency fault
+nominal_id(nominal_start_stop(1,1):nominal_start_stop(2,1)) = 1;
+
+% All nominal phase indexes
+% for i = 1 : length(nominal_start_stop)
+%     nominal_id(nominal_start_stop(1,i):nominal_start_stop(2,i)) = 1;
+% end
+
+gyro_nominal_cond_id = nominal_id & gyro_id_only;
+
+gyro_nominal_cond(:,1) = dataArray{1, 4}(gyro_nominal_cond_id);
+gyro_nominal_cond(:,2) = array_col_5(gyro_nominal_cond_id);
+gyro_nominal_cond(:,3) = dataArray{1, 6}(gyro_nominal_cond_id);
+t_gyro_nominal_cond = dataArray{1, 1}(gyro_nominal_cond_id);
+
+accel_nominal_cond_id = nominal_id & accel_id_only;
+
+accel_nominal_cond(:,1) = dataArray{1, 4}(accel_nominal_cond_id);
+accel_nominal_cond(:,2) = array_col_5(accel_nominal_cond_id);
+accel_nominal_cond(:,3) = dataArray{1, 6}(accel_nominal_cond_id);
+t_accel_nominal_cond = dataArray{1, 1}(accel_nominal_cond_id);
+
+% Forming the feature and output vectors to apply classification.
+% Here we form the matrix as 
+% feature_vector = [acc_x_nominal acc_y_nom   acc_z_nom   gyro_x_nom  gyro_y_nom   gyro_z_nom
+%                   acc_x_fault   acc_y_fault acc_z_fault gyro_x_faul gyro_y_fault gyro_z_fault]
+feature_vector = [accel_nominal_cond gyro_nominal_cond; accel_fault_cond gyro_fault_cond];
+% Assuming the time steps for the gyro and the accelerometers are sync.
+t_features = [t_accel_nominal_cond; t_accel_fault_cond];
+% Assuming same number of gyro and accelerometer data
+% Labelling data
+
+% nominal_label = cell(length(gyro_nominal_cond),1);
+% nominal_label(:) = {'nominal'};
+% fault_label = cell(length(gyro_fault_cond),1);
+% fault_label(:) = {'fault'};
+% label = [nominal_label; fault_label];
+% output_vector = label;
+
+nominal_label = zeros(length(gyro_nominal_cond),1);
+fault_label = ones(length(gyro_fault_cond),1);
+output_vector = [nominal_label; fault_label];
+
+%% ADD FEATURES OF CONSEQUENT MEASUREMENTS
+
+% % Number of next (and previous) measurements to add to the feature vector : N
+% feature_vector_original = feature_vector;
+% clear feature_vector;
+% N = 3;
+% [row,col] = size(feature_vector_original);
+% 
+% addedFeat = zeros(row, N + 1);
+
+% for i = 1 : col
+%     % If features added before the current time measurement
+%     addedFeat = addFeaturesBefore(feature_vector_original(:,i),N);
+%     feature_vector(:,((i-1)*(N+1)+1):((i-1)*(N+1)+1+N)) = addedFeat;
+%     
+%     % If features added both before and after the current time measurement
+%     addedFeat = addFeaturesBeforeAfter(feature_vector_original(:,i),N);
+%     feature_vector(:,((i-1)*(2*N+1)+1):((i-1)*(2*N+1)+1+2*N)) = addedFeat;
+% end
+
+% Figures to visualize data
+% feature = [accel_nominal_cond;accel_fault_cond];
+gscatter(feature_vector(:,1),feature_vector(:,3),output_vector,'gr')
+legend('normal','fault')
+set(legend,'FontSize',11);
+xlabel({'$a_x$'},...
+'FontUnits','points',...
+'interpreter','latex',...
+'FontSize',15,...
+'FontName','Times')
+ylabel({'$a_y$'},...
+'FontUnits','points',...
+'interpreter','latex',...
+'FontSize',15,...
+'FontName','Times')
+print -depsc2 feat1vsfeat3.eps
+ \end{lstlisting}
+ 
+\section{arrangeDataSet.m}
+\begin{lstlisting}
+% Copyright 2017 Elgiz Baskaya
+
+% This file is part of cureDDrone.
+
+% cureDDrone is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+% 
+% curedRone is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+% 
+% You should have received a copy of the GNU General Public License
+% along with curedRone.  If not, see <http://www.gnu.org/licenses/>.
+
+% FAULT DETECTION VIA SVM
+% This code assumes that you already have a data set of normal and faulty 
+% situation sensor outputs.
+
+%% Arrange training/test sets
+
+feature_vec = feature_vector;
+output_vec = output_vector;
+
+% training set (around %80 percent of whole data set)
+trainingDataExNum = ceil(80 / 100 * (length(feature_vec)));
+
+% Select %80 of data for training and leave the rest for testing
+randomSelectionColoumnNum = randperm(length(feature_vec),trainingDataExNum);
+
+% Training set for feature and output
+% feature_vec_training .:. feature matrix for training
+% output_vec_training .:. output vector for training
+feature_vec_training = feature_vec(randomSelectionColoumnNum, :);
+output_vec_training = output_vec(randomSelectionColoumnNum, :);
+
+% Test set for feature and output
+feature_vec_test = feature_vec;
+feature_vec_test(randomSelectionColoumnNum, :) = [];
+
+output_vec_test = output_vec;
+output_vec_test(randomSelectionColoumnNum, :) = [];
+
+test_set_time = t_features;
+test_set_time(randomSelectionColoumnNum) = [];
+
+% To have same partions for cross-validations 
+rng(1);
+cFold = cvpartition(length(feature_vec_training),'KFold',10);
+ \end{lstlisting}
+
+ 
+ \section{svmFD.m}
+\begin{lstlisting}
+% Copyright 2017 Elgiz Baskaya
+
+% This file is part of cureDDrone.
+
+% cureDDrone is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+% 
+% curedRone is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+% 
+% You should have received a copy of the GNU General Public License
+% along with curedRone.  If not, see <http://www.gnu.org/licenses/>.
+
+% FAULT DETECTION VIA SVM
+% This code assumes that you already have a data set of normal and faulty 
+% situation sensor outputs.
+
+%% TRAINING PHASE
+tic
+% SVMModel is a trained ClassificationSVM classifier.
+SVMModel = fitcsvm(feature_vec_training,output_vec_training, 'KernelFunction','rbf','Standardize',true,'ClassNames',{'0','1'});
+toc
+
+% Support vectors
+sv = SVMModel.SupportVectors;
+
+%% CROSS VALIDATION
+% 10-fold cross validation on the training data
+% inputs : trained SVM classifier (which also stores the training data)
+% outputs : cross-validated (partitioned) SVM classifier from a trained SVM
+% classifier
+
+% CVSVMModel is a ClassificationPartitionedModel cross-validated classifier.
+% ClassificationPartitionedModel is a set of classification models trained 
+% on cross-validated folds.
+
+CVSVMModel = crossval(SVMModel,'CVPartition',cFold);
+
+% To assess predictive performance of SVMModel on cross-validated data 
+% "kfold" methods and properties of CVSVMModel, such as kfoldLoss is used
+
+% Evaluate 10-fold cross-validation error.
+% (Estimate the out-of-sample misclassification rate.)
+crossValClassificErr = kfoldLoss(CVSVMModel);
+
+% Predict response for observations not used for training
+% Estimate cross-validation predicted labels and scores.
+[elabelUntuned,escoreUntuned] = kfoldPredict(CVSVMModel);
+
+max(escoreUntuned)
+min(escoreUntuned)
+
+% FIT POSTERIOR PROBABILITES fitPosterior(SVMModel) / fitSVMPosterior(CVSVMModel)
+% [ScoreCVSVMModel,ScoreParameters] = fitSVMPosterior(CVSVMModel);
+% Predict does not work here?
+
+
+%% PREDICTION PHASE
+
+[labelUntuned,scoreUntuned] = predict(SVMModel,feature_vec_test);
+
+% %% FIT POSTERIOR PROBABILITES fitPosterior(SVMModel) / fitSVMPosterior(CVSVMModel)
+% % "The transformation function computes the posterior probability 
+% % that an observation is classified into the positive class (SVMModel.Classnames(2)).
+% % The software fits the appropriate score-to-posterior-probability 
+% % transformation function using the SVM classifier SVMModel, and 
+% % by conducting 10-fold cross validation using the stored predictor data (SVMModel.X) 
+% % and the class labels (SVMModel.Y) as outlined in REF : Platt, J. 
+% % "Probabilistic outputs for support vector machines and comparisons 
+% % to regularized likelihood methods". In: Advances in Large Margin Classifiers. 
+% % Cambridge, MA: The MIT Press, 2000, pp. 61-74"
+% ScoreSVMModel = fitPosterior(SVMModel);
+% [~,postProbability] = predict(ScoreSVMModel,feature_vec_test);
+
+%% EVALUATING THE PERFORMANCE OF CLASSIFICATION WITH NEW DATA
+
+% Evaluating the prediction performance of classification via
+% CompactClassificationSVM class methods (e.g compareHoldout, edge, loss, margin, 
+% predict)
+
+eUntuned = edge(SVMModel, feature_vec_test, output_vec_test);
+mUntuned = margin(SVMModel, feature_vec_test, output_vec_test);
+
+% Evaluating the prediction performance of classification via confusion matrix
+
+[f1scoreUntuned, precisionUntuned, recallUntuned] = calcF1score(output_vec_test, str2double(labelUntuned));
+%% Plot results
+figure
+gscatter(feature_vec_training(:,1),feature_vec_training(:,2),output_vec_training)
+hold on
+plot(sv(:,1),sv(:,2),'ko','MarkerSize',10)
+legend('normal','fault','Support Vector')
+legend('normal','fault')
+hold off
+set(legend,'FontSize',11);
+xlabel({'$a_x$'},...
+'FontUnits','points',...
+'interpreter','latex',...
+'FontSize',15,...
+'FontName','Times')
+ylabel({'$a_y$'},...
+'FontUnits','points',...
+'interpreter','latex',...
+'FontSize',15,...
+'FontName','Times')
+print -depsc2 feat1vsfeat2.eps
+
+ \end{lstlisting}
+ 
+ \section{svmFDtuningViaHeuristic.m}
+\begin{lstlisting}
+% Copyright 2017 Elgiz Baskaya
+
+% This file is part of cureDDrone.
+
+% cureDDrone is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+% 
+% curedRone is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+% 
+% You should have received a copy of the GNU General Public License
+% along with curedRone.  If not, see <http://www.gnu.org/licenses/>.
+
+% FAULT DETECTION VIA SVM
+% This code assumes that you already have a data set of normal and faulty 
+% situation sensor outputs.
+
+%% TUNING THE SVM CLASSIFIER using heuristic approach to select kernel scale
+
+tic
+% SVMModelTune is a trained ClassificationSVM classifier 
+% By passing 'KernelScale','auto' the software utilizes a heuristic
+% approach to select kernel scale
+SVMModelTune1 = fitcsvm(feature_vec_training,output_vec_training, 'KernelFunction','rbf', 'KernelScale','auto','Standardize',true,'ClassNames',{'0','1'});
+
+%% CROSS VALIDATION
+% 10-fold cross validation on the training data
+% inputs : trained SVM classifier (which also stores the training data)
+% outputs : cross-validated (partitioned) SVM classifier from a trained SVM
+% classifier
+
+% CVSVMModelTune is a ClassificationPartitionedModel cross-validated classifier.
+% ClassificationPartitionedModel is a set of classification models trained 
+% on cross-validated folds.
+CVSVMModelTune1 = crossval(SVMModelTune1,'CVPartition',cFold);
+
+% To assess predictive performance of SVMModelTune on cross-validated data 
+% "kfold" methods and properties of CVSVMModelTune, such as kfoldLoss is used
+
+% Evaluate 10-fold cross-validation error.
+% (Estimate the out-of-sample misclassification rate.)
+crossValClassificErrTuning1 = kfoldLoss(CVSVMModelTune1);
+
+% Predict response for observations not used for training
+% Estimate cross-validation predicted labels and scores.
+[elabelTune1,escoreTune1] = kfoldPredict(CVSVMModelTune1);
+
+max(escoreTune1)
+min(escoreTune1)
+
+%% RETRAIN SVM CLASSIFIER
+% Retrain for different values of BoxConstraint and KernelScale
+% This KernelScale is the KernelScale found by the heuristic approach
+sampleSpace = 11;
+kernelScaleFactor = zeros(1,sampleSpace + 1);
+boxConstraint = zeros(1,sampleSpace + 1);
+crossValClassificErrTuning2 = zeros(sampleSpace,sampleSpace);
+
+ks = SVMModelTune1.KernelParameters.Scale;
+boxConstraint(1) = 1e-5;
+kernelScaleFactor(1) = 1e-5;
+minCrossValClassificError = 100;
+
+for i = 1 : sampleSpace
+    for j = 1 : sampleSpace
+        
+        SVMModelTune2 = fitcsvm(feature_vec_training,output_vec_training, 'KernelFunction','rbf', 'KernelScale',ks * kernelScaleFactor(j),'BoxConstraint',boxConstraint(i),...
+        'Standardize',true,'ClassNames',{'0','1'});
+        
+        % CrossValidate
+        CVSVMModelTune2 = crossval(SVMModelTune2,'CVPartition',cFold);
+        crossValClassificErrTuning2(i,j) = kfoldLoss(CVSVMModelTune2);
+        if crossValClassificErrTuning2(i,j) < minCrossValClassificError
+            minCrossValClassificError = crossValClassificErrTuning2(i,j);
+            kernelScaleOptim = SVMModelTune2.KernelParameters.Scale;
+            boxConstraintOptim = SVMModelTune2.ModelParameters.BoxConstraint;
+        end
+        kernelScaleFactor(j + 1) = kernelScaleFactor(j) * 10;
+    end
+    boxConstraint(i + 1) = boxConstraint(i) * 10;
+end
+
+toc
+
+%% TRAIN AGAIN WITH THE TUNED KernelScale and BoxConstraint
+SVMModelTune = fitcsvm(feature_vec_training,output_vec_training, 'KernelFunction','rbf', 'KernelScale',kernelScaleOptim,'BoxConstraint',boxConstraintOptim,...
+'Standardize',true,'ClassNames',{'0','1'});
+
+%% PREDICTION PHASE
+
+[labelTune,scoreTune] = predict(SVMModelTune,feature_vec_test);
+
+%% EVALUATING THE PERFORMANCE OF CLASSIFICATION WITH NEW DATA
+
+% Evaluating the prediction performance of classification via
+% CompactClassificationSVM class methods (e.g compareHoldout, edge, loss, margin, 
+% predict)
+
+eTune = edge(SVMModelTune, feature_vec_test, output_vec_test);
+mTune = margin(SVMModelTune, feature_vec_test, output_vec_test);
+
+% Evaluating the prediction performance of classification via confusion matrix
+
+[f1scoreTune, precisionTune, recallTune] = calcF1score(output_vec_test, str2double(labelTune));
+ \end{lstlisting}
+ 
+ 
+  \section{svmFDtuningViaOptim.m}
+\begin{lstlisting}
+% Copyright 2017 Elgiz Baskaya
+
+% This file is part of cureDDrone.
+
+% cureDDrone is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+% 
+% curedRone is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+% 
+% You should have received a copy of the GNU General Public License
+% along with curedRone.  If not, see <http://www.gnu.org/licenses/>.
+
+% FAULT DETECTION VIA SVM
+% This code assumes that you already have a data set of normal and faulty 
+% situation sensor outputs.
+
+%% TUNING THE SVM CLASSIFIER using Bayesian Optimization
+sigma = optimizableVariable('sigma',[1e-5,1e5],'Transform','log');
+box = optimizableVariable('box',[1e-5,1e5],'Transform','log');
+
+minfn = @(z)kfoldLoss(fitcsvm(feature_vec_training,output_vec_training,...
+    'CVPartition',cFold,'KernelFunction','rbf','BoxConstraint',z.box,...
+    'KernelScale',z.sigma));
+
+results = bayesopt(minfn,[sigma,box],'IsObjectiveDeterministic',true,...
+    'AcquisitionFunctionName','expected-improvement-plus')
+
+z(1) = results.XAtMinObjective.sigma;
+z(2) = results.XAtMinObjective.box;
+SVMModelTuned = fitcsvm(feature_vec_training,output_vec_training,...
+'KernelFunction','rbf','KernelScale',z(1),'BoxConstraint',z(2));
+
+%% CROSS VALIDATION
+% 10-fold cross validation on the training data
+% inputs : trained SVM classifier (which also stores the training data)
+% outputs : cross-validated (partitioned) SVM classifier from a trained SVM
+% classifier
+
+% CVSVMModel is a ClassificationPartitionedModel cross-validated classifier.
+% ClassificationPartitionedModel is a set of classification models trained 
+% on cross-validated folds.
+
+CVSVMModelTuned = crossval(SVMModelTuned,'CVPartition',cFold);
+
+% To assess predictive performance of SVMModel on cross-validated data 
+% "kfold" methods and properties of CVSVMModel, such as kfoldLoss is used
+
+% Evaluate 10-fold cross-validation error.
+% (Estimate the out-of-sample misclassification rate.)
+crossValClassificErrTuned = kfoldLoss(CVSVMModelTuned);
+
+%% PREDICTION PHASE
+[labelTuned,scoreTuned] = predict(SVMModelTuned,feature_vec_test);
+
+%% EVALUATING THE PERFORMANCE OF CLASSIFICATION WITH NEW DATA
+
+% Evaluating the prediction performance of classification via
+% CompactClassificationSVM class methods (e.g compareHoldout, edge, loss, margin, 
+% predict)
+
+eTuned = edge(SVMModelTuned, feature_vec_test, output_vec_test);
+mTuned = margin(SVMModelTuned, feature_vec_test, output_vec_test);
+
+% Evaluating the prediction performance of classification via confusion matrix
+
+[f1scoreTuned, precisionTuned, recallTuned] = calcF1score(output_vec_test, labelTuned);
+ \end{lstlisting}
+ 
+ 
+ 
+  \section{calcF1score.m}
+\begin{lstlisting}
+function [f1Score,precision,recall] = calcF1score(labelActual, labelPredicted)
+
+truePositive = sum(labelPredicted & labelActual);
+falsePositive = sum(~((~labelPredicted)|labelActual));
+falseNegative = sum((~labelPredicted) & labelActual);
+% trueNegative = sum(~(labelPredicted|labelActual));
+
+precision = truePositive / (truePositive + falsePositive);
+recall = truePositive / (truePositive + falseNegative);
+f1Score = 2 * precision * recall / (precision + recall);
+end
+ \end{lstlisting}
+ 
+ 
+   \section{addFeaturesBefore.m}
+\begin{lstlisting}
+% Copyright 2017 Elgiz Baskaya
+
+% This file is part of cureDDrone.
+
+% cureDDrone is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+% 
+% curedRone is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+% 
+% You should have received a copy of the GNU General Public License
+% along with curedRone.  If not, see <http://www.gnu.org/licenses/>.
+
+% FAULT DETECTION VIA SVM
+% This code assumes that you already have a data set of normal and faulty 
+% situation sensor outputs.
+
+%% FEATURE ADDITION
+% Add features (measurements) of up to N - 1 measurements before
+% An example : Lets say N = 3
+% Before adding the features the feature vector 
+% v = [v1 
+%      v2
+%      v3 
+%      v4
+%      v5
+%      v6
+%       .
+%       .
+%      v_m]     where m is the number of measurements
+
+% For a given feature matrix above this file outputs 
+% REMINDER the number of measurements before and after you want to add to
+% the feature vector is N - 1 both sides of the original feature vector.
+% So this file will add N - 1 coloumns before and N - 1 coloumns after 
+% the original feature vector. And the indexes for the resulting matrix will be: 
+% m is the number of measurements and also the number of rows in the
+% feature vector
+% Coloumn marked with * is the original feature vector
+%                                           *    
+% v_(2-N)     ...      v_(-1)     v_0      v_1  
+% v_(2-N+1)   ...        v_0      v_1      v_2 
+% v_(2-N+2)   ...        v_1      v_2      v_3
+% v_(2-N+3)   ...        v_2      v_3      v_4
+%     .       ...         .        .        . 
+%     .       ...         .        .        .
+% v_(m-N)     ...     v_(m-2)   v_(m-1)    v_m
+
+function [vNew] = addFeaturesBefore(v,N) 
+
+N = N + 1;
+v_b = v;
+vNew(:,N) = v;
+
+for i = 1 : N - 1
+    v_b(2:end,:) = v_b(1:end-1,:);
+    vNew(:,N - i) = v_b;
+end
+ \end{lstlisting}
+
