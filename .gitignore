@@ -1,6 +1,27 @@
-# temporary latex/bibtex stuff
+# ignore Mac finder files
+.DS_Store
+
+# ignore temporary files
+*.tmp
+
+# ignore latex temporary files
 *.log
 *.blg
+*.out
+*.synctex.gz*
+*.auxlock
+*_contourtmp*
 
-# sync
-*.synctex.gz
+# ignore TeXnic Center files
+*.tps
+*.tcp
+
+# ignore untracked nomenclature output files
+*.nlo
+
+# ignore nomenclature temporary files
+*.ilg
+
+# ignore biblatex/biber temporary files
+*.bcf
+*.run.xml
