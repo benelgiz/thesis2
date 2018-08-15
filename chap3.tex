@@ -454,7 +454,7 @@ The time evolution of attitude is identified by a set of first order differentia
 The angular velocity of a reference frame B with respect a reference frame A, given in the B frame can be written as follows
 
 \begin{equation}\label{eqn:quaternion1}
-\bm{\omega}
+\bm{\omega}_B^{B/A}
  =\,
 \omega_1 \bm{b_1} + \omega_2 \bm{b_2} + \omega_3 \bm{b_3}
 \end{equation}
@@ -702,8 +702,8 @@ And in a more compact form;
 
 \begin{align}{\label{eqn:compactKinematics}}
 \begin{split}
-\dot{q}_0 &= -\frac{1}{2} \bm{q}_\nu^T \bm{\omega}_{b/n}^b\\
-\dot{\bm{q}}_\nu &= \frac{1}{2}\Big(\bm{q}_\nu^\times + q_0 \bm{I}_3 \Big) \bm{\omega}_{b/n}^b \\
+\dot{q}_0 &= -\frac{1}{2} \bm{q}_\nu^T \bm{\omega}_B^{B/A}\\
+\dot{\bm{q}}_\nu &= \frac{1}{2}\Big(\bm{q}_\nu^\times + q_0 \bm{I}_3 \Big) \bm{\omega}_B^{B/A} \\
 \end{split}
 \end{align}
 
@@ -886,27 +886,27 @@ Unfortunately those forces depend on the attitude of the aircraft.
 
 \subsection{Translational kinematics}
 
-Time change of the position of the aircraft $\bm{x}_n$ expressed in the navigation frame can be written in terms of translational velocity $\bm{v}_b$ expressed in the body frame as
+Time change of the position of the aircraft $\bm{x}_N$ expressed in the navigation frame can be written in terms of translational velocity $\bm{v}_B$ expressed in the body frame as
 
 \begin{align}{\label{eqn:translationalKinematics1}}
 \begin{split}
-\dot{\bm{x}}_n & = \frac{d}{dt} \big( \bm{x}_n \big) \\
-                        & = \frac{d}{dt} \big(\bm{C}_b^n \bm{x}_b \big) \\
-                        & = \dot{\bm{C}}_b^n \bm{x}_b + \bm{C}_b^n  \dot{\bm{x}}_b \\
-                        & = \bm{C}_b^n \bm{v}_b
+\dot{\bm{x}}_N & = \frac{d}{dt} \big( \bm{x}_N \big) \\
+                        & = \frac{d}{dt} \big(\bm{C}_B^N \bm{x}_B \big) \\
+                        & = \dot{\bm{C}}_B^N \bm{x}_B + \bm{C}_B^N  \dot{\bm{x}}_b \\
+                        & = \bm{C}_B^N \bm{v}_B
 \end{split}
 \end{align}
 
-using $\bm{x}_b=0$. Eq. \ref{eqn:translationalKinematics1} can also be represented in matrix form pointing the elements of the vectors as
+using $\bm{x}_B=0$. Eq. \ref{eqn:translationalKinematics1} can also be represented in matrix form pointing the elements of the vectors as
 
 \begin{equation}{\label{eqn:angularMomentumInPrincipleAxes}}
 \begin{bmatrix}
-\dot{x}_N\\[0.2em]
-\dot{x}_E\\[0.2em]
-\dot{x}_D\\[0.2em]
+\dot{x}_n\\[0.2em]
+\dot{x}_e\\[0.2em]
+\dot{x}_d\\[0.2em]
 \end{bmatrix}
  =\,
-\bm{C}_b^n
+\bm{C}_B^N
 \,
 \begin{bmatrix}
 u\\[0.2em]
@@ -924,68 +924,96 @@ From now on, the aircraft will be assumed to be flying over a small region compa
 Another assumption is that the frame attached to Earth being an inertial frame by ignoring Coriolis acceleration so that Newton's laws apply. 
 
 \begin{equation}{\label{eqn:newtonsSecondLaw}}
-\sum_j \bm{F}_j = \left. \frac{d}{dt} \big( m \bm{v} \big) \right|_A 
+\sum_j \bm{F}_j = \left. \frac{d}{dt} \big( m \bm{v} \big) \right|_I
 \end{equation}
 
 Unfortunately those forces that directly effect the translation depend on the attitude of the aircraft, complicating the dynamics.
 
-\subsubsection{Model of aerodynamic forces}
+Here the subscript $I$ represents the frame in which the time derivation occurs, which is an inertial frame in this case. 
+To represent time derivation in the inertial frame in terms of time derivation in body frame, relative rotation of the body frame with respect to the inertial frame should be included such that
 
 
+\begin{equation}{\label{eqn:newtonsDerivationFrameDependency}}
+\left. \frac{d}{dt} \big( m \bm{v} \big) \right|_I = \left. \frac{d}{dt} \big( m \bm{v} \big) \right|_B + \bm{\omega}^{B/I} \times \big( m\bm{v} \big)
+\end{equation}
 
+Substituting Eq. ~\ref{eqn:newtonsDerivationFrameDependency} in Eq. ~\ref{eqn:newtonsSecondLaw} and then projecting the vector variables in the body frame as well as assuming mass is constant give
+
+
+ \begin{equation}{\label{eqn:newtonsSecondLaw}}
+\frac{1}{m} \bigg( \sum_j \bm{F}_{B_j} \bigg)= \left. \frac{d\big(\bm{v}_B \big)}{dt}  \right|_B + \bm{\omega}_B^{B/I} \times \bm{v}_B
+\end{equation}
+
+Writing the summation of forces in terms of the forces acting on the aircraft
+
+\begin{equation}{\label{eqn:dynamicsEquation1}}
+\frac{1}{m} \Big( m \bm{g}_B + \bm{F}_{{thrust}_B} + \bm{F}_{{aero}_B} \Big)  =\,
+\begin{bmatrix}
+\dot{u}\\[0.2em]
+\dot{v}\\[0.2em]
+\dot{w}\\[0.2em]
+\end{bmatrix}
++\,
+\begin{bmatrix}
+p\\[0.2em]
+q\\[0.2em]
+r\\[0.2em]
+\end{bmatrix}
+\times \,
+\begin{bmatrix}
+u\\[0.2em]
+v\\[0.2em]
+w\\[0.2em]
+\end{bmatrix}
+\end{equation}
+
+in vectorial form. Rearranging terms and writing the forces more detailed gives 
+
+\begin{equation}{\label{eqn:dynamicsEquation2}}
+\begin{bmatrix}
+\dot{u}\\[0.2em]
+\dot{v}\\[0.2em]
+\dot{w}\\[0.2em]
+\end{bmatrix}
+=\,
+\begin{bmatrix}
+{-g \sin{\theta}}\\[0.2em]
+{g \sin{\phi} \cos{\theta} }\\[0.2em]
+{g \cos{\phi} \cos{\theta}}\\[0.2em]
+\end{bmatrix}
++\,
+\frac{1}{m}
+\,
+\begin{bmatrix}
+F_{thrust}\\[0.2em]
+0\\[0.2em]
+0\\[0.2em]
+\end{bmatrix}
++\,
+\frac{1}{m}
+\,
+\begin{bmatrix}
+X^b\\[0.2em]
+Y^b\\[0.2em]
+Z^b\\[0.2em]
+\end{bmatrix}
+-\,
+\begin{bmatrix}
+qw-rv\\[0.2em]
+ru-pw\\[0.2em]
+pv-qu\\[0.2em]
+\end{bmatrix}
+\end{equation}
+
+which are the equations of motion of the aircraft. 
 
 \section{Drone model}
 
-
-In this section parameters for two different drone is given, ETH model aircraft and MAKO model. 
-
-As an addition to the aerodynamic coefficients and stability derivatives, it is useful to have the moments of inertia of the aircraft so that one can use the model in a simulator. 
-For that purpose, the aircraft is hanged by two strings, at different orientations, as shown in Figure \ref{fig:inertia}, and measurements performed by timing the oscillation period for each axis. 
-The resultant moment of inertias are given Table ~\ref{arm:MAKO}. 
-
-\begin{figure}
-\centering
-\includegraphics[width=0.7\columnwidth]{figures/makoEmptyBack}
-\caption{MAKO}
-\label{figure:mako}
-\end{figure}
-
-
- \begin{figure*}[!ht]
-      \centering
-      \includegraphics[width=0.9\textwidth]{figures/Mako_Inertia_combined_small.png}
-      \caption{Moments of inertia measurements for each axis, $I_{xx} , I_{yy} , I_{zz} $.}
-      \label{fig:inertia}
- \end{figure*}
- 
- \begin{table}[!htbp]
-\caption{General specifications of MAKO \cite{bronz2016aerodynamic}}
-\label{arm:MAKO}
-\begin{center}
-\begin{tabular}{ ||p{4cm}|p{3cm}|p{2cm}||}\hline
-\textbf{Parameter} & \textbf{Value} & \textbf{Definition} \\\hline
-Wing span                  & $\ \ \, 1.288 $	   & $[m]$ \\\hline
-Wing surface area       & $ \ \ \, 0.27 $           &  $[m^2]$ \\\hline
-Mean aero chord           & $\ \ \, 0.21$           & $[m]$ \\\hline
-Take-off mass              & $\ \ \, 0.7 - 2.0$       & $[kg]$ \\\hline
-Flight velocity              & $\ \ \, 10 - 25$       & $[m/s]$ \\\hline
-$I_{xx}$                         & $\ \ \, 0.02471284$   & $[kg \cdot m^2]$ \\\hline
-$I_{yy}$                         & $\ \ \, 0.015835159$   & $[kg \cdot m^2]$ \\\hline
-$I_{zz}$                         & $\ \ \, 0.037424499$   & $[kg \cdot m^2]$ \\\hline
-\end{tabular}
-\end{center}
-\end{table}
-
-
-\subsection{Attitude kinematics of aircraft}
-
-Since the general equations of attitude motion of a rigid body, by introducing the frames of interest and angles standardized for aircraft attitude motion can be investigated next. 
-
-Frames of interest
-	ECI
-	ECEF
-	Navigation Frame 
-	BODY
+The calculation of aerodynamic forces and moments that are necessary to solve the equations of motion of a drone will be given in this section. 
+During the course of this PhD, two drones have been simulated : a drone from ETH university \cite{ducard2009fault} and MAKO (used in drone lab) given in Fig.~\ref{figure:mako}. 
+ETH drone has 2 aileron, 2 elevator and a rudder as its control surfaces while MAKO has only 2 control surfaces: elevons. 
+An example of an elevon can be seen in the schematic of Zagi given in Fig.~\ref{fig:bodyNEDframes}. 
+Changed in the same direction, elevon is used as an elevator (changes the pitch) while changed in reverse direction, they act as ailerons (changes the roll). 
 
 \begin{figure}
 \begin{center}
@@ -996,6 +1024,139 @@ Frames of interest
 \end{center}
 \end{figure}
 
+First, to calculate the moments of inertia of MAKO, it is hanged by two strings, at different orientations, as shown in Fig.~\ref{fig:inertia}, and measurements performed by timing the oscillation period for each axis. 
+The resultant moment of inertias are given Table~\ref{arm:MAKO}. 
+
+\begin{figure}
+\centering
+\includegraphics[width=0.7\columnwidth]{figures/makoEmptyBack}
+\caption{MAKO}
+\label{figure:mako}
+\end{figure}
+
+ \begin{figure*}
+      \centering
+      \includegraphics[width=0.9\textwidth]{figures/Mako_Inertia_combined_small.png}
+      \caption{Moments of inertia measurements for each axis, $I_{xx} , I_{yy} , I_{zz} $.}
+      \label{fig:inertia}
+ \end{figure*}
+ 
+ \begin{table}
+\caption{General specifications of MAKO \cite{bronz2016aerodynamic}}
+\label{arm:MAKO}
+\begin{center}
+\begin{tabular}{ ||p{4cm}|p{3cm}|p{2cm}||}\hline
+\textbf{Parameter} & \textbf{Value} & \textbf{Definition} \\\hline
+Wing span (b)                  & $\ \ \, 1.288 $	   & $[m]$ \\\hline
+Wing surface area (S)      & $ \ \ \, 0.27 $           &  $[m^2]$ \\\hline
+Mean aero chord ($\bar{c}$)         & $\ \ \, 0.21$           & $[m]$ \\\hline
+Take-off mass (m)             & $\ \ \, 0.7 - 2.0$       & $[kg]$ \\\hline
+Flight velocity           & $\ \ \, 10 - 25$       & $[m/s]$ \\\hline
+$I_{xx}$                         & $\ \ \, 0.02471284$   & $[kg \cdot m^2]$ \\\hline
+$I_{yy}$                         & $\ \ \, 0.015835159$   & $[kg \cdot m^2]$ \\\hline
+$I_{zz}$                         & $\ \ \, 0.037424499$   & $[kg \cdot m^2]$ \\\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+ \begin{table}
+\caption{Parameters of ETH drone \cite{bronz2016aerodynamic}}
+\label{arm:ethDrone}
+\begin{center}
+\begin{tabular}{ ||p{6cm}|p{3cm}|p{2cm}||}\hline
+\textbf{Parameter} & \textbf{Value} & \textbf{Definition} \\\hline
+Wing span (b)                & $\ \ \, 3.1 $	   & $[m]$ \\\hline
+Wing surface area (S)      & $ \ \ \, 1.80$           &  $[m^2]$ \\\hline
+Mean aero chord ($\bar{c}$)          & $\ \ \, 0.58$           & $[m]$ \\\hline
+Take-off mass (m)             & $\ \ \, 28$       & $[kg]$ \\\hline
+Propeller diameter (D)           & $\ \ \, 28$       & $[m]$ \\\hline
+time constant of the engine ($\tau_n$)           & $\ \ \, 28$       & $[m]$ \\\hline
+$I_{xx}$                         & $\ \ \, 2.56$   & $[kg \cdot m^2]$ \\\hline
+$I_{yy}$                         & $\ \ \, 10.9$   & $[kg \cdot m^2]$ \\\hline
+$I_{zz}$                         & $\ \ \, 11.3$   & $[kg \cdot m^2]$ \\\hline
+$I_{zx}$                         & $\ \ \, 0.5$   & $[kg \cdot m^2]$ \\\hline
+$I_{xz}$                         & $\ \ \, 0.5$   & $[kg \cdot m^2]$ \\\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\subsubsection{Model of aerodynamic moments}
+
+The attitude of the aircraft changes with the torques applied to the airframe. 
+
+\begin{equation}{\label{eqn:torqueTotal}}
+\bm{M}_B
+= \,
+\begin{bmatrix}
+L_{b} \\
+M_{b}\\
+N_{b}\\
+\end{bmatrix}
+\end{equation}
+
+Here $L_b$ is the roll torque, $M_b$ is the pitch torque, and $N_b$ is the yaw torque given in body frame shown in Fig.~\ref{fig:bodyNEDframes}
+
+\textbf{Roll torque}
+
+Roll torque is given as a multiplication of dynamic pressure $\bar{q}$, wing surface area $S$, wingspan $b$,  and dimensionless roll torque $C_L$ as 
+
+\begin{equation}{\label{eqn:rollTorque}}
+L_B = \bar{q} \, S \, b \, C_L
+\end{equation}
+
+Here the dynamic pressure is calculated as 
+
+\begin{equation}{\label{eqn:dynamicPressure}}
+\bar{q}=\frac{\rho V_T^2}{2} 
+\end{equation}
+
+while the air density $\rho$ is given by the international standard atmosphere model for low altitude (<11000m) as 
+
+\begin{equation}{\label{eqn:airDensityStandard}}
+\rho = \frac{p_0 \Big[ 1+\frac{ah}{T_0} \Big]^{5.2561}}{R\,T}
+\end{equation}
+
+where the temperature $T$ is given as
+
+\begin{equation}{\label{eqn:temperature}}
+T=T_0\Big[ 1 + \frac{ah}{T_0} \Big]
+\end{equation}
+
+with $T_0=288.15K$, $a = -6.5 \times 10^{-3} \, K/m$, $R=287.3\;m^2K^{-1}s^{-2}$ and $p_0=1013 \times 10^2 \;Nm^{-2}$.
+
+Next is to calculate the dimensionless roll torque in Equ.~\ref{eqn:rollTorque}.
+For ETH drone, it is given by \cite{stevens2015aircraft,ducard2009fault,mockli2006guidance}
+
+\begin{equation}{\label{eqn:bigCraftC_L}}
+C_L = C_{L_{a1}} \, \delta_{a1} + C_{L_{a2}} \, \delta_{a2} + C_{L_{e1}} \, \delta_{e1} + C_{L_{e2}} \, \delta_{e2} + C_{L_{\tilde{p}}} \, \tilde{p} + C_{L_{\tilde{r}}} \, \tilde{r} +  C_{L_\beta} \, \beta 
+\end{equation}
+
+For MAKO, the dimensionless roll torque is given as
+
+\begin{equation}{\label{eqn:makoC_L}}
+C_L = C_{L_{a}} \, \delta_{a} + C_{L_{\tilde{p}}} \, \tilde{p} + C_{L_{\tilde{r}}} \, \tilde{r} +  C_{L_\beta} \, \beta 
+\end{equation}
+
+where $\beta$ is the sideslip angle representing the angle between airspeed vector $\bm{V_T}$ and the projection of $\bm{V_T}$ onto $x_b-z_b$ plane as shown in Fig.~\ref{fig:windFrame} and given as 
+
+\begin{equation}{\label{eqn:sideslipAngle}}
+\beta = \arcsin{\frac{v_T}{V_T}}
+\end{equation}
+
+$\tilde{p}, \tilde{r}$ are dimensionless angular rates given by
+
+ \begin{equation}{\label{eqn:dimensionlessAngularVelocties}}
+\tilde{b}=\frac{bp}{2V_T} \qquad \tilde{r}=\frac{br}{2V_T}
+\end{equation}
+
+Here, $b$ is the wingspan, $p,q$ are angular rates and $V_T$ is the norm of the airspeed vector such as
+
+\begin{equation}{\label{eqn:airspeedVector}}
+V_T=\sqrt{u_T^2 + v_T^2 + w_T^2}
+\end{equation}
+
+Air flow acting on the aircraft is described by $\bm{V_T}$ can be seen in Fig.~\ref{fig:windFrame}. 
+Airspeed vector in terms of its components in body frame, and in wind frame can be given as
 
 \begin{figure}
 \begin{center}
@@ -1006,6 +1167,43 @@ Frames of interest
 \end{center}
 \end{figure}
 
+\begin{equation}{\label{eqn:airspeedComponents}}
+\bm{V}_{\bm{T}_B}
+=\,
+\begin{bmatrix}
+u_{T} \\
+v_{T}\\
+w_{T}\\
+\end{bmatrix}
+\qquad \,
+\bm{V}_{\bm{T}_W}
+=\,
+\begin{bmatrix}
+V_{T} \\
+0\\
+0\\
+\end{bmatrix}
+\end{equation}
+
+The relationship between $\bm{V}_{\bm{T}_B}$ and $\bm{V}_{\bm{T}_W}$ can be written as \cite{ducard2009fault}
+
+\begin{equation}{\label{eqn:airspeedVectorTransformation}}
+\bm{V}_{\bm{T}_B}=\bm{C_W^B}\bm{V}_{\bm{T}_W}
+\end{equation}
+
+Notice that the inertial velocity of the aircraft $\bm{v}_B = {[u \quad v \quad w]}^T$ is different than airspeed vector $\bm{V}_{\bm{T}_B} = {[u_T \quad v_T \quad w_T ]}^T$. 
+To give the relation between those two, wind disturbance velocity vector $\bm{W}$ is shown in Fig.~\ref{fig:windDisturbance} and relates $\bm{v}$ and $\bm{V}_{\bm{T}} $ as such 
+
+\begin{equation}{\label{eqn:inertialVelocityAirspeedVectorWind}}
+\bm{v}=\bm{V_T} + \bm{W}
+\end{equation}
+
+When those vectors projected on to body frame, the relation becomes
+
+\begin{equation}{\label{eqn:inertialVelocityAirspeedVectorWind}}
+\bm{v}_B=\bm{V}_{\bm{T}_B} + \bm{C_N^B} \bm{W}_B
+\end{equation}
+
 \begin{figure}
 \begin{center}
 %\includegraphics[width=11cm]{figures/windDisturbance}    % The printed column width is 8.4 cm.
@@ -1015,107 +1213,29 @@ Frames of interest
 \end{center}
 \end{figure}
 
-\begin{figure}
-\begin{center}
-\includegraphics[width=11cm]{figures/eulerAnglesAircraft}    % The printed column width is 8.4 cm.
-\caption{Euler angle sequence \cite{ducard2009fault}} 
-\label{fig:eulerAnglesAircraft}
-\end{center}
-\end{figure}
+and showing components
 
-As mentioned before, the sequence of the transformation between frames effects the final transformation matrix so does the attitude kinematics equation. In the course of the study, the sequence is assumed to be yaw - pitch - roll as is given in Fig. \ref{fig:eulerAngSequence} and the corresponding transformation matrix from the navigation frame to body-fixed frame is given in Eq. \ref{eqn:C_NtoB}.
-
-\begin{equation}{\label{eqn:C_NtoB}}
-C_N^B
-= \,
+\begin{equation}{\label{eqn:inertialVelocityAirspeedVectorWindComponents}}
 \begin{bmatrix}
-1 - 2(q_2^2 + q_3^2) & 2(q_1 q_2 + q_0 q_3) & 2(q_1 q_3 - q_0 q_2)  \\[0.2em]
-2(q_1 q_2 - q_0 q_3) & 1 - 2(q_1^2 + q_3^2) & 2(q_2 q_3 + q_0 q_1)\\[0.2em]
-2(q_1 q_3 + q_0 q_2) & 2(q_2 q_3 - q_0 q_1) & 1 - 2(q_1^2 + q_2^2) \\[0.2em]
+u \\
+v\\
+w\\
+\end{bmatrix}
+=\,
+\begin{bmatrix}
+u_{T} \\
+v_{T}\\
+w_{T}\\
+\end{bmatrix}
++\,
+\bm{C_N^B}
+\begin{bmatrix}
+W_n \\
+W_e\\
+W_d\\
 \end{bmatrix}
 \end{equation}
 
-And finally the kinematics equation of motion for the aircraft can be written as in Eq. \ref{eqn:kinematicArrangeYPR}
-\begin{equation} \label{eqn:kinematicArrangeYPR}
-\begin{bmatrix}
-\dot{q}_0\\[0.2em]
-\dot{q}_1\\[0.2em]
-\dot{q}_2\\[0.2em]
-\dot{q}_3\\[0.2em]
-\end{bmatrix}
- =\,
-\frac{1}{2}
-\,
-\begin{bmatrix}
--q_1 & -q_2 & -q_3 \\
-q_0 & -q_3 & q_2 \\
-q_3 & q_0 & -q_1 \\
--q_2 & q_1 & q_0\\
-\end{bmatrix}
-\,
-\begin{bmatrix}
-p\\[0.2em]
-q\\[0.2em]
-r\\[0.2em]
-\end{bmatrix} 
-\end{equation}
-
-\begin{landscape}
-\begin{figure}
-\begin{center}
-%\includegraphics[width=11cm]{figures/eulerAngSequence}    % The printed column width is 8.4 cm.
-\includegraphics[width=23cm]{figures/ZagiEulerAngleSequence}
-\caption{Euler angle sequence \cite{ducard2009fault}} 
-\label{fig:eulerAngSequence}
-\end{center}
-\end{figure}
-\end{landscape}
-
-\subsection{Attitude dynamics of aircraft}
-
-AVL is an open source program developed at MIT and uses vortex-lattice method for the aerodynamic and stability calculations.
-The output of the program is linearized at a selected condition, therefore all the coefficients are calculated around the equilibrium point at $14m/s$ cruise flight condition.
-The center of gravity is located at $X_{CG}= 0.295\,m$, which corresponds to a $8\,\%$ of positive static margin that has been flight tested. %FIXME we have to check if we used modified AVL with viscous add-on or not...
-
-
-\subsubsection{Model of aerodynamic moments}
-
-The attitude of the aircraft changes with the torques applied to the airframe. 
-
-\begin{equation}{\label{eqn:torqueTotal}}
-\bm{M}_B
-= \,
-\begin{bmatrix}
-M_{Bx} \\
-M_{By}\\
-M_{Bz}\\
-\end{bmatrix}
-= \,
-\begin{bmatrix}
-L_{B} \\
-M_{B}\\
-N_{B}\\
-\end{bmatrix}
-\end{equation}
-
-The torques can be given under three subclasses; roll torque $L_B$, pitch torque $M_B$, and yaw torque $N_B$.
-
-
-
-
-\textbf{Roll torque}
-
-\begin{equation}{\label{eqn:rollTorque}}
-L_B = \bar{q} \, S \, b \, C_L
-\end{equation}
-
-\begin{equation}{\label{eqn:bigCraftC_L}}
-C_L = C_{L_{a1}} \, \delta_{a1} + C_{L_{a2}} \, \delta_{a2} + C_{L_{e1}} \, \delta_{e1} + C_{L_{e2}} \, \delta_{e2} + C_{L_{\tilde{p}}} \, \tilde{p} + C_{L_{\tilde{r}}} \, \tilde{r} +  C_{L_\beta} \, \beta 
-\end{equation}
-
-\begin{equation}{\label{eqn:makoC_L}}
-C_L = C_{L_{a}} \, \delta_{a} + C_{L_{\tilde{p}}} \, \tilde{p} + C_{L_{\tilde{r}}} \, \tilde{r} +  C_{L_\beta} \, \beta 
-\end{equation}
 
 \textbf{Pitch torque}
 
@@ -1198,6 +1318,79 @@ $C_{N_\beta} $                      & $\ \ \, 2.28 \times 10^{-2}$	   & yaw deri
 \end{tabular}
 \end{center}
 \end{table}
+
+
+
+
+
+
+Since the general equations of attitude motion of a rigid body, by introducing the frames of interest and angles standardized for aircraft attitude motion can be investigated next. 
+
+
+
+
+
+
+%\begin{figure}
+%\begin{center}
+%\includegraphics[width=11cm]{figures/eulerAnglesAircraft}    % The printed column width is 8.4 cm.
+%\caption{Euler angle sequence \cite{ducard2009fault}} 
+%\label{fig:eulerAnglesAircraft}
+%\end{center}
+%\end{figure}
+
+As mentioned before, the sequence of the transformation between frames effects the final transformation matrix so does the attitude kinematics equation. In the course of the study, the sequence is assumed to be yaw - pitch - roll as is given in Fig. \ref{fig:eulerAngSequence} and the corresponding transformation matrix from the navigation frame to body-fixed frame is given in Eq. \ref{eqn:C_NtoB}.
+
+\begin{equation}{\label{eqn:C_NtoB}}
+C_N^B
+= \,
+\begin{bmatrix}
+1 - 2(q_2^2 + q_3^2) & 2(q_1 q_2 + q_0 q_3) & 2(q_1 q_3 - q_0 q_2)  \\[0.2em]
+2(q_1 q_2 - q_0 q_3) & 1 - 2(q_1^2 + q_3^2) & 2(q_2 q_3 + q_0 q_1)\\[0.2em]
+2(q_1 q_3 + q_0 q_2) & 2(q_2 q_3 - q_0 q_1) & 1 - 2(q_1^2 + q_2^2) \\[0.2em]
+\end{bmatrix}
+\end{equation}
+
+And finally the kinematics equation of motion for the aircraft can be written as in Eq. \ref{eqn:kinematicArrangeYPR}
+\begin{equation} \label{eqn:kinematicArrangeYPR}
+\begin{bmatrix}
+\dot{q}_0\\[0.2em]
+\dot{q}_1\\[0.2em]
+\dot{q}_2\\[0.2em]
+\dot{q}_3\\[0.2em]
+\end{bmatrix}
+ =\,
+\frac{1}{2}
+\,
+\begin{bmatrix}
+-q_1 & -q_2 & -q_3 \\
+q_0 & -q_3 & q_2 \\
+q_3 & q_0 & -q_1 \\
+-q_2 & q_1 & q_0\\
+\end{bmatrix}
+\,
+\begin{bmatrix}
+p\\[0.2em]
+q\\[0.2em]
+r\\[0.2em]
+\end{bmatrix} 
+\end{equation}
+
+\begin{landscape}
+\begin{figure}
+\begin{center}
+%\includegraphics[width=11cm]{figures/eulerAngSequence}    % The printed column width is 8.4 cm.
+\includegraphics[width=23cm]{figures/ZagiEulerAngleSequence}
+\caption{Euler angle sequence \cite{ducard2009fault}} 
+\label{fig:eulerAngSequence}
+\end{center}
+\end{figure}
+\end{landscape}
+
+
+AVL is an open source program developed at MIT and uses vortex-lattice method for the aerodynamic and stability calculations.
+The output of the program is linearized at a selected condition, therefore all the coefficients are calculated around the equilibrium point at $14m/s$ cruise flight condition.
+The center of gravity is located at $X_{CG}= 0.295\,m$, which corresponds to a $8\,\%$ of positive static margin that has been flight tested. %FIXME we have to check if we used modified AVL with viscous add-on or not...
 
 
 %%%%%%%%%%%%%%%%%% FORCE CALCULATIONS
