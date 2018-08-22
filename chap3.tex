@@ -268,6 +268,27 @@ If the set of rotations is selected in a different way, such as
 
 then the direction cosine matrix would differ from the previous one.
 
+For aircrafts, the Euler angles are called pitch, yaw and roll and can be seen in Fig.~\ref{fig:eulerAngSequence}.
+
+\begin{landscape}
+\begin{figure}
+\begin{center}
+%\includegraphics[width=11cm]{figures/eulerAngSequence}    % The printed column width is 8.4 cm.
+\includegraphics[width=23cm]{figures/ZagiEulerAngleSequence}
+\caption{Euler angle sequence \cite{ducard2009fault}} 
+\label{fig:eulerAngSequence}
+\end{center}
+\end{figure}
+\end{landscape}
+
+%\begin{figure}
+%\begin{center}
+%\includegraphics[width=11cm]{figures/eulerAnglesAircraft}    % The printed column width is 8.4 cm.
+%\caption{Euler angle sequence \cite{ducard2009fault}} 
+%\label{fig:eulerAnglesAircraft}
+%\end{center}
+%\end{figure}
+
 \subsubsection{Quaternions}
 
 The idea behind this representation is the Euler's \emph{eigen-axis rotation} theorem. 
@@ -717,6 +738,33 @@ x_3 & 0 & -x_1 \\
  \end{bmatrix}
 \end{equation}
 
+The sequence of the transformation between frames effects the final transformation matrix so does the attitude kinematics equation. In the course of the study, the sequence is assumed to be yaw - pitch - roll and the corresponding kinematic equation is given as in Equ.~\ref{eqn:kinematicArrangeYPR}.
+
+And finally the kinematics equation of motion for the aircraft can be written as in Eq. \ref{eqn:kinematicArrangeYPR}
+\begin{equation} \label{eqn:kinematicArrangeYPR}
+\begin{bmatrix}
+\dot{q}_0\\[0.2em]
+\dot{q}_1\\[0.2em]
+\dot{q}_2\\[0.2em]
+\dot{q}_3\\[0.2em]
+\end{bmatrix}
+ =\,
+\frac{1}{2}
+\,
+\begin{bmatrix}
+-q_1 & -q_2 & -q_3 \\
+q_0 & -q_3 & q_2 \\
+q_3 & q_0 & -q_1 \\
+-q_2 & q_1 & q_0\\
+\end{bmatrix}
+\,
+\begin{bmatrix}
+p\\[0.2em]
+q\\[0.2em]
+r\\[0.2em]
+\end{bmatrix} 
+\end{equation}
+
 \subsection{Attitude dynamics}
 
 The equation describing the rotational motion of a rigid body moving relative to an inertial frame can written as \cite{wie2008space}
@@ -915,6 +963,20 @@ w\\[0.2em]
 \end{bmatrix}
 \end{equation}
 
+As mentioned before, the sequence of the transformation between frames effects the final transformation matrix so does the attitude kinematics equation. 
+In the course of the study, the sequence is assumed to be yaw - pitch - roll and the corresponding transformation matrix from the navigation frame to body-fixed frame is given in Eq. ~\ref{eqn:C_NtoB}.
+
+\begin{equation}{\label{eqn:C_NtoB}}
+C_N^B
+= \,
+\begin{bmatrix}
+1 - 2(q_2^2 + q_3^2) & 2(q_1 q_2 + q_0 q_3) & 2(q_1 q_3 - q_0 q_2)  \\[0.2em]
+2(q_1 q_2 - q_0 q_3) & 1 - 2(q_1^2 + q_3^2) & 2(q_2 q_3 + q_0 q_1)\\[0.2em]
+2(q_1 q_3 + q_0 q_2) & 2(q_2 q_3 - q_0 q_1) & 1 - 2(q_1^2 + q_2^2) \\[0.2em]
+\end{bmatrix}
+\end{equation}
+
+
 \subsection{Translational dynamics}
 
 The aircraft is assumed to be a point mass, all its mass collected at its center of gravity, while it translates from one point to the other.
@@ -1080,7 +1142,7 @@ $I_{xz}$                         & $\ \ \, 0.5$   & $[kg \cdot m^2]$ \\\hline
 \end{center}
 \end{table}
 
-\subsubsection{Model of aerodynamic moments}
+\subsection{Modeling of aerodynamic moments}
 
 The attitude of the aircraft changes with the torques applied to the airframe. 
 
@@ -1094,9 +1156,15 @@ N_{b}\\
 \end{bmatrix}
 \end{equation}
 
-Here $L_b$ is the roll torque, $M_b$ is the pitch torque, and $N_b$ is the yaw torque given in body frame shown in Fig.~\ref{fig:bodyNEDframes}
+Here $L_b$ is the roll torque, $M_b$ is the pitch torque, and $N_b$ is the yaw torque given in body frame shown in Fig.~\ref{fig:bodyNEDframes}.
 
-\textbf{Roll torque}
+The stability derivatives required to calculate the moments are given under Table~\ref{arm:MAKOstabilityDeriv} for MAKO and under Table~\ref{arm:ethcraftStabilityDeriv}. 
+Those values for ETH drone are taken from \cite{ducard2009fault} while for MAKO they are calculated via AVL. 
+AVL is an open source program developed at MIT and uses vortex-lattice method for the aerodynamic and stability calculations.
+The output of the program is linearized at a selected condition, therefore all the coefficients are calculated around the equilibrium point at $14m/s$ cruise flight condition.
+The center of gravity is located at $X_{CG}= 0.295\,m$, which corresponds to a $8\,\%$ of positive static margin that has been flight tested. %FIXME we have to check if we used modified AVL with viscous add-on or not...
+
+\subsubsection{Roll torque}
 
 Roll torque is given as a multiplication of dynamic pressure $\bar{q}$, wing surface area $S$, wingspan $b$,  and dimensionless roll torque $C_L$ as 
 
@@ -1127,6 +1195,53 @@ with $T_0=288.15K$, $a = -6.5 \times 10^{-3} \, K/m$, $R=287.3\;m^2K^{-1}s^{-2}$
 Next is to calculate the dimensionless roll torque in Equ.~\ref{eqn:rollTorque}.
 For ETH drone, it is given by \cite{stevens2015aircraft,ducard2009fault,mockli2006guidance}
 
+\begin{table}
+\label{arm:momentsETHcraft}
+\caption{Stability derivatives for ETH UAV \cite{ducard2009fault}}
+\label{arm:ethcraftStabilityDeriv}
+\begin{center}
+\begin{tabular}{ ||p{3cm}|p{3cm}|p{3cm}||}\hline
+\textbf{Parameter} & \textbf{Value} & \textbf{Definition} \\\hline
+$C_{L_{a1}} = - C_{L_{a2}}$ & $-3.395 \times 10^{-2}$	   & roll derivative \\\hline
+$C_{L_{e1}} = - C_{L_{e2}}$ & $-0.485 \times 10^{-2}$         & roll derivative \\\hline
+$C_{L_{\tilde{p}}}$                 & $-1.92 \times 10^{-1}$	   & roll derivative \\\hline
+$C_{L_{\tilde{r}}} $                 & $\ \ \, 3.61 \times 10^{-2}$     & roll derivative \\\hline
+$C_{L_\beta}$                        & $-1.30 \times 10^{-2}$	   & roll derivative \\\hline
+$ C_{M_{1}}$                          & $\ \ \, 2.08 \times 10^{-2}$	   & pitch derivative \\\hline
+$C_{M_{a1}} = C_{M_{a2}} $ & $\ \ \, 0.389 \times 10^{-1}$  & pitch derivative \\\hline
+$C_{M_{e1}} = C_{M_{e2}} $ & $\ \ \, 2.725 \times 10^{-1}$  &  pitch derivative \\\hline
+$C_{M_{\tilde{q}}} $               & $-9.83$	                            & pitch derivative \\\hline
+$C_{M_\alpha} $                    & $-9.03 \times 10^{-2}$ 	   & pitch derivative \\\hline
+$C_{N_{\delta r}}$                  & $\ \ \, 5.34 \times 10^{-2}$ 	   & yaw derivative \\\hline
+$ C_{N_{\tilde{r}}}$                 & $-2.14 \times 10^{-1}$	   & yaw derivative \\\hline
+$C_{N_\beta} $                       & $\ \ \, 8.67 \times 10^{-2}$	     & yaw derivative \\\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}
+\label{arm:momentsMAKO}
+\caption{Stability derivatives for MAKO extracted from AVL program at $14 m/s$ equilibrium cruise speed \cite{bronz2016aerodynamic}}
+\label{arm:MAKOstabilityDeriv}
+\begin{center}
+\begin{tabular}{ ||p{3cm}|p{3cm}|p{3cm}||}\hline
+\textbf{Parameter} & \textbf{Value} & \textbf{Definition} \\\hline
+$C_{L_a}$                             & $-0.1956 \times 10^{-2}$	   & roll derivative \\\hline
+$C_{L_{\tilde{p}}}$                 & $-4.095 \times 10^{-1}$	   & roll derivative \\\hline
+$C_{L_{\tilde{r}}} $                 & $\ \ \, 6.203 \times 10^{-2}$     & roll derivative \\\hline
+$C_{L_\beta}$                        & $\ \ \, 3.319 \times 10^{-2}$	   & roll derivative \\\hline
+$C_{M_0}$ 			     & $\ \ \, 0$  &  pitch derivative \\\hline
+$C_{M_e}$ 			     & $-0.076 \times 10^{-1}$  &  pitch derivative \\\hline
+$C_{M_{\tilde{q}}} $               & $-1.6834$	                            & pitch derivative \\\hline
+$C_{M_\alpha} $                    & $-32.34 \times 10^{-2}$ 	   & pitch derivative \\\hline
+$C_{N_a}$                             & $-0.0126 \times 10^{-2}$	   & yaw derivative \\\hline
+$C_{N_{\tilde{p}}}$                 & $-4.139 \times 10^{-2}$ 	   & yaw derivative \\\hline
+$C_{N_{\tilde{r}}}$                 & $-0.1002 \times 10^{-1}$	   & yaw derivative \\\hline
+$C_{N_\beta} $                      & $\ \ \, 2.28 \times 10^{-2}$	   & yaw derivative \\\hline
+\end{tabular}
+\end{center}
+\end{table}
+
 \begin{equation}{\label{eqn:bigCraftC_L}}
 C_L = C_{L_{a1}} \, \delta_{a1} + C_{L_{a2}} \, \delta_{a2} + C_{L_{e1}} \, \delta_{e1} + C_{L_{e2}} \, \delta_{e2} + C_{L_{\tilde{p}}} \, \tilde{p} + C_{L_{\tilde{r}}} \, \tilde{r} +  C_{L_\beta} \, \beta 
 \end{equation}
@@ -1137,7 +1252,7 @@ For MAKO, the dimensionless roll torque is given as
 C_L = C_{L_{a}} \, \delta_{a} + C_{L_{\tilde{p}}} \, \tilde{p} + C_{L_{\tilde{r}}} \, \tilde{r} +  C_{L_\beta} \, \beta 
 \end{equation}
 
-where $\beta$ is the sideslip angle representing the angle between airspeed vector $\bm{V_T}$ and the projection of $\bm{V_T}$ onto $x_b-z_b$ plane as shown in Fig.~\ref{fig:windFrame} and given as 
+where $\delta_{a1},\,\delta_{a2}$ are the aileron deflections, $\delta_{e1},\, \delta_{e2}$ are the elevator deflections, $\delta_a$ is the aileron deflection for MAKO, $\beta$ is the sideslip angle representing the angle between airspeed vector $\bm{V_T}$ and the projection of $\bm{V_T}$ onto $x_b-z_b$ plane as shown in Fig.~\ref{fig:windFrame} and given as 
 
 \begin{equation}{\label{eqn:sideslipAngle}}
 \beta = \arcsin{\frac{v_T}{V_T}}
@@ -1146,7 +1261,7 @@ where $\beta$ is the sideslip angle representing the angle between airspeed vect
 $\tilde{p}, \tilde{r}$ are dimensionless angular rates given by
 
  \begin{equation}{\label{eqn:dimensionlessAngularVelocties}}
-\tilde{b}=\frac{bp}{2V_T} \qquad \tilde{r}=\frac{br}{2V_T}
+\tilde{p}=\frac{bp}{2V_T} \qquad \tilde{r}=\frac{br}{2V_T}
 \end{equation}
 
 Here, $b$ is the wingspan, $p,q$ are angular rates and $V_T$ is the norm of the airspeed vector such as
@@ -1237,176 +1352,70 @@ W_d\\
 \end{equation}
 
 
-\textbf{Pitch torque}
+\subsubsection{Pitch torque}
+
+Pitch torque is given as a multiplication of dynamic pressure $\bar{q}$, wing surface area $S$, mean aero chord $\bar{c}$,  and dimensionless pitch torque $C_M$ as 
 
 \begin{equation}{\label{eqn:pitchTorque}}
 M_B = \bar{q} \, S \, \bar{c} \, C_M
 \end{equation}
 
+where the dimensionless pitch torque is given as for ETH drone as
+
 \begin{equation}{\label{eqn:bigCraftC_M}}
 C_M = C_{M_{1}} + C_{M_{a1}} \, \delta_{a1} + C_{M_{a2}} \, \delta_{a2} + C_{M_{e1}} \, \delta_{e1} + C_{M_{e2}} \, \delta_{e2} + C_{M_{\tilde{q}}} \, \tilde{q} +  C_{M_\alpha} \, \alpha 
 \end{equation}
+
+and for MAKO
 
 \begin{equation}{\label{eqn:makoC_M}}
 C_M =  C_{M_{e}} \, \delta_{e} + C_{M_{\tilde{q}}} \, \tilde{q} +  C_{M_\alpha} \, \alpha 
 \end{equation}
 
-\textbf{Yaw torque}
+where the variables not introduced up to now are the dimensionless roll rate $\tilde{q}$, elevator deflection $\delta_{e}$ and angle of attack $\alpha$. Angle of attack $\alpha$ is defined as the angle between the projection of the airspeed vector $\bm{V_T}$ onto the $x_b-z_b$ plane and $x_b$ axis as can be seen in Fig.~\ref{fig:windFrame}, and calculated as
+
+\begin{equation}{\label{eqn:angleOfAttack}}
+\alpha = \arctan{\Big( \frac{w_T}{u_T} \Big)}
+\end{equation}
+
+\subsubsection{Yaw torque}
+
+Yaw torque can be given as
 
 \begin{equation}{\label{eqn:yawTorque}}
 N_B = \bar{q} \, S \, b \, C_N \\
 \end{equation}
 
+with a dimensionless yaw torque for the ETH drone
 
 \begin{equation}{\label{eqn:bigCraftC_N}}
 C_N= C_{N_{\delta r}} \, \delta_{r} + C_{N_{\tilde{r}}} \, \tilde{r} +  C_{N_\beta} \, \beta 
 \end{equation}
 
+and for the MAKO
+
 \begin{equation}{\label{eqn:makoC_N}}
 C_N= C_{N_{a}} \, \delta_{a} + C_{N_{\tilde{p}}} \, \tilde{p} + C_{N_{\tilde{r}}} \, \tilde{r} +  C_{N_\beta} \, \beta 
 \end{equation}
 
-\begin{equation}{\label{eqn:dynamicPressure}}
-\bar{q} = \frac{\rho V_T^2}{2} 
-\end{equation}
-
-where $\bar{q}$ is the dynamic pressure given in  Eq. \ref{eqn:dynamicPressure}, $V_T$ is the total airspeed of the aircraft, $\rho$ is the air density, $S$ is the wing total surface, $b$ is the wing span, and $\bar{c}$ mean aerodynamic wing chord. 
-
-\begin{table}
-\label{arm:momentsETHcraft}
-\caption{Stability derivatives for ETH UAV \cite{ducard2009fault}}
-\label{arm:ethcraft}
-\begin{center}
-\begin{tabular}{ ||p{3cm}|p{3cm}|p{3cm}||}\hline
-\textbf{Parameter} & \textbf{Value} & \textbf{Definition} \\\hline
-$C_{L_{a1}} = - C_{L_{a2}}$ & $-3.395 \times 10^{-2}$	   & roll derivative \\\hline
-$C_{L_{e1}} = - C_{L_{e2}}$ & $-0.485 \times 10^{-2}$         & roll derivative \\\hline
-$C_{L_{\tilde{p}}}$                 & $-1.92 \times 10^{-1}$	   & roll derivative \\\hline
-$C_{L_{\tilde{r}}} $                 & $\ \ \, 3.61 \times 10^{-2}$     & roll derivative \\\hline
-$C_{L_\beta}$                        & $-1.30 \times 10^{-2}$	   & roll derivative \\\hline
-$ C_{M_{1}}$                          & $\ \ \, 2.08 \times 10^{-2}$	   & pitch derivative \\\hline
-$C_{M_{a1}} = C_{M_{a2}} $ & $\ \ \, 0.389 \times 10^{-1}$  & pitch derivative \\\hline
-$C_{M_{e1}} = C_{M_{e2}} $ & $\ \ \, 2.725 \times 10^{-1}$  &  pitch derivative \\\hline
-$C_{M_{\tilde{q}}} $               & $-9.83$	                            & pitch derivative \\\hline
-$C_{M_\alpha} $                    & $-9.03 \times 10^{-2}$ 	   & pitch derivative \\\hline
-$C_{N_{\delta r}}$                  & $\ \ \, 5.34 \times 10^{-2}$ 	   & yaw derivative \\\hline
-$ C_{N_{\tilde{r}}}$                 & $-2.14 \times 10^{-1}$	   & yaw derivative \\\hline
-$C_{N_\beta} $                       & $\ \ \, 8.67 \times 10^{-2}$	     & yaw derivative \\\hline
-\end{tabular}
-\end{center}
-\end{table}
-
-\begin{table}
-\label{arm:momentsMAKO}
-\caption{Stability derivatives for MAKO extracted from AVL program at $14 m/s$ equilibrium cruise speed \cite{bronz2016aerodynamic}}
-\label{arm:MAKO}
-\begin{center}
-\begin{tabular}{ ||p{3cm}|p{3cm}|p{3cm}||}\hline
-\textbf{Parameter} & \textbf{Value} & \textbf{Definition} \\\hline
-$C_{L_a}$                             & $-0.1956 \times 10^{-2}$	   & roll derivative \\\hline
-$C_{L_{\tilde{p}}}$                 & $-4.095 \times 10^{-1}$	   & roll derivative \\\hline
-$C_{L_{\tilde{r}}} $                 & $\ \ \, 6.203 \times 10^{-2}$     & roll derivative \\\hline
-$C_{L_\beta}$                        & $\ \ \, 3.319 \times 10^{-2}$	   & roll derivative \\\hline
-$C_{M_0}$ 			     & $\ \ \, 0$  &  pitch derivative \\\hline
-$C_{M_e}$ 			     & $-0.076 \times 10^{-1}$  &  pitch derivative \\\hline
-$C_{M_{\tilde{q}}} $               & $-1.6834$	                            & pitch derivative \\\hline
-$C_{M_\alpha} $                    & $-32.34 \times 10^{-2}$ 	   & pitch derivative \\\hline
-$C_{N_a}$                             & $-0.0126 \times 10^{-2}$	   & yaw derivative \\\hline
-$C_{N_{\tilde{p}}}$                 & $-4.139 \times 10^{-2}$ 	   & yaw derivative \\\hline
-$C_{N_{\tilde{r}}}$                 & $-0.1002 \times 10^{-1}$	   & yaw derivative \\\hline
-$C_{N_\beta} $                      & $\ \ \, 2.28 \times 10^{-2}$	   & yaw derivative \\\hline
-\end{tabular}
-\end{center}
-\end{table}
+where $\bar{q}$ is the dynamic pressure, $V_T$ is the total airspeed of the aircraft, $\rho$ is the air density, $S$ is the wing total surface, $b$ is the wing span, and $\bar{c}$ mean aerodynamic wing chord. 
 
 
+\subsection{Modeling of aerodynamic forces}
 
-
-
-
-Since the general equations of attitude motion of a rigid body, by introducing the frames of interest and angles standardized for aircraft attitude motion can be investigated next. 
-
-
-
-
-
-
-%\begin{figure}
-%\begin{center}
-%\includegraphics[width=11cm]{figures/eulerAnglesAircraft}    % The printed column width is 8.4 cm.
-%\caption{Euler angle sequence \cite{ducard2009fault}} 
-%\label{fig:eulerAnglesAircraft}
-%\end{center}
-%\end{figure}
-
-As mentioned before, the sequence of the transformation between frames effects the final transformation matrix so does the attitude kinematics equation. In the course of the study, the sequence is assumed to be yaw - pitch - roll as is given in Fig. \ref{fig:eulerAngSequence} and the corresponding transformation matrix from the navigation frame to body-fixed frame is given in Eq. \ref{eqn:C_NtoB}.
-
-\begin{equation}{\label{eqn:C_NtoB}}
-C_N^B
-= \,
-\begin{bmatrix}
-1 - 2(q_2^2 + q_3^2) & 2(q_1 q_2 + q_0 q_3) & 2(q_1 q_3 - q_0 q_2)  \\[0.2em]
-2(q_1 q_2 - q_0 q_3) & 1 - 2(q_1^2 + q_3^2) & 2(q_2 q_3 + q_0 q_1)\\[0.2em]
-2(q_1 q_3 + q_0 q_2) & 2(q_2 q_3 - q_0 q_1) & 1 - 2(q_1^2 + q_2^2) \\[0.2em]
-\end{bmatrix}
-\end{equation}
-
-And finally the kinematics equation of motion for the aircraft can be written as in Eq. \ref{eqn:kinematicArrangeYPR}
-\begin{equation} \label{eqn:kinematicArrangeYPR}
-\begin{bmatrix}
-\dot{q}_0\\[0.2em]
-\dot{q}_1\\[0.2em]
-\dot{q}_2\\[0.2em]
-\dot{q}_3\\[0.2em]
-\end{bmatrix}
- =\,
-\frac{1}{2}
-\,
-\begin{bmatrix}
--q_1 & -q_2 & -q_3 \\
-q_0 & -q_3 & q_2 \\
-q_3 & q_0 & -q_1 \\
--q_2 & q_1 & q_0\\
-\end{bmatrix}
-\,
-\begin{bmatrix}
-p\\[0.2em]
-q\\[0.2em]
-r\\[0.2em]
-\end{bmatrix} 
-\end{equation}
-
-\begin{landscape}
-\begin{figure}
-\begin{center}
-%\includegraphics[width=11cm]{figures/eulerAngSequence}    % The printed column width is 8.4 cm.
-\includegraphics[width=23cm]{figures/ZagiEulerAngleSequence}
-\caption{Euler angle sequence \cite{ducard2009fault}} 
-\label{fig:eulerAngSequence}
-\end{center}
-\end{figure}
-\end{landscape}
-
-
-AVL is an open source program developed at MIT and uses vortex-lattice method for the aerodynamic and stability calculations.
-The output of the program is linearized at a selected condition, therefore all the coefficients are calculated around the equilibrium point at $14m/s$ cruise flight condition.
-The center of gravity is located at $X_{CG}= 0.295\,m$, which corresponds to a $8\,\%$ of positive static margin that has been flight tested. %FIXME we have to check if we used modified AVL with viscous add-on or not...
-
-
-%%%%%%%%%%%%%%%%%% FORCE CALCULATIONS
-
+The position of the aircraft changes with the forces applied to the airframe. The calculation of aerodynamic forces, lift force, drag force, lateral force and thrust force are given below.
 
 %%%% LIFT FORCE %%%%
 
-\textbf{Lift force}
+\subsubsection{Lift force}
+
+The lift force in the wind frame is given as 
 
 \begin{equation}{\label{eqn:liftForce}}
 Z^w = \bar{q} \, S \,  C_Z(\alpha)
 \end{equation}
 
-\begin{equation}{\label{eqn:dynamicPressure}}
-\bar{q} = \frac{\rho V_T^2}{2} 
-\end{equation}
+where the dimensionless lift coefficient calculated as below.
 
 \begin{equation}{\label{eqn:liftCoef}}
 C_Z(\alpha) = C_{Z_0} + C_{Z_{\alpha}} \alpha 
@@ -1415,15 +1424,24 @@ C_Z(\alpha) = C_{Z_0} + C_{Z_{\alpha}} \alpha
 
 %%%% DRAG FORCE %%%%
 
-\textbf{Drag force}
+\subsubsection{Drag force}
+
+Drag force in the wind frame is calculated as a multiplication of the dynamic pressure, wing surface area, and the drag coefficient as given in Equ.~\ref{eqn:dragForceETHcraft}
 
 \begin{equation}{\label{eqn:dragForceETHcraft}}
 X^w = \bar{q} \, S \,  C_X(\alpha, \beta)
 \end{equation}
 
+where the dimensionless drag coefficient is given as
+
+
+% I AM HEREEEE
+
 \begin{equation}{\label{eqn:dragCoeffETHcraft}}
 C_X(\alpha, \beta) = C_{X_1} + C_{X_{\alpha}} \alpha + C_{X_{\alpha 2}} {\alpha}^2 + C_{X_{\beta 2}} {\beta}^2 
 \end{equation}
+
+And for MAKO \cite{bronz2016aerodynamic}
 
 \begin{equation}{\label{eqn:dragForceMAKO}}
 X^w = \bar{q} \, S \, C_{Z}(\alpha, \beta)
@@ -1435,7 +1453,7 @@ C_X(\alpha) = C_{X_1} + C_{X_k} \, C_Z^2 = C_{X_1} + C_{X_k} \, (C_{Z_1} + C_{Z_
 
 %%%% LATERAL FORCE %%%%
 
-\textbf{Lateral force}
+\subsubsection{Lateral force}
 
 \begin{equation}{\label{eqn:lateralForceETHcraft}}
 Y^w = \bar{q} \, S \,  C_Y(\beta)
@@ -1520,6 +1538,9 @@ $D$                                 & $\ \ \, 0.79 \, m$                        
 \end{center}
 \end{table}
 
+%%%% TAken from 
+\cite{bronz2017flight}
+
 \begin{equation}{\label{eqn:thrustCoefMAKO}}
 C_{F_T} = C_{F_{T1}} + C_{F_{T2}} J^\prime + C_{F_{T_{rpm}}} \frac{n}{60} 
 \end{equation}
@@ -1543,7 +1564,7 @@ $D$                              & $\ \ \, 0.228 \, m$                          
 \end{center}
 \end{table}
 
-\section{Shortcut to modeling}
+\subsection{Shortcut to modeling}
 
 Nonlinear aircraft flight dynamics for translational and attitude motion can be given as a system of first order differential equations 
 
@@ -1578,7 +1599,7 @@ N& = \bar{q} \, S \, b \, C_N \\
 \end{split}
 \end{align}
 
-\section{Verification with Matlab Simulink 6DOF block}
+\subsection{Verification with Matlab Simulink 6DOF block}
 
 To validate the written translational and attitude motion dynamics and kinematics, MATLAB Simulink \textit{6DOF} block has been utilized.
 This block accepts inputs as the force and moment and outputs the states of aircraft motion Fig.~\ref{figure:validationSimulink}.
@@ -1595,7 +1616,7 @@ The difference found to be negligible indicating the validity of the model.
 \end{figure*}
 
 
-\section{Sensor Models}
+\subsection{Sensor Models}
 
 The measurements are simulated using the statistics of the hardware in the house.
 The sensor suit simulated is the InvenSense MPU-9250 Nine-axis (Gyro + Accelerometer + Compass) MEMS MotionTracking Device. 
@@ -1627,7 +1648,7 @@ ${\bm{z}_{gyro}}_z$           & $-1.7$           & $\ \ \, 0.2214$ \\\hline
 Here $\bm{\beta}$ is the bias, and $\bm{\eta}$ is the zero mean Gaussian process with $\bm{\sigma}^2$ variance and given in Table ~\ref{arm:sensorSpecs}.
 
 
-\section{Fault Models}
+\subsection{Fault Models}
 
 \begin{equation}
 \bm{u}\left(t\right)= \begin{bmatrix} {\delta}_{a}\ {\delta}_{e}\ n \end{bmatrix}^{\rm T}
