@@ -13,7 +13,7 @@ After that, classification for control surface stuck and loss of effectiveness f
 
 \section{Fault detection from simulated flight data}
 
-In this section, model of an aircraft is simulated in Matlab using the equations of motion given Equ. (Summarized Equations of motion reference). 
+In this section, model of an aircraft is simulated in Matlab using the equations of motion given Equ.~\ref{eqn:compactEquOfMotion}. 
 This drone model, will not be used for the design of FDD algorithms, but to generate data that will be used by the FDD algorithms. 
 After the equations of motion of drone have been solved numerically, accelerometer and gyro measurements have been simulated based on the statistics of the sensors onboard. 
 This part of the study uses the model of a MAKO drone to simulate the measurements while the real flights that will be explained in the forthcoming section uses a ZAGI drone.
@@ -46,9 +46,9 @@ Most of the FDD algorithms are implemented to open-loop systems, ignoring the pr
 Here, a step by step approach is followed. In this first section the effect of controller is ignored while in the next section, in which real flight data is utilized, diagnosis is achieved aside a functioning controller.
 
 The code for simulations in this section can be reached in \emph{Github}\footnote{https://github.com/benelgiz/curedRone}. 
-First, the measurements are simulated for faulty and and nominal flight conditions. 
-As an example to an input in a loss of efficiency faulty condition could be an actual aileron command of $\delta_{a}^a=1^\circ$ corresponding to a desired $\delta_{a}^d=4^\circ$. 
-The measurements are labeled correspondingly. 
+First, the measurements are simulated for faulty and nominal flight conditions. 
+An example control input in case of loss of efficiency condition could be an actual aileron command of $\delta_{a}^a=1^\circ$ corresponding to a desired $\delta_{a}^d=4^\circ$. In the simulation, the fault is introduced after 120 s. Actual aileron command and corresponding simulated accelerometer $x-axis$ readings can be seen in Fig.~\ref{fig:faultSimulation}. 
+The measurements are labeled, and an example plot showing simulated measurements in two-dimensional feature space, $a_x$ - $a_y$, is given as in Fig.~\ref{fig:feat1vsfeat2}. 
 
 \begin{figure}
 \begin{center}
@@ -68,7 +68,7 @@ The measurements are labeled correspondingly.
 
 It is always important to visualize the features to have a grasp of data structure before applying machine learning algorithms. 
 For that reason, available observations forms the 6-dimensional pattern space,  $\vec{\bm{y}} = \begin{bmatrix} {a_x} & {a_y} & {a_z} & {\omega_x} & {\omega_y} & {\omega_z}  \end{bmatrix}^T$ can be visualized in pairs such as Fig.~\ref{fig:feat1vsfeat2}. 
-There are further methods to visualize multidimensional data such as \emph{Tours},\cite{asimov1985grand,cook1997manual,cook1995grand}, GGobi data visualization system \cite{cook2007interactive}. In this work, dimensionality reduction technique, Principle Component Analysis (PCA), is utilized for visualization. If very briefly explained, the feature vector $\bm{x}\in{\rm I\!R}^{n}$ is mapped to a lower dimensional space where the 
+There are further methods to visualize multidimensional data such as \emph{Tours}\cite{asimov1985grand,cook1997manual,cook1995grand} and \emph{GGobi} data visualization system \cite{cook2007interactive}. In this work, dimensionality reduction technique, Principle Component Analysis (PCA), is utilized for visualization. If very briefly explained, the feature vector $\bm{x}\in{\rm I\!R}^{n}$ is mapped to a lower dimensional space where the 
 new feature set will be represented by $\bm{z}\in{\rm I\!R}^{k}$. The final two dimensional feature set can be plotted to give an idea about faulty and nominal measurements' distribution in feature space as shown in Fig.~\ref{fig:z1_vs_z2}.
 
 \begin{figure}
@@ -78,8 +78,6 @@ new feature set will be represented by $\bm{z}\in{\rm I\!R}^{k}$. The final two 
 \label{fig:z1_vs_z2}
 \end{center}
 \end{figure}
-
-The aim of machine learning methods is to train a model with a given data set in order to predict the output values corresponding to a new input. 	With default values of MATLAB SVM toolbox, a hypothesis is trained by fitcsvm function\%70 of whole data. 
 
 \begin{figure}
 \begin{center}
@@ -91,6 +89,7 @@ The aim of machine learning methods is to train a model with a given data set in
 \end{center}
 \end{figure}
 
+The aim of machine learning methods is to train a model with a given data set in order to predict the output values corresponding to a new input.
 A binary classifier is used in this work to classify two classes, faulty and nominal. 
 The fault considered in this study is the loss of effectiveness of the control surfaces. 
 SVM being a supervised classification algorithm has two main phases as shown in Fig.~\ref{fig:supervisedLearning}. 
@@ -101,28 +100,7 @@ The last phase is the prediction, where for a new instance the classifier predic
 Training data is comprised of labeled data where the label can belong to one of two possible cases. 
 This data set is saved in $\bm{X} \in {\rm I\!R^{m \times n}}  $ where $m,n$ correspond to number of instances and features respectively. 
 The label information corresponding to the measurement instances is also fed to the SVM algorithm during the training phase as output vector $\bm{y} \in \{-1,1\}$. 
-The aim of SVM is to find an optimal hyperplane maximizing the margin by solving the optimization problem for non-linearly separable datasets.
-
-To avoiding overfitting, which is the main problem of parametric discrimination approaches such as neural networks, parameter $C$ is tuned to result in the optimal fit for the cross validation set. 
-The data set available is first divided to two portions with a percentage of \%20, \%80 where the bigger chunk is the training set and the remaining is the test set. 
-Further, the training set is divided as cross-validation and training sets. 
-The idea to split data is to avoid overfitting. 
-Overfitting means that the models trained being very accurate fit for the data they are trained to but fail to generalize with new inputs resulting in bad prediction performance for the new data. 
-To assess the performance of the classifier trained with the training data is tuned to give a better performance with the cross validation data. 
-And then the final ability of the classifier is tested on the test set. 
-This parameter also tuned for the outliers to generalize the distribution of the data rather than resulting in fine fits for each individual data in the training set. 
-With a satisfactory result of the training \& tuning is followed by the prediction where the classifier predicts if the new measurement data belongs to the faulty or nominal class. 
-The output of the SVM classification is not the probability that the new measurement belongs to one class as is in the traditional classification problems, but directly the class information it belongs to. 
-For investigating the performance of the classifier on the test set, a method \cite{platt1999probabilistic} is used to calculate the posterior probabilities giving the probability that the new measurements belongs to faulty mode. 
-Results shows as in  Fig.~\ref{fig:post_prob} that prober tuning achieves very accurate and instant detection for the drone fault. 
-   
-%\begin{figure*}
-%\begin{center}
-%\includegraphics[width=14cm]{modelSelectionNonVisualizableData}    % The printed column width is 8.4 cm.
-%\caption{Supervised learning basics } 
-%\label{fig:supervisedLearning}
-%\end{center}
-%\end{figure*}
+The aim of SVM is to find an optimal hyperplane maximizing the margin by solving the optimization problem for non-linearly separable datasets. For further details on SVM and machine learning in general, the reader could refer to the methodology chapter of this thesis.
 
 \begin{figure}
 \begin{center}
@@ -132,10 +110,32 @@ Results shows as in  Fig.~\ref{fig:post_prob} that prober tuning achieves very a
 \end{center}
 \end{figure}
 
+To avoiding overfitting, which is the main problem of parametric discrimination approaches such as neural networks, parameter $C$ (box constraint) is tuned to result in the optimal fit for the cross validation set. Box constraint $C$ controls the values of the parameters learnt during the training phase, and further explained under methodology chapter.
+The data set available is first divided into two portions with a percentage of \%20, \%80 where the bigger chunk is the training set and the remaining is the test set. 
+Further, the training set is divided as cross-validation and training sets. 
+The idea to split data is to avoid overfitting. 
+Overfitting means that the models trained being very accurate fit for the data they are trained to but fail to generalize with new inputs resulting in bad prediction performance for the new data. 
+To improve the performance of the classifier trained with the training data, it is tuned with the cross validation data. 
+And finally, ability of the classifier is tested on the test set. 
+This parameter also tuned for the outliers to generalize the distribution of the data rather than resulting in fine fits for each individual data in the training set. 
+With a satisfactory result of the training \& tuning is followed by the prediction where the classifier predicts if the new measurement data belongs to the faulty or nominal class. 
+The output of the SVM classification is not the probability that the new measurement belongs to one class as is in the traditional classification problems, but directly the class information it belongs to. 
+For investigating the performance of the classifier on the test set, a method \cite{platt1999probabilistic} is used to calculate the posterior probabilities giving the probability that the new measurements belongs to faulty mode. 
+Results shows as in  Fig.~\ref{fig:post_prob} that proper tuning achieves very accurate and instant detection for the drone fault. 
+   
+%\begin{figure*}
+%\begin{center}
+%\includegraphics[width=14cm]{modelSelectionNonVisualizableData}    % The printed column width is 8.4 cm.
+%\caption{Supervised learning basics } 
+%\label{fig:supervisedLearning}
+%\end{center}
+%\end{figure*}
+
+
 
 \section{Fault detection from real flight data}
 
-This second section of the chapter discusses the classification results using real flight data. First, the injection of faults to the flights have been explained throughly. The Paparazzi GCS has been altered to inject faults real-time, controllers in some of flight modes have been changed to accommodate faults. After, the selection of the faults and nominal phases and also labeling data have been presented. Finally, the labeled data have been used to train classifiers for elevon stuck and loss of efficiency faults separately and the classifiers have been evaluated. A variety of techniques implemented to ameliorate the performance such as feature engineering and tuning the classifiers. 
+This second section of the chapter discusses the classification results using real flight data. First, the injection of faults to the flights have been explained throughly. The Paparazzi GCS has been altered to inject real-time faults, controllers in some of flight modes have been changed to accommodate faults. After, the selection of the faults and nominal phases and also labeling data have been presented. Finally, the labeled data have been used to train classifiers for elevon stuck and loss of efficiency faults separately and the classifiers have been evaluated. A variety of techniques implemented to improve the performance such as feature engineering and tuning the classifiers. 
 
 \subsection{Injecting faults in flight from Paparazzi GCS}
 
@@ -150,10 +150,10 @@ For the faulty flight data gathering, some modifications to the \emph{Paparazzi}
 \end{figure}
 
 For the former part, a slider is added to the ground station to set the fault during flight and set it back to normal flight conditions if necessary. 
-Fig. ~\ref{fig:groundStationFaultInj} shows the GCS view with the fault settings open. 
-This pane can be found under  \emph{Settings} $>$  \emph{FAULT} as highlighted in pink in Fig. ~\ref{fig:groundStationFaultInj}. 
+Fig.~\ref{fig:groundStationFaultInj} shows the GCS view with the fault settings open. 
+This pane can be found under  \emph{Settings} $>$  \emph{FAULT} as highlighted in pink in Fig.~\ref{fig:groundStationFaultInj}. 
 The four row configuration represents from top to bottom, the multiplicative error in the right elevon, the multiplicative error in the left elevon, additive error in the right elevon, and finally the additive error in the left elevon. 
-The nominal condition where there is no fault, the configuration is  $[\begin{matrix}right & left & right\_offset &left\_offset\end{matrix}] = [\begin{matrix} 1.0 & 1.0 & 0 & 0\end{matrix}]$. \\
+The nominal condition where there is no fault, is given by $[\begin{matrix}right & left & right\_offset &left\_offset\end{matrix}] = [\begin{matrix} 1.0 & 1.0 & 0 & 0\end{matrix}]$. \\
 This configuration lets the user to realize all types of actuator faults, such as control surface inefficiency or stuck. 
 To generate the fault of right elevon stuck at its nominal position, setting the first slider ($right$) to zero is enough. 
 The generate stuck fault at other positions, $right\_offset$ slider should be changed to desired stuck position while keeping the first slider at zero. 
@@ -172,9 +172,9 @@ The generate stuck fault at other positions, $right\_offset$ slider should be ch
 
 For the second part, which is to modify the servo command from the autopilot to the servos, a look at the \emph{Paparazzi} flight modes is necessary. 
 Most of the times, there are three modes for fixed-wings from control perspective:  \emph{Auto 1},  \emph{Auto 2},  \emph{Manual}. 
-In  \emph{Auto 1}, the pilot is still in the loop and gives the desired pitch and roll values to the controller and the desired elevator and aileron commands are calculated by the autopilot and passed to control allocation where the final desired servo commands are sent to servos as highlighted  \emph{Auto 1} in Fig. ~\ref{fig:paparazziControlModes}. 
+In  \emph{Auto 1}, the pilot is still in the loop and gives the desired pitch and roll values to the controller and the desired elevator and aileron commands are calculated by the autopilot and passed to control allocation where the final desired servo commands are sent to servos as highlighted  \emph{Auto 1} in Fig.~\ref{fig:paparazziControlModes}. 
 In the  \emph{Auto 2} mode, there is no need for the pilot since the navigation is also held by the autopilot for a given flight plan. 
-This mode is also given as  \emph{Auto 2} in Fig. ~\ref{fig:paparazziControlModes}.
+This mode is also given as  \emph{Auto 2} in Fig.~\ref{fig:paparazziControlModes}.
 In  \emph{Manual} mode, the pilot gives the desired elevator and aileron commands and desired servo commands are calculated in the autopilot's control allocation phase. So still there is a very low sense of autonomy in the manual phase. 
 
 Flying with faults is a challenge. 
@@ -188,15 +188,14 @@ This figure shows that during the control allocation phase, which is the calcula
 The modifications in the control allocation code by adding additive and multiplicative faults as well as extracting  \emph{Manual} mode from those injected faults can be seen in the \emph{Paparazzi} code given below. 
 
 
-\begin{figure*}
+\begin{figure}
 \begin{center}
 \includegraphics[width=0.9\textwidth]{figures/faultInjectionPprz}    % The printed column width is 8.4 cm.
 %\includegraphics[width=19cm,angle=90,origin=c]{figures/faultInjectionPaparazzi}    % The printed column width is 8.4 cm.
 \caption{Modifications on the control modes of \emph{Paparazzi} autopilot} 
 \label{fig:faultInjectionPaparazzi}
 \end{center}
-\end{figure*}
-
+\end{figure}
 
 
 \lstset{language=C}
@@ -221,11 +220,29 @@ The modifications in the control allocation code by adding additive and multipli
 \subsection{Reading \& labeling flight data}
 
 
-Flight data saved to the SD card onboard should be converted to .data format by using the \textit{sd2log} program of \emph{Paparazzi}. For that purpose, from the terminal, browse into the folder including  the .LOG file, which is the file format for the onboard data saved in Paparazzi. 
-Run the program under paparazzi/sw/logalize/sd2log and specify the file is to be converted to .data file and where to export it as shown in  Fig. ~\ref{fig:dataManip} ('.' means extract to current folder). 
+Flight data saved to the SD card onboard should be converted to \emph{.data} format by using the \textit{sd2log} program of \emph{Paparazzi}. For that purpose, from the terminal, browse into the folder including  the .LOG file, which is the file format for the onboard data saved in Paparazzi. 
 
-An example of a part of the flight data\footnote{17\_07\_06\_\_10\_21\_07\_SD.data} is given in Fig. ~\ref{fig:dataSettingsNominalFault} and whole file is available in \emph{Github}\footnote{https://github.com/benelgiz/cureDDrone/tree/master/ \\ data/v4\_multiplicativeAdditive\_MURET\_06\_07\_2017}. 
-The UAV used to realize the faulty flights in order to generate labeled data is given in Fig.  ~\ref{fig:zagi}. 
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=15cm]{figures/dataManip}    % The printed column width is 8.4 cm.
+\caption{Conversion of raw flight data saved to SD card onboard to .data file to be used in further calculations} 
+\label{fig:dataManip}
+\end{center}
+\end{figure}
+
+Run the program under paparazzi/sw/logalize/sd2log and specify the file is to be converted to \emph{.data} file and where to export it as shown in Fig.~\ref{fig:dataManip} ('.' means extract to current folder). 
+
+An example of a part of the flight data\footnote{17\_07\_06\_\_10\_21\_07\_SD.data} is given in Fig.~\ref{fig:dataSettingsNominalFault} and whole file is available in \emph{Github}\footnote{https://github.com/benelgiz/cureDDrone/tree/master/ \\ data/v4\_multiplicativeAdditive\_MURET\_06\_07\_2017}. 
+The UAV used to realize the faulty flights in order to generate labeled data is given in Fig.~\ref{fig:zagi}. 
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.87\textwidth]{figures/zagi}    % The printed column width is 8.4 cm.
+\caption{The flying-wing: \emph{ZAGI}} 
+\label{fig:zagi}
+\end{center}
+\end{figure}
+
 The duration of the flight was around an hour. 
 The flight has been practiced under strong wind. 
 34 different faults are injected.
@@ -236,54 +253,35 @@ For ineffectiveness of control surface faults, where the controller has still an
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=15cm]{figures/dataManip}    % The printed column width is 8.4 cm.
-\caption{Conversion of raw flight data saved to SD card onboard to .data file to be used in further calculations} 
-\label{fig:dataManip}
-\end{center}
-\end{figure}
-
-
-\begin{figure}
-\begin{center}
 \includegraphics[width=11.9cm]{figures/dataSettingsNominalFault}    % The printed column width is 8.4 cm.
 \caption{A small part of the flight data corresponding to nominal and two different fault phases of the flight. \emph{Settings} message exists only if there is a change in the multiplicative and additive fault parameters via GCS} 
 \label{fig:dataSettingsNominalFault}
 \end{center}
 \end{figure}
 
-\begin{figure}
-\begin{center}
-\includegraphics[width=0.87\textwidth]{figures/zagi}    % The printed column width is 8.4 cm.
-\caption{The flying-wing: \emph{ZAGI}} 
-\label{fig:zagi}
-\end{center}
-\end{figure}
 
-
-Now that the .data file is ready, next is to detect the time stamps at which the faults are injected and then label all the data corresponding to this fault interval as designated with different colors in Fig. ~\ref{fig:dataSettingsNominalFault}. 
+Now that the \emph{.data} file is ready, next is to detect the time stamps at which the faults are injected and then label all the data corresponding to this fault interval as designated with different colors in Fig.~\ref{fig:dataSettingsNominalFault}. 
 Since, most of the times, there has been more than one fault type generated during flights, another step in data manipulation is to choose the faults to investigate. 
 
 The fault injection or change from fault condition to nominal mode is done via the GCS and there is a corresponding message saved to SD card onboard in \emph{Paparazzi} \emph{Messages} indicated via \emph{Settings}. 
 \emph{Settings} gives multiplicative fault and additive fault values and only appears in the flight data when one of the control surface effectiveness values is changed. 
-The value of the \emph{Settings} for nominal phase is [1.0 1.0 0.0 0.0] and a corresponding example line in the data corresponding to a command to revert to nominal condition can be seen in Fig. ~\ref{fig:flightDataSettings}. 
-It means to multiply the value given by the controller by 1 and add 0, so does not change the values given by the autopilot. 
-As soon as any of control surface effectiveness values is changed in the GCS, a new \emph{Settings} value is saved to the file (Shown with arrows in Fig. ~\ref{fig:dataSettingsNominalFault}). 
+The value of the \emph{Settings} for nominal phase is [1.0 1.0 0.0 0.0] and a corresponding example line in the data corresponding to a command to revert to nominal condition can be seen in Fig.~\ref{fig:flightDataSettings}. 
 
-To find the indexes where the nominal and faulty data starts and ends, the values of the  \emph{Settings} message is investigated. 
-So when there is a  \emph{Settings} message in the flight, it should be either a fault generation or going back to nominal condition after a fault. 
-If the message contains the  \emph{Settings} message equal to [1.0 1.0 0.0 0.0], this data index is selected as the nominal condition start index and a previous index before next  \emph{Settings} message is the last index of this nominal phase. 
-The matrix holding the start and end index for the nominal phases are saved as \textit{nominal\_start\_stop} shown in Table~\ref{arm:tableNominalindexes} where the first row corresponds to start index of each nominal set and second row corresponds to the last index of the corresponding as nominal phase. 
-For the fault indexes a similar approach is followed except that  \emph{Settings} messages selected are the ones which is different than  [1.0 1.0 0.0 0.0]. 
-An example is Fault \#23 in Fig. ~\ref{fig:settingsStuckFault} and its corresponding start and end indexes given in Table~\ref{arm:tableFaultyindexes}.
-
-
-\begin{figure}
+\begin{figure}[h]
 \begin{center}
 \includegraphics[width=13cm]{figures/flightDataSettings}    % The printed column width is 8.4 cm.
 \caption{\emph{SETTINGS} \emph{Message} saves the multiplicative and additive fault values inserted from the GCS.  [1.0 1.0 0.0 0.0] corresponds a command from the GCS to revert back to nominal phase} 
 \label{fig:flightDataSettings}
 \end{center}
 \end{figure}
+
+It means to multiply the value given by the controller by 1 and add 0, so does not change the values given by the autopilot. 
+As soon as any of control surface effectiveness values is changed in the GCS, a new \emph{Settings} value is saved to the file (Shown with arrows in Fig.~\ref{fig:dataSettingsNominalFault}). 
+
+To find the indexes where the nominal and faulty data starts and ends, the values of the  \emph{Settings} message is investigated. 
+So when there is a  \emph{Settings} message in the flight, it should be either a fault generation or going back to nominal condition after a fault. 
+If the message contains the  \emph{Settings} message equal to [1.0 1.0 0.0 0.0], this data index is selected as the nominal condition start index and a previous index before next  \emph{Settings} message is the last index of this nominal phase. 
+The matrix holding the start and end index for the nominal phases are saved as \textit{nominal\_start\_stop} shown in Table~\ref{arm:tableNominalindexes} where the first row corresponds to start index of each nominal set and second row corresponds to the last index of the corresponding as nominal phase. 
 
 \newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
 
@@ -299,9 +297,20 @@ An example is Fault \#23 in Fig. ~\ref{fig:settingsStuckFault} and its correspon
 \end{center}
 \end{table}
 
+For the fault indexes a similar approach is followed except that  \emph{Settings} messages selected are the ones which is different than  [1.0 1.0 0.0 0.0]. 
+An example is Fault \#23 in Fig.~\ref{fig:settingsStuckFault} and its corresponding start and end indexes given in Table~\ref{arm:tableFaultyindexes}.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=11cm]{figures/settingsStuckFault}    % The printed column width is 8.4 cm.
+\caption{SETTINGS message corresponding to stuck of right control surface} 
+\label{fig:settingsStuckFault}
+\end{center}
+\end{figure}
+
 \newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
 
-\begin{table}
+\begin{table}[h]
 \caption{Faulty phase start stop indexes of the flight}
 \label{arm:tableFaultyindexes}
 \begin{center}
@@ -313,15 +322,15 @@ An example is Fault \#23 in Fig. ~\ref{fig:settingsStuckFault} and its correspon
 \end{center}
 \end{table}
 
-\begin{figure}
-\begin{center}
-\includegraphics[width=11cm]{figures/settingsStuckFault}    % The printed column width is 8.4 cm.
-\caption{SETTINGS message corresponding to stuck of right control surface} 
-\label{fig:settingsStuckFault}
-\end{center}
-\end{figure}
 
-\begin{figure}
+Next step is to choose the phases of the flight to work with. 
+As an example, a phase of the flight where there is enough nominal data and followed with an extreme fault injection is selected. 
+This corresponds to the 4th nominal phase of the flight followed by the 23th fault is selected. Fault \#23 corresponds to right control surface stuck and can be seen in  Fig.~\ref{fig:dataSettingsNominalFault}. 
+The next is to select the measurement corresponding the these selected time intervals and this is done by AND ing the indexes of interest, such as the indexes of fault and gyro data measurements as shown in Fig.~\ref{fig:labelingGyroAccel}. 
+The script for labeling the nominal and faulty measurements is the \emph{selectDataToInvest.m} file given in Appendix B.2. 
+The output of this file is the accelerometer and gyro measurements corresponding to selected phases of the flight.
+
+\begin{figure}[h]
 \begin{center}
 \includegraphics[width=15cm]{figures/labelingGyroAccel}    % The printed column width is 8.4 cm.
 \caption{Indexing SETTINGS, to find fault and nominal flight intervals, indexing GYRO measurements to AND with FAULT indexes to find the indexes of faulty gyro measurements} 
@@ -329,18 +338,28 @@ An example is Fault \#23 in Fig. ~\ref{fig:settingsStuckFault} and its correspon
 \end{center}
 \end{figure}
 
-Next step is to choose the phases of the flight to work with. As an example, a phase of the flight where there is enough nominal data and followed with an extreme fault injection is selected. This corresponds to the 4th nominal phase of the flight followed by the 23th fault is selected. Fault \#23 corresponds to right control surface stuck and can be seen in  Fig. ~\ref{fig:dataSettingsNominalFault}. The next is to select the measurement corresponding the these selected time intervals and this is done by AND ing the indexes of interest, such as the indexes of fault and gyro data measurements as shown in Fig. ~\ref{fig:labelingGyroAccel}. The script for the labeling the nominal and faulty measurements is the selectDataToInvest.m file given in Appendix B.2. The output of this file is the accelerometer and gyro measurements corresponding to selected phases of the flight.
-
-SVM classifier has been trained and tuned with the flight data, generated following the steps covered above, in order to classify the faulty and nominal classes.
+SVM classifier has been trained and tuned with the flight data, generated by following the steps covered above, in order to classify the faulty and nominal classes.
 The simulations have been developed under Matlab coding environment. 
 Some tools, such as calculation of \emph{f1Score}, were written as Matlab scripts rather than changing some arguments of toolbox functions, since they were not found available in the toolbox either it does not exist or was difficult to obtain.
  
  The simulations have been executed on HP Z820 Workstation with 3.1 GHz, 32 cores. 
  
 This work investigates only binary classification, not multi-class classification considering multiple different faults.  
-But different faulty cases have been studied to further attack the problem of multi-class classification in the future studies. The classifier's abilities in different fault conditions have been investigated. The main two types of faults of interest in this study were control surface stuck and LOE. The flight data\footnote{https://github.com/benelgiz/cureDDrone/tree/master/ \\ data/v4\_multiplicativeAdditive\_MURET\_06\_07\_2017} and code\footnote{https://github.com/benelgiz/cureDDrone/tree/master} that has been developed are publicly available under \emph{Github}.
+But different faulty cases have been studied to further attack the problem of multi-class classification in the future studies. 
+The classifier's abilities in different fault conditions have been investigated. 
+The main two types of faults of interest in this study were control surface stuck and LOE. 
+The flight data\footnote{https://github.com/benelgiz/cureDDrone/tree/master/ \\ data/v4\_multiplicativeAdditive\_MURET\_06\_07\_2017} and code\footnote{https://github.com/benelgiz/cureDDrone/tree/master} that has been developed are publicly available under \emph{Github}.
 
-\begin{figure}
+All three steps (training, tuning and evaluation), explained thoroughly under SVM application section have been applied and the results are given below.
+
+\subsection{Control surface stuck fault}
+
+During the flights, the most challenging fault to realize was the control surface stuck. 
+The drone reacted very fast with an uncontrollable dive towards the ground and the safety pilot initiated manual recovery by triggering the safety switch shown in Fig.~\ref{fig:faultInjectionPaparazzi}. 
+So the time past starting from the ignition of the control surface stuck fault until the manual pilot's intervention is very short ($\sim$2 seconds) which can be seen from the accelerometer x-direction readings in Fig.~\ref{fig:acc_x}. 
+
+
+\begin{figure}[h]
 \begin{center}
 \includegraphics[width=0.7\textwidth]{figures/acc_x}    % The printed column width is 8.4 cm.
 \caption{Accelerometer readings along $x$-direction during flight interval just before control surface stuck (nominal, represented with blue) and during control surface stuck at $\SI{0}{\degree}$ until the safety pilot's intervention} 
@@ -348,22 +367,7 @@ But different faulty cases have been studied to further attack the problem of mu
 \end{center}
 \end{figure}
 
-All three steps (training, tuning and evaulation), explained thoroughly under SVM application section have been applied and the results are given below.
-
-\subsection{Control surface stuck fault}
-
-During the flights, the most challenging fault to realize was the control surface stuck. 
-The drone reacted very fast with an uncontrollable dive towards the ground and the safety pilot initiated manual recovery by triggering the safety switch shown in Fig.~\ref{fig:faultInjectionPaparazzi}. 
-So the time past starting from the ignition of the control surface stuck fault until the manual pilot's intervention is very short ($\sim$2 seconds) which can be seen from the accelerometer x-direction readings in Fig.~\ref{fig:acc_x}. 
 This causes the problem of skew-class classification where there is a big difference between the number of instances belonging to different classes and requires some special treatment as explained above under section ~\ref{evalClassifier}.
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=0.7\textwidth]{figures/acc_x_evenLongerNominal}    % The printed column width is 8.4 cm.
-\caption{Accelerometer readings along $x$-direction during flight interval before control surface stuck (nominal, represented with blue) and during control surface stuck at  $\SI{0}{\degree}$ until the safety pilot's intervention} 
-\label{fig:acc_x_evenLongerNominal}
-\end{center}
-\end{figure}
 
 First problem considered for classification is the right elevon stuck at $\SI{0}{\degree}$.
 Gyro and accelerometer measurements are saved to SD card onboard at 60 Hz. 
@@ -393,13 +397,28 @@ It can be interpreted from the Fig.~\ref{fig:acc_x} that the fault injected show
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.7\textwidth]{figures/acc_z}    % The printed column width is 8.4 cm.
+\includegraphics[width=0.66\textwidth]{figures/acc_x_evenLongerNominal}    % The printed column width is 8.4 cm.
+\caption{Accelerometer readings along $x$-direction during flight interval before control surface stuck (nominal, represented with blue) and during control surface stuck at  $\SI{0}{\degree}$ until the safety pilot's intervention} 
+\label{fig:acc_x_evenLongerNominal}
+\end{center}
+\end{figure}
+
+
+To investigate further, measurements have been plotted during a larger time scale involving $\sim$70 seconds of measurements as shown in Fig.~\ref{fig:acc_x_evenLongerNominal}. 
+Here, it is seen that the accelerometer measurements corresponding to faulty phase could be observed during the nominal flight phase as well, thus it might be necessary to check the time change of translational acceleration to catch a difference in behavior. 
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=0.66\textwidth]{figures/acc_z}    % The printed column width is 8.4 cm.
 \caption{Accelerometer measurements along z direction $a_z$ for faulty and nominal flight data} 
 \label{fig:acc_z}
 \end{center}
 \end{figure}
 
-\begin{figure}
+Fig.~\ref{fig:acc_z} and Fig.~\ref{fig:gyro_x} show the accelerometer measurements along z-direction and angular velocities along x-direction during a short time interval. 
+Here, although an average of faulty measurements would result in an obvious difference, individual measures might correspond to nominal phase of the flight as well.
+
+\begin{figure}[h]
 \begin{center}
 \includegraphics[width=0.7\textwidth]{figures/gyro_x}    % The printed column width is 8.4 cm.
 \caption{Angular velocity $w_x$  for faulty nominal flight data} 
@@ -407,12 +426,6 @@ It can be interpreted from the Fig.~\ref{fig:acc_x} that the fault injected show
 \end{center}
 \end{figure}
 
-
-
-To investigate further, measurements have been plotted during a larger time scale involving $\sim$70 seconds of measurements as shown in Fig.~\ref{fig:acc_x_evenLongerNominal}. 
-Here, it is seen that the accelerometer measurements corresponding to faulty phase could be observed during the nominal flight phase as well, thus it might be necessary to check the time change of translational acceleration to catch a difference in behavior. 
-Fig.~\ref{fig:acc_z} and Fig.~\ref{fig:gyro_x} show the accelerometer measurements along z-direction and angular velocities along x-direction during a short time interval. 
-Here, although an average of faulty measurements would result in an obvious difference, individual measures might correspond to nominal phase of the flight as well.
 
 %\begin{figure}
 %\begin{center}
@@ -423,8 +436,10 @@ Here, although an average of faulty measurements would result in an obvious diff
 %\end{figure}
 
 
+The measurements are also plotted in feature spaces $a_x$-$a_z$ and $a_x$-$a_y$ as shown in Fig.~\ref{fig:feat1vsfeat3FaultStuck} and Fig.~\ref{fig:feat1vsfeat2FaultStuck}. 
+It shows $a_x$-$a_z$ space gives a distribution that would be easier to classify the faulty and nominal phases while in $a_x$-$a_y$ feature space, the measures are quite similar and difficult to classify.
 
-\begin{figure}
+\begin{figure}[!h]
 \begin{center}
 \includegraphics[width=0.7\textwidth]{figures/feat1vsfeat3FaultStuck}    % The printed column width is 8.4 cm.
 \caption{$a_x$ vs $a_z$ feature space for faulty nominal flight data} 
@@ -432,19 +447,13 @@ Here, although an average of faulty measurements would result in an obvious diff
 \end{center}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!h]
 \begin{center}
 \includegraphics[width=0.7\textwidth]{figures/feat1vsfeat2FaultStuck}    % The printed column width is 8.4 cm.
 \caption{$a_x$ vs $a_y$ feature space for faulty nominal flight data} 
 \label{fig:feat1vsfeat2FaultStuck}
 \end{center}
 \end{figure}
-
-
-
-The measurements are also plotted in feature spaces $a_x$-$a_z$ and $a_x$-$a_y$ as shown in Fig.~\ref{fig:feat1vsfeat3FaultStuck} and Fig.~\ref{fig:feat1vsfeat2FaultStuck}. 
-It shows $a_x$-$a_z$ space gives a distribution that would be easier to classify the faulty and nominal phases while in $a_x$-$a_y$ feature space, the measures are quite similar and difficult to classify.
-
 
 
 %\begin{figure}
@@ -489,7 +498,7 @@ It shows $a_x$-$a_z$ space gives a distribution that would be easier to classify
 
 %
 % For tables use
-\begin{table*}
+\begin{table}
 	\centering
 % table caption is above the table
 \caption{Untuned and tuned via heuristic approach and tuned via Bayesian optimization SVM classification evaluations}
@@ -510,7 +519,7 @@ recall & 0.8261 & 0.8696 & 0.913 & 0.913\\
 comp. time & 3.75s & 3.4s & 5917.5s & 1784.7s \\
 \noalign{\smallskip}\hline
 \end{tabular}
-\end{table*}
+\end{table}
 
 
 Table~\ref{tab:stuck} shows the results of SVM classification for untuned linear kernel, untuned Gaussian kernel, and tuned Gaussian kernel via two methods (heuristic and Bayesian) respectively in its columns.  
@@ -518,7 +527,7 @@ Although a variety of variables used in the evaluation of classifiers have been 
 The classifier with a \emph{box constraint} $= 2.11$ and a \emph{kernel scale} $ = 1$ have been found to give the highest \emph{f1Score} (\emph{f1Score} $= 0.9545$). 
 
 % For tables use
-\begin{table*}
+\begin{table}
 	\centering
 % table caption is above the table
 \caption{Untuned and tuned via heuristic approach and tuned via Bayesian optimization SVM classification evaluations}
@@ -539,7 +548,7 @@ recall & 0.2632 & 0.8947 & 0.8421\\
 comp. time & 12.4s & 5581.9s &1205.2s \\
 \noalign{\smallskip}\hline
 \end{tabular}
-\end{table*}
+\end{table}
 
 
 Due to previous observations on data, feature set have been widened via additions of data from past measurements for each attribute. 
@@ -631,7 +640,7 @@ The results showed the insufficiency of the method to diagnose the fault (see Ta
 One of the explanations for that might be, since the control surfaces is not moving in a wide range during the nominal course of action, \%10 degradation in the movement of the elevon does not really change the dynamic behavior of the drone yet not easy to pinpoint from the measurements.
 Another reason, likely to be the main driver, could be the compensation of the fault via the controller.
 The aim of the controller onboard is to minimize the error to track a given reference trajectory and corresponding attitude references. 
-Hence, when this error is not minimized, for one reason or another, the controller re-calculates the control signal to minimize this error. 
+Hence, when this error is not minimized, for one reason or another, the controller re-computes the control signal to minimize this error. 
 So either an error due to a different wind condition or a fault in the control surface, the controller's duty is to minimize this error, so a well designed controller might handle that especially for the condition where the effect of disturbance is not catastrophic. 
 This controller's compensation for the fault could be known by observing output of the controller and feeding this information as well in the set of instances. 
 But, during the course of this study, the abilities of a classifier without the information from the controller is investigated. 
