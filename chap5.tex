@@ -415,17 +415,32 @@ Here, it is seen that the accelerometer measurements corresponding to faulty pha
 \end{center}
 \end{figure}
 
-Fig.~\ref{fig:acc_z} and Fig.~\ref{fig:gyro_x} show the accelerometer measurements along z-direction and angular velocities along x-direction during a short time interval. 
-Here, although an average of faulty measurements would result in an obvious difference, individual measures might correspond to nominal phase of the flight as well.
-
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=0.7\textwidth]{figures/gyro_x}    % The printed column width is 8.4 cm.
+\includegraphics[width=0.65\textwidth]{figures/gyro_x}    % The printed column width is 8.4 cm.
 \caption{Angular velocity $w_x$  for faulty nominal flight data} 
 \label{fig:gyro_x}
 \end{center}
 \end{figure}
 
+Fig.~\ref{fig:acc_z} and Fig.~\ref{fig:gyro_x} show the accelerometer measurements along z-direction and angular velocities along x-direction during a short time interval. 
+Here, although an average of faulty measurements would result in an obvious difference, individual measures might correspond to nominal phase of the flight as well.
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=0.65\textwidth]{figures/feat1vsfeat3FaultStuck}    % The printed column width is 8.4 cm.
+\caption{$a_x$ vs $a_z$ feature space for faulty nominal flight data} 
+\label{fig:feat1vsfeat3FaultStuck}
+\end{center}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.65\textwidth]{figures/feat1vsfeat2FaultStuck}    % The printed column width is 8.4 cm.
+\caption{$a_x$ vs $a_y$ feature space for faulty nominal flight data} 
+\label{fig:feat1vsfeat2FaultStuck}
+\end{center}
+\end{figure}
 
 %\begin{figure}
 %\begin{center}
@@ -435,26 +450,31 @@ Here, although an average of faulty measurements would result in an obvious diff
 %\end{center}
 %\end{figure}
 
-
 The measurements are also plotted in feature spaces $a_x$-$a_z$ and $a_x$-$a_y$ as shown in Fig.~\ref{fig:feat1vsfeat3FaultStuck} and Fig.~\ref{fig:feat1vsfeat2FaultStuck}. 
 It shows $a_x$-$a_z$ space gives a distribution that would be easier to classify the faulty and nominal phases while in $a_x$-$a_y$ feature space, the measures are quite similar and difficult to classify.
 
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=0.7\textwidth]{figures/feat1vsfeat3FaultStuck}    % The printed column width is 8.4 cm.
-\caption{$a_x$ vs $a_z$ feature space for faulty nominal flight data} 
-\label{fig:feat1vsfeat3FaultStuck}
-\end{center}
-\end{figure}
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=0.7\textwidth]{figures/feat1vsfeat2FaultStuck}    % The printed column width is 8.4 cm.
-\caption{$a_x$ vs $a_y$ feature space for faulty nominal flight data} 
-\label{fig:feat1vsfeat2FaultStuck}
-\end{center}
-\end{figure}
-
+\begin{table}[!ht]
+	\centering
+% table caption is above the table
+\caption{Untuned and tuned via heuristic approach and tuned via Bayesian optimization SVM classification evaluations}
+\label{tab:stuck}       % Give a unique label
+% For LaTeX tables use
+\begin{tabular}{p{2.7cm}p{2.0cm}p{2.3cm}p{3cm}p{3cm}}
+\hline\noalign{\smallskip}
+ & Untuned linear kernel & Untuned Gaussian kernel & Tuned heuristic Gaussian kernel & Tuned Bayesian Gaussian kernel\\
+\noalign{\smallskip}\hline\noalign{\smallskip}
+kernel scale & 1 & 1 & 2.1187 & 10.3581 \\
+box constraint & 1 & 1 & 1 & 1323.1 \\
+margin & 10.5927 & 2.0248 & 2.4763 & 5.3004 \\
+edge & 10.5875 & 2.0245 & 2.4761 & 5.3004 \\
+kFoldLoss & 0.2 x $10^{-2}$ & 1.2 x $10^{-3}$& 7.571 x $10^{-4}$ & 1.2 x $10^{-3}$ \\
+precision & 0.76 & 1 & 1 & 0.913 \\
+recall & 0.8261 & 0.8696 & 0.913 & 0.913\\
+\textbf{f1Score} & 0.7917 & 0.9302 &0.9545 & 0.913 \\
+comp. time & 3.75s & 3.4s & 5917.5s & 1784.7s \\
+\noalign{\smallskip}\hline
+\end{tabular}
+\end{table}
 
 %\begin{figure}
 %\begin{center}
@@ -496,38 +516,20 @@ It shows $a_x$-$a_z$ space gives a distribution that would be easier to classify
 %\end{center}
 %\end{figure}
 
-%
-% For tables use
-\begin{table}
-	\centering
-% table caption is above the table
-\caption{Untuned and tuned via heuristic approach and tuned via Bayesian optimization SVM classification evaluations}
-\label{tab:stuck}       % Give a unique label
-% For LaTeX tables use
-\begin{tabular}{p{2.7cm}p{2.0cm}p{2.3cm}p{3cm}p{3cm}}
-\hline\noalign{\smallskip}
- & Untuned linear kernel & Untuned Gaussian kernel & Tuned heuristic Gaussian kernel & Tuned Bayesian Gaussian kernel\\
-\noalign{\smallskip}\hline\noalign{\smallskip}
-kernel scale & 1 & 1 & 2.1187 & 10.3581 \\
-box constraint & 1 & 1 & 1 & 1323.1 \\
-margin & 10.5927 & 2.0248 & 2.4763 & 5.3004 \\
-edge & 10.5875 & 2.0245 & 2.4761 & 5.3004 \\
-kFoldLoss & 0.2 x $10^{-2}$ & 1.2 x $10^{-3}$& 7.571 x $10^{-4}$ & 1.2 x $10^{-3}$ \\
-precision & 0.76 & 1 & 1 & 0.913 \\
-recall & 0.8261 & 0.8696 & 0.913 & 0.913\\
-\textbf{f1Score} & 0.7917 & 0.9302 &0.9545 & 0.913 \\
-comp. time & 3.75s & 3.4s & 5917.5s & 1784.7s \\
-\noalign{\smallskip}\hline
-\end{tabular}
-\end{table}
-
 
 Table~\ref{tab:stuck} shows the results of SVM classification for untuned linear kernel, untuned Gaussian kernel, and tuned Gaussian kernel via two methods (heuristic and Bayesian) respectively in its columns.  
 Although a variety of variables used in the evaluation of classifiers have been presented to the reader for completeness, f1Score will be the main variable of concern for this study for the reasons explained before. 
 The classifier with a \emph{box constraint} $= 2.11$ and a \emph{kernel scale} $ = 1$ have been found to give the highest \emph{f1Score} (\emph{f1Score} $= 0.9545$). 
 
+Due to previous observations on data, feature set have been widened via additions of data from past measurements for each attribute. 
+The idea is to introduce the time change behavior of data to be represented in each instance. 
+The number of features have been increased to 24 in Table~\ref{tab:contSurfStuckAddedFeat}, which means only 3 previous measures for each different attribute have been added to the feature set ((3 past + 1 instant) * 6 axis).
+This addition to the feature set, in general, deteriorated the performance of the classifier, especially the classifier with an untuned Gaussian kernel (\emph{f1Score}= $0.4167$) ($\Delta f1Score = -0.5135$). 
+For the classifiers with tuned Gaussian kernels, \emph{f1Score} decreases by a small amount for the classifier tuned with heuristic method (\emph{f1Score} $= 0.9444$) and increases by an even smaller amount(\emph{f1Score} $= 0.9143$) hence the effect is not really obvious. 
+
+
 % For tables use
-\begin{table}
+\begin{table*}[h]
 	\centering
 % table caption is above the table
 \caption{Untuned and tuned via heuristic approach and tuned via Bayesian optimization SVM classification evaluations}
@@ -548,14 +550,7 @@ recall & 0.2632 & 0.8947 & 0.8421\\
 comp. time & 12.4s & 5581.9s &1205.2s \\
 \noalign{\smallskip}\hline
 \end{tabular}
-\end{table}
-
-
-Due to previous observations on data, feature set have been widened via additions of data from past measurements for each attribute. 
-The idea is to introduce the time change behavior of data to be represented in each instance. 
-The number of features have been increased to 24 in Table~\ref{tab:contSurfStuckAddedFeat}, which means only 3 previous measures for each different attribute have been added to the feature set ((3 past + 1 instant) * 6 axis).
-This addition to the feature set, in general, deteriorated the performance of the classifier, especially the classifier with an untuned Gaussian kernel (\emph{f1Score}= $0.4167$) ($\Delta f1Score = -0.5135$). 
-For the classifiers with tuned Gaussian kernels, \emph{f1Score} decreases by a small amount for the classifier tuned with heuristic method (\emph{f1Score} $= 0.9444$) and increases by an even smaller amount(\emph{f1Score} $= 0.9143$) hence the effect is not really obvious. 
+\end{table*}
 
 % Second trial for the same number of features
 % For tables use
