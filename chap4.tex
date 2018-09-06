@@ -6,19 +6,18 @@
 %% prompt when you run the file main.tex through LaTeX.
 \chapter{Methodology}
 
-The aim of machine learning methods is to train a model with a given data set in order to predict the output values corresponding to a new input. 
+In this chapter, an introduction to machine learning methods is presented. 
+Machine learning methods have been discusses with a focus on applications rather then the theory.
+Finally, a supervised learning method, Support Vector Machines (SVM) is explained since it is the method used for classification in this thesis.
 
 \section{Machine Learning}
 
+The aim of machine learning methods is to train a model with a given data set in order to predict the output values corresponding to a new input. 
 According to Arthur Samuel, name father of machine learning, "Machine learning is the field of study that gives computers the ability to learn without being explicitly programmed". 
-A rather more to the point but complicated definition offered by Tom Mitchell in 1998, quite new compared to Samuel\textquotesingle s in 1959, " A computer program is said to learn from experience E with respect to some task T and some performance measure P, if its performance on T, as measured by P, improves with experience E".
+A rather more to the point but complicated definition offered by Tom Mitchell in 1998, quite new compared to Samuel\textquotesingle s in 1959, "A computer program is said to learn from experience E with respect to some task T and some performance measure P, if its performance on T, as measured by P, improves with experience E".
 
 \subsection{Introduction}
 Machine learning methods are mainly handled under two main categories: supervised and unsupervised learning as shown in Fig.~\ref{fig:machineLearningMethods}. 
-In supervised learning, \textit{"right answer"} for each example in the data set is available to the user apriori. 
-Whereas for unsupervised learning, the \textit{"right answer"} are not available. 
-Although not as common as these methods, there are other machine learning algorithms serving specific purposes such as reinforcement learning and recommender systems. 
-The common methodology in machine learning is that there are two phases, the learning and the prediction phases as in Fig.~\ref{fig:supervisedLearningBasics}. 
 
 \begin{figure}
 \begin{center}
@@ -28,6 +27,8 @@ The common methodology in machine learning is that there are two phases, the lea
 \end{center}
 \end{figure}
 
+In supervised learning, \textit{"right answers"} are available for each training input in the data set.
+Supervised learning methods are comprised of two phases, the learning and the prediction as shown in Fig.~\ref{fig:supervisedLearningBasics}.
 The first phase is comprised of learning from the available data to understand how the system behaves. 
 In the second phase, the idea is to predict what will be the output of the system for a given input, depending on the knowledge about the system that you gained via learning phase. 
 
@@ -44,9 +45,12 @@ In the second phase, the idea is to predict what will be the output of the syste
 The most common types of supervised leaning is the regression and classification problems. 
 Since these are both of supervised learning types, the \textit{"right answer"} (right values of the output $y$) for each example is assumed to be known. 
 
+In unsupervised learning, the \textit{"right answers"} corresponding to the training input are not available. 
+There are other machine learning algorithms, such as reinforcement learning, that is a combination of supervised and unsupervised learning. 
+
 \subsection{Terminology}
 
-Since being clear about the terminology is essential, a basic introduction to mostly used terms is given in this section.  
+A basic introduction to frequently used terms in machine learning is given in this section.  
 Table~\ref{arm:machineLearningTerminology} shows representations of commonly used variables in machine learning. 
 Although representations could differ from one reference to the other, throughout this thesis, one coherent representation given in Table~\ref{arm:machineLearningTerminology} is followed. 
 
@@ -57,7 +61,7 @@ Although representations could differ from one reference to the other, throughou
 \begin{tabular}{||l|l||}\hline
 x & input variable or feature \\\hline
 y & output variable or target variable \\\hline
-\textbf{x} & input variable vector or feature vector \\\hline
+\textbf{X} & input variable vector or feature vector \\\hline
 \textbf{y} & output variable vector or target variable vector \\\hline
 m & number of training examples \\\hline
 n & number of features \\\hline
@@ -65,7 +69,7 @@ i & index of training examples \\\hline
 j & index of features \\\hline
 $\textbf{x}_j^{(i)}$ & $i^{th}$ training example for feature $j$ \\\hline
 $\textbf{y}^{(i)}$ & $i^{th}$ training output  \\\hline
-$\textbf{h}_{\bm{\theta}}(\textbf{x})$ &hypothesis function\\\hline
+$\textbf{h}_{\bm{\theta}}(\textbf{x})$ &hypothesis function (model)\\\hline
 $\bm{\theta}$ &parameter set\\\hline
 $\textbf{J}({\bm{\theta}})$ &cost function  \\\hline
 
@@ -73,12 +77,12 @@ $\textbf{J}({\bm{\theta}})$ &cost function  \\\hline
 \end{center}
 \end{table}
 
-Many of the machine learning tools have defaults settings and easy to be used by beginners. 
+Many of the machine learning tools, such as MATLAB Statistics and Machine Learning Toolbox or Tensorflow, have defaults settings and are easy to be used by beginners. 
 Although they would most probably not achieve optimized results which would be the case in the hands of an experienced user, a beginner can easily start using those tools by sending input and output vectors as arguments to the machine learning functions. 
 
 The configurations of input and output vectors to feed the learning algorithms might change from one to other but still there is a common convention that would be compatible with many. 
 In this representation, each instance is given in different rows of the input vector. 
-An example of predicting housing prices (taken from Andrew Ng's machine learning course) is given to show the way to constitute the input and output matrix. 
+An example of predicting housing prices taken from Ref.~\cite{andrewNgMachLearning} is given to show the way to constitute the input and output matrix. 
 Table~\ref{arm:exampHousingPrices} uses a supervised learning regression example to show input and output vector representations. 
 The aim of the problem in this example is to predict price of houses for given surface area. 
 For that, known examples of houses with surface area and corresponding price have been given. 
@@ -90,7 +94,7 @@ So, in Table~\ref{arm:exampHousingPrices} each row corresponds to a different ho
 \caption{Training set $(\textbf{x},\textbf{y})$ of housing prices - one-feature example}
 \label{arm:exampHousingPrices}
 \begin{center}
-\begin{tabular}{ ||p{3cm}|p{3cm}|p{3cm}||}\hline
+\begin{tabular}{ || c | c | c ||}\hline
 \textbf{training example index} $(i)$ & \textbf{Size in $feet^2$} ($\textbf{x}$) & \textbf{Price in $1000 \$ s$} ($\textbf{y}$) \\\hline
 1 & 2104	   & 460 \\\hline
 2 & 1416	   & 232 \\\hline
@@ -106,7 +110,7 @@ In this problem, there is an assumption that the price of a house is only depend
 In real problems, it is more common that the output would depend not only one variable but more, or many. 
 For that reason, the input vector in a realistic example would rather be an input matrix having different features in its columns as given in Table~\ref{arm:exampleMultiFeatures}. 
 Here in this example, the output is still the price of house, but now the features which corresponds to each column of an input matrix (or sometimes called the feature matrix) are surface area, number of bedrooms, and can be enlarged until n features. 
-It should be kept in mind the selection of features that would lead to a better prediction of the output is a challenging problem and usually requires experience on the system of interest. 
+It should be kept in mind that the selection of features that would lead to a better prediction of the output is a challenging problem and usually requires experience on the system of interest. 
 
 \begin{table}
 \caption{Training set $(\textbf{x},\textbf{y})$ of housing prices - multi-feature example}
@@ -133,12 +137,13 @@ m & $\textbf{x}_1^{(m)}$  & $\textbf{x}_2^{(m)}$  & $\textbf{x}_2j^{(m)}$   & $\
 
 \subsubsection{Visualizing the data}
 
-Having a preliminary glance at data might give the designer an idea about the ways to tackle the problem since it is the designer to select the features, the hypothesis, and the type of cost function. It is true that the algorithms are optimizing some parameters of the hypothesis and the cost function but still the structure itself is usually supplied by a human. 
-Although there are tricks to select those in a better sense, machines still have a way to go towards Skynet.
+Having a preliminary glance at data might give the designer an idea about the ways to tackle the problem since it is the designer to select the features, the model, and the type of cost function. 
+It is true that the algorithms are optimizing some parameters of the model and the cost function but still the structure itself is usually supplied by a human. 
+Although there are tricks to select those in a better sense, machines still have a way to go towards Skynet\footnote{From movie Terminator: ``Skynet is a fictional neural net-based conscious group mind and artificial general intelligence (see also superintelligence) system that features centrally in the Terminator franchise and serves as the franchise's true main antagonist.''}.
 
 Fig.~\ref{fig:housingPrices} shows the housing price depending on the surface area corresponding to the data given in Table~\ref{arm:exampHousingPrices}.
 In this example, price of the houses are the output (target) variable given in y-axis and size (surface area in $feet^2$) is the feature (input) variable given in x-axis. 
-Since output y is price which is a continuous value (thus not a label representing a class) this problem is called a regression problem. Plotting the data given shows that the problem could to be modeled by a linear hypothesis (a linear line to fit the data given). Then linear regression can be applied.
+Since output y is price which is a continuous value (thus not a label representing a class) this problem is called a regression problem. Plotting the data given shows that the problem could to be modeled by a linear model (a linear line to fit the data given). Then linear regression can be applied.
 
 \begin{figure}
 \begin{center}
@@ -164,13 +169,14 @@ And the information about the output is represented with the colors of the sampl
 Fig.~\ref{fig:classificationEx1} shows the output vs. inputs of a classification problem. 
 This is just to show the difference between regression and classification problem figures. 
 Usually in regression problems the y-axis represents the output. 
-Here there is a direct analogy by representing a classification problem just as a regression problem, x-axis representing the input whereas y-axis representing the output. 
+Here, there is a direct analogy by representing a classification problem just as a regression problem, x-axis representing the input whereas y-axis representing the output. 
 But usually in classification problems, value of y (which class it corresponds to) is represented with different colors as in Fig.~\ref{fig:classificationEx2} or with different signs such as O and X.
 
 By just plotting the samples, in this example, it seems that logistic regression could yield satisfactory results since the data seems to be separated by a linear decision boundary. 
+A decision boundary is a curve which separates the training data examples which belongs to different classes. 
 
 It is possible to choose the model structure that would represent the problem satisfactorily via visualizing the data set when the number of features are not large.
-With an increasing number of feature set, determining the degree of the polynomial via visualizing data to represent the input output relationship could be more complicated. 
+With an increasing number of feature set, determining the degree of the polynomial via visualizing the data to represent the input output relationship could be more complicated. 
 In that case, the user should refer to model selection techniques rather than the insights gained by data visualization. 
 
 
@@ -182,18 +188,17 @@ In that case, the user should refer to model selection techniques rather than th
 \end{center}
 \end{figure}
 
-
-In case the number of feature set is small but yet the visualization gives that the model for regression or classification problem can not be represented by a linear model (or linear decision boundary) feature mapping could be applied. 
+In case the number of feature set is small but yet the visualization gives that the model for regression or classification problem can not be represented by a linear model (or linear decision boundary), feature mapping could be applied. 
 Then linear regression or logistic regression (can only fit linear models unless features are mapped) could be applied to nonlinear systems with mapped features.  
 
 \subsubsection{Feature Mapping}
 
 This section applies to problems with smaller feature sets and to fit a nonlinear model with linear or logistic regression.
-Depending on the results from visualizing data, it might be necessary to map the features since a straightforward implementation of linear / logistic regression will end up in linear model, linear decision boundary respectively. 
-So for cases that the model or decision boundary being linear will not be enough to satisfactorily describe the training data, feature mapping should be applied.
+Depending on the results from visualizing data, it might be necessary to map the features since a straightforward implementation of linear / logistic regression might result in linear model, linear decision boundary respectively. 
+So for the cases that a linear model will not be satisfactory enough to describe the training data, feature mapping should be applied.
 
 The housing price prediction problem can be revisited here to give an example on feature mapping.
-The data given in Table~\ref{arm:exampHousingPrices} and plotted in Fig.~\ref{fig:housingPrices} is a regression problem with one feature (surface area of house). 
+The data given in Table~\ref{arm:exampHousingPrices} and plotted in Fig.~\ref{fig:housingPrices} is a regression problem with one feature (surface area of house).
 To fit more accurately to the training data given, new features can be artificially added to the system as below, where the new features will be functions of the original feature.
 
 \begin{align}
@@ -226,11 +231,14 @@ x_3 & = size^3
 \end{center}
 \end{figure}
 
+By changing the model via adding features, now it is possible to fit a nonlinear curve to the training data as given in Fig.~\ref{fig:underOverFit}.
+
 Another example that requires a nonlinear model to fit the data set is microchip assessment problem.
-This example is also taken from the lecture notes of machine learning course by Andrew Ng. 
+This example is also taken from the lecture notes of machine learning course by Andrew Ng \cite{andrewNgMachLearning}. 
 This is a two class classification problem, where one class of microchips is faulty while the other class is functional.
-It is seen from the Fig.~\ref{fig:classificationEx3} that a linear decision boundary will not serve appropriately. 
-So, in order to apply logistic regression for this problem, feature mapping is necessary where an example of new feature vector could be given as
+It is seen from the Fig.~\ref{fig:classificationEx3} that a linear decision boundary will not serve appropriately to classify the data. 
+So, in order to apply logistic regression for this problem, feature mapping is necessary. 
+An example of a mapped feature vector that could give a satisfactory decision boundary to classify the two classes could be given as
 
 \begin{equation}{\label{eqn:featureMapping2}}
 \bm{x_{mapped}}
@@ -241,8 +249,8 @@ So, in order to apply logistic regression for this problem, feature mapping is n
 \,^ T
 \end{equation} 
 
-Let's take another example of binary (two-class) classification problem with 100 original features.
-Since selecting only the original features, logistic regression can fit a linear decision boundary, so the features need to be mapped.
+Mapping of the features could be done in various ways. 
+Let's take another example of binary (two-class) classification problem with 100 features, which needs a nonlinear decision boundary to achieve a satisfactory classification.
 One way to map the feature set could be such that only the quadratic terms are taken into account, which would result in a new feature set such as
  
 \begin{equation}{\label{eqn:featureMapping3}}
@@ -278,7 +286,7 @@ x_1^3 & x_1x_2x_3 & x_1^2x_2 & \cdots  & x_{11}x_{13}x_{17} & \cdots
 \begin{figure}
 \begin{center}
 \includegraphics[width=14.1cm]{figures/ml_followChart}    % The printed column width is 8.4 cm.
-\caption{Guide for feature mapping} 
+\caption{Simplified guide for feature mapping} 
 \label{fig:ml_followChart}
 \end{center}
 \end{figure}
@@ -286,7 +294,8 @@ x_1^3 & x_1x_2x_3 & x_1^2x_2 & \cdots  & x_{11}x_{13}x_{17} & \cdots
 
 It is important to point out that, with a higher dimensional feature vector, the model will tend to fit more accurately to the training set but might be poor to generalize for a new input. 
 This is called overfitting which is a common problem for many machine learning applications. 
-More explanations about overfitting and ways to overcome it will be explained in regularization section. Increasing the dimensionality of the feature, the models might become more computationally expensive as well.
+More explanations about overfitting and ways to overcome it will be explained in regularization section. 
+Increasing the dimensionality of the features, the model might become more computationally expensive as well.
 
 To fit a model or decision boundary of a circular or elliptical shape, only a subset of features can be considered such as
 
@@ -299,58 +308,21 @@ x_1^2 & x_2^2 & x_3^2 & \cdots & x_N^2
 \,^ T
 \end{equation} 
 
-Finally, when the number of features will be less, but it can not fit complex models or boundaries such as in Fig.~\ref{fig:complexBoundary}, then addition of higher terms such as given in 
+Finally, when the number of features are small, but it can not fit complex models or boundaries such as in Fig.~\ref{fig:complexBoundary}, then addition of higher terms such as given in 
 Equ.~\ref{eqn:featureMapping3} or using Neural Networks should be considered.
 A scheme to help select the strategy for mapping is given in  Fig.~\ref{fig:ml_followChart}. 
 
-\subsubsection{Selecting Model Structure}
+\subsubsection{Selecting the model}
 
-With a larger set of features, it might be difficult to have a sense of which model would be a better fit to the problem via visualizing the hypothesis. 
-During the selection of the model or assessment of the hypothesis, it is not fair to evaluate the model using the same data set.   
-Because in most cases, the model would fit very well with the data that it is trained with but not able to generalize to the new data which is the actual goal. 
-The idea is to test on different data rather than the one that the model is fitted with. 
-Assessment of the model with the data that the model is trained for will usually give better fit results but is likely to give worse results for a new data. 
+With a larger set of features, it might be difficult to have a sense of which model would be a better fit to the problem via visualizing the data. 
+In this cases, model selection techniques could be applied to decide which model will yield to a better accuracy.
 
-Specifically in model structure selection problem, there is a new parameter to fit in addition to model parameter vector $\bm{\theta}$.
-This parameter is the model structure number \emph{d}. \emph{d} can be the degree of the polynomial used as hypothesis, or could represent another hypothesis structure.
-As for the case of training and evaluating with the same data, using only two data sets and calculating the test set error with the same data that is used for selecting the model, might lead to selecting a model biased towards the data that is used selecting the model.
-So, the idea is to have different subsets of data to train the model (calculating $\theta$), to select the model structure and to evaluate the selected model structure and its corresponding parameter set. 
-In order to do that, 3 distinct data sets are needed as shown in Fig.~\ref{fig:modelSelection}, to train parameters ($\theta$), to select the model structure ($d$), and associate an error value with that choices. 
+To explain the procedure, first assume a model structure is already selected or given. 
+In such a problem, during training, training data is used to calculate the best model parameter vector $\bm{\theta}$ that would minimize the objective function, $J_{tranining}(\bm{\theta)}$.
+Then trained model is assesses with a new data set $J_{test}$ to avoid overfitting, since the evaluation would be biased in favor of the training data that the model is trained for. 
+That could lead to an optimistic view of the abilities of the learning algorithm. 
 
-Fig.~\ref{fig:modelSelection} summarizes the steps that should be followed which are explained in more detail below:
-
-\begin{enumerate}
-  \item Train the hypothesis for each model structure (d = 1,2,3 .. 10 in the example below is the degree of polynomial) by using the training set (\%60 of whole data, randomly selected) which will output the parameters of the hypothesis for the selected model.
-  \item Then by using the cross validation data set (\%20 of whole data, randomly selected) calculate cross validation error for each model and select the hypothesis with the smallest cross validation error.
-
-\begin{equation}{\label{eqn:costFuncCrossVal}}
-J_{cv}(\theta)
-=\,
-\frac{1}{2m_{cv}} \sum\limits_{i=1}^{m_{cv}} \Big(h_\theta(x_{cv}^{(i)}) - (y_{cv}^{(i)})\Big)^2  
-\end{equation} 
-
-  \item Then by using the test set (\%20 of whole data, randomly selected) estimate generalization error for the selected hypothesis.
-  
-\begin{equation}{\label{eqn:costFuncTest}}
-J_{test}(\theta)
-=\,
-\frac{1}{2m_{test}} \sum\limits_{i=1}^{m_{test}} \Big(h_\theta(x_{test}^{(i)}) - (y_{test}^{(i)})\Big)^2  
-\end{equation} 
-
-\end{enumerate}
-
-\begin{landscape}
-\begin{figure}
-\begin{center}
-%\includegraphics[width=16cm]{figures/modelSelection}    % The printed column width is 8.4 cm.
-\includegraphics[width=23cm]{figures/modelSelectionNonVisualizableData}    % The printed column width is 8.4 cm.
-\caption{Hypothesis selection guide} 
-\label{fig:modelSelection}
-\end{center}
-\end{figure}
-\end{landscape}
-
-which can also be summarized as
+In model selection technique, each model is given a number $d$ to represent the model as shown below.
 
 \begin{alignat*}{6}
 \label{eqn:exampCostFunc}
@@ -365,19 +337,59 @@ d &= 3, \quad h_{\theta}(x) \ && = \theta_0 + \theta_1 x + \theta_2 x^2 + \theta
 d &= k, \quad h_{\theta}(x) \ && = \theta_0 + \theta_1 x_1 + \cdots+ \theta_k x^k\ \ && \longrightarrow \theta^{(k)}\ \ && \quad \longrightarrow J_{cv}(\theta^{(k)})\
 \end{alignat*}
 
-Select the d which makes $J_{cv}(\theta^{(k)})$ minimum and then estimate generalization error for the test set $J_{test}(\theta^{(4)})$.
+In the previous problem of a given model structure, only model parameter vector $\bm{\theta}$ is calculated to minimize cost function $J_{tranining}(\bm{\theta)}$.
+Now, since the best model is not known, it is also necessary to find the best $d$ to minimize the cost function. 
+Since now the parameters to fit for is two, $\bm{\theta}$ and $d$, three different sets of data is necessary to evaluate, in order to avoid overfitting.
+As for the case of training and evaluating with the same data in the previous paragraph for a given model, using only two data sets and calculating the test set error with the same data that is used for selecting the model, might lead to selecting a model biased towards the data that is used selecting the model.
+ 
+So, the idea is to have different subsets of data to train the model (calculating $\theta$), to select the model structure and to evaluate the selected model structure and its corresponding parameter set. 
+In order to do that, 3 distinct data sets are needed as shown in Fig.~\ref{fig:modelSelection}, to train parameters ($\theta$), to select the model structure ($d$), and associate an error value to the chosen model. 
+Then, the model structure coined by number $d$ which makes $J_{cv}(\theta^{(d)})$ minimum is selected and its generalization is error is calculated with the test set $J_{test}(\theta^{(d)})$.
 
-\subsubsection{Scaling}
+Fig.~\ref{fig:modelSelection} summarizes the steps to be followed which are explained in more detail as
 
-The next step is to normalize the data to make the values of features change within the same order of magnitude. 
-This helps for calculation of parameters of the hypothesis via an optimization algorithm and its convergence rate.  
-Although there are different methods for normalization, a common one is
+\begin{enumerate}
+  \item Train the model for each model structure (d = 1,2,3 .. 10 in the example below is the degree of polynomial) by using the training set (\%60 of whole data, randomly selected) which will output the parameters of the model for the selected model.
+  \item Then by using the cross validation data set (\%20 of whole data, randomly selected) calculate cross validation error for each model and select the model with the smallest cross validation error.
+
+\begin{equation}{\label{eqn:costFuncCrossVal}}
+J_{cv}(\theta)
+=\,
+\frac{1}{2m_{cv}} \sum\limits_{i=1}^{m_{cv}} \Big(h_\theta(x_{cv}^{(i)}) - (y_{cv}^{(i)})\Big)^2  
+\end{equation} 
+
+  \item Then by using the test set (\%20 of whole data, randomly selected) estimate generalization error for the selected model.
+  
+\begin{equation}{\label{eqn:costFuncTest}}
+J_{test}(\theta)
+=\,
+\frac{1}{2m_{test}} \sum\limits_{i=1}^{m_{test}} \Big(h_\theta(x_{test}^{(i)}) - (y_{test}^{(i)})\Big)^2  
+\end{equation} 
+
+\end{enumerate}
+
+\begin{landscape}
+\begin{figure}
+\begin{center}
+%\includegraphics[width=16cm]{figures/modelSelection}    % The printed column width is 8.4 cm.
+\includegraphics[width=23cm]{figures/modelSelectionNonVisualizableData}    % The printed column width is 8.4 cm.
+\caption{model selection guide} 
+\label{fig:modelSelection}
+\end{center}
+\end{figure}
+\end{landscape}
+
+\subsubsection{Normalization (Scaling)}
+
+The next step is to normalize the data in order to constrain the values of features change within the same order of magnitude. 
+This helps to improve the convergence rate of the optimization algorithm during the calculation of the model parameters $\bm{\theta}$.  
+Although there are different methods for normalization, a common way is
 
 \begin{equation}{\label{eqn:scalingFeatures}}
 \bar{x}_j = \frac{x_j - \mu_j}{s_j} 
 \end{equation} 
 
-where the mean and range is given as
+where the mean $\mu_j$ and range $s_j$ is given as
 
 \begin{align}
 \label{eqn:meandAndRange}
@@ -388,12 +400,13 @@ s_j & = max(x_j) - min(x_j)
 \end{split}
 \end{align}
 
-An important point is to keep that values $\mu_j, s_j$ and may be standard deviation in case it is preferred to range $s_j$. 
-During prediction phase, the data first should be scaled with these values attained from learning data.
+An important point is to keep that values $\mu_j$ and $s_j$ (or standard deviation in cases it is preferred instead of range $s_j$). 
+Those values are saved since they will also be used to scale the new inputs during the prediction phase.
 
 \subsubsection{Add Artificial Feature}
 
-To write the hypothesis in vectorized form to accommodate larger feature sets and more complex hypothesis, feature vector is defined as
+The model can be written in a vectorized form to accommodate larger feature sets in a more compact form.
+To explain how, a feature vector is defined as
 
 \begin{equation}{\label{eqn:featureVector}}
 \vec{\bm{x}}
@@ -414,7 +427,7 @@ where $x_0 = 1$. Fig.~\ref{fig:addArtificialFeature} shows the addition of the a
 \end{center}
 \end{figure}
 
-Also parameters of the hypothesis is given in vectorial form such as
+Also parameters of the model is given in vectorial form such as
 
 \begin{equation}{\label{eqn:parameterVector}}
 \vec{\bm{\theta}}
@@ -425,31 +438,33 @@ Also parameters of the hypothesis is given in vectorial form such as
 \,^T
 \end{equation} 
 
-So for the linear regression problem with a single feature where hypothesis is given as
+So for the linear regression problem with a single feature, the model is given as
 
 \begin{equation}{\label{eqn:costFuncOneFeature}}
 h_{\theta}(x) = \theta_0 + \theta_1 x_1
 \end{equation} 
 
-and also for $n$ features
+and the model for $n$ features
 
 \begin{equation}{\label{eqn:costFuncMltplFeature}}
 h_{\theta}(x) = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \cdots+ \theta_n x_n
 \end{equation}
 
-with the introduced vectorial form, the hypothesis can be denoted in its compact generic form such as 
+Introducing the vectorial forms of $\vec{\bm{x}}$ and $\vec{\bm{\theta}}$ enables the model to be written in compact generic form such as 
 
 \begin{equation}{\label{eqn:costFuncMltplFeature}}
 h_{\theta}(x) = {\vec{\bm{\theta}}}^\intercal \vec{\bm{x}}
 \end{equation}
 
+In this context, vectors have been represented with an arrow to emphasize that they are vectors, although in the rest of the thesis, vectors and matrices are given in bold.
+
 \subsubsection{Selection of the Cost Function}
 
-Cost function and the gradient are usually the inputs of the optimization algorithms to calculate the optimized $\theta$ values in order to fit a model or a decision boundary by using the data set given. 
-The selection of cost function is another issue but for standard applications there are widely used cost functions for each type of machine learning (e.g linear regression, logistic regression). 
-Examples of cost functions are given below. 
+To calculate $\theta$ that will fit a better model to the training data, optimization algorithms are used.
+Usually, cost function and its gradient are given to the optimization algorithm as an input. 
+Here, widely used cost functions for linear regression (regression problem) and logistic regression (classification problem) are given. 
 
-Cost function for Linear Regression 
+Cost function for linear regression can be given as
 
 \begin{equation}{\label{eqn:costFuncLinearRegression}}
 J(\theta)
@@ -457,7 +472,7 @@ J(\theta)
 \frac{1}{2m} \sum\limits_{i=1}^{m} \Big(h_\theta(x^{(i)}) - (y^{(i)})\Big)^2  
 \end{equation} 
 
-Cost function for Logistic Regression (Classification) - a subcase of two class e.g $y \in \{0,1\}$ . 
+and the cost function for logistic regression (classification) is given for two class classification problem (e.g $y \in \{0,1\}$) as 
 
 \begin{equation}{\label{eqn:costFuncLogisticRegression}}
 J(\theta)
@@ -465,42 +480,26 @@ J(\theta)
 \frac{1}{m} \sum\limits_{i=1}^{m} \Big[-y^{(i)}log(h_\theta(x^{(i)})) - (1-(y^{(i)}))log(1-h_\theta(x^{(i)}))\Big]
 \end{equation} 
 
-\subsubsection{Modify the Cost Function by Adding Regularization Term}
+\subsubsection{Training and Evaluating of the classifier}
 
-Regularization is done to avoid overfitting which is common for complicated models or decision boundaries such as having high order polynomial terms as below;
+Here, it is assumed that we have selected one model and train the parameters of only this model selected. 
+If multiple models are going to be evaluated, this training phase will be applied to all different models. 
+Then, the selection of the best model should be done as already explained under \emph{Selecting the model} section.  
 
-\begin{equation}{\label{eqn:featureMapping2}}
-\bm{x_{mapped}}
-=\,
-\begin{bmatrix}
-1 & x_1 & x_2 & x_1^2 & x_1x_2 & x_2^2 & x_1^3 \cdots & x_1x_2^5 & x_2^6 
-\end{bmatrix}
-\,^ T
-\end{equation} 
-
-Overfitting might end up fitting very well with the training set, but fail to generalize to the new data for the prediction phase. 
-This means that the training set error is not a good predictor for how well the hypothesis would do on new examples.
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=16cm]{figures/underOverFit}    % The printed column width is 8.4 cm.
-\caption{Underfitting, just right or overfitting examples - left to right} 
-\label{fig:underOverFit}
-\end{center}
-\end{figure}
-
-Fig.~\ref{fig:underOverFit} shows a system where it is easy to realize that the hypothesis is underfit, just right or overfit since there is only one feature (plot and see). 
-But for problems with more features, it might not be that obvious or even not possible to plot and understand that the hypothesis is overfit or not. For that cases the standard way to evaluate the hypothesis
+Before the training phase, the data should be split into two parts: training and test sets.
+Then, the parameters $\bm{\theta}$ is learnt using the training data. 
+Finally, the classifier trained is evaluated calculating the test set error using the test set.
+Those steps are given in more detail as follows:
  
  \begin{enumerate}
  
-  \item Split the data set to two parts (\%30 for the test set - \%70 for the training set). 
-  Note that if the data set is randomly ordered than you can use the first \%70 for training and the rest for test, but if your data is not randomly ordered (data set is dependent on time or any kind of pattern in between the data set) \%70 - \%30 should be selected ramdomly.
+  \item Split the data set to two parts (30\% for the test set - 70\% for the training set). 
+  Note that if the data set is randomly ordered, than the first 70\% can be used for training and the rest for test, but if the data is not randomly ordered (data set is dependent on time or any kind of pattern in between the data set) 70\% - 30\% should be selected randomly.
   
-  \item Learn parameters $\bm{\theta}$ from the new training set (\% 70 of the whole data set).
+  \item Learn parameters $\bm{\theta}$ from the new training set (70\% of the whole data set). This step is further explained under \emph{Calculating parameters $\theta$} section.
 
-  \item Calculate the test set error by using test set (\%30 of whole data) with the parameters learnt by utilizing training set (\% 70 of the whole data).\\
-  For linear regression the test set error is the cost function evaluated by the test set $(x_{test}(i), y_{test}(i))$ pairs and the parameters trained by utilizing the training set (\% 70 of the whole data)
+  \item Calculate the test set error by using test set (30\% of whole data) with the parameters learnt by utilizing training set (70\% of the whole data).\\
+  For linear regression the test set error is the cost function evaluated by the test set $(x_{test}(i), y_{test}(i))$ pairs and the parameters trained by utilizing the training set $(x_{train}(i), y_{train}(i))$ and can be given as
 	
 	\begin{equation}{\label{eqn:costFuncTest}}
 	J_{test}(\theta)
@@ -516,13 +515,15 @@ But for problems with more features, it might not be that obvious or even not po
 	-\frac{1}{m_{test}} \sum\limits_{i=1}^{m_{test}} \Big[y_{test}^{(i)}\,log(\ h_\theta(\ x_{test}^{(i)})) + (1-(y_{test}^{(i)}))\,log(\ h_\theta(\ x_{test}^{(i)}))\Big]
 	\end{equation} 
 	
-	or the misclassification error (0/1 misclassification error)
+	Sometimes misclassification error (0/1 misclassification error), given in \ref{eqn:errorMisclassificationError}, is used instead of \ref{eqn:costFuncLogisticRegressionModified}
 	
 	\begin{equation}{\label{eqn:errorMisclassificationError}}
 	 test\ error
 	=\,
 	\frac{1}{m_{test}} \sum\limits_{i=1}^{m_{test}} \Big(err(\ h_\theta(\ x_{test}^{(i)}), (y_{test}^{(i)})\Big)  
-	\end{equation} 
+	\end{equation}
+	
+	where the error function is given as
 
 	\begin{equation}{\label{eqn:misclassificationError}}
 	  err(h_{theta}(x),y)=\begin{cases}
@@ -531,60 +532,20 @@ But for problems with more features, it might not be that obvious or even not po
             \end{cases}
 	\end{equation} 
 
-are used most commonly.
 \end{enumerate}
 
-Fig.~\ref{fig:overfittingRealization} visualizes and summarizes the procedure explained above.
-
-The difference between calculating the test set error for overfitting (to distinguish if the model is overfit or not) and calculating the test set error for model structure selection is that the data set is split to 2 and 3 respectively since there is another parameter (\emph{d}) to select. 
+Fig.~\ref{fig:trainingAndEvaluation} visualizes and summarizes the procedure explained above.
 
 \begin{landscape}
 \begin{figure}
 \begin{center}
 \includegraphics[width=17cm]{figures/overfittingRealization}    % The printed column width is 8.4 cm.
-\caption{Procedure to detect overfitting} 
-\label{fig:overfittingRealization}
+\caption{Training and evaluating the classifier} 
+\label{fig:trainingAndEvaluation}
 \end{center}
 \end{figure}
 \end{landscape}
 
-
-\textbf{Regularization}
-
-To avoid overfitting by regularization, a term is added to cost function to penalize parameters $\vec{\bm{\theta}}$ for being large (i.e to make $\vec{\bm{\theta}}$ as small as possible), except ${\theta}_0$ (is not penalized by convention). Cost function for linear regression with the added term for regularization is given as
-
-\begin{equation}{\label{eqn:costFuncRegularized}}
-J(\theta)
-=\,
-\frac{1}{2m} \bigg[ \sum\limits_{i=1}^{m} \Big(h_\theta(x^{(i)}) - (y^{(i)})\Big)^2 +\lambda \sum\limits_{j=1}^{n} \theta_j^2 \bigg] 
-\end{equation} 
-
-For logistic regression the regularized cost function can be written as (for two class e.g $y \in \{0,1\}$)
-
-\begin{equation}{\label{eqn:costFuncLogisticRegression}}
-J(\theta)
-=\,
-\frac{1}{m} \sum\limits_{i=1}^{m} \Big[-y^{(i)}log(h_\theta(x^{(i)})) - (1-(y^{(i)}))log(1-h_\theta(x^{(i)}))\Big] +\frac{\lambda}{2m} \sum\limits_{j=1}^{n} \theta_j^2
-\end{equation} 
-
-Here, the challenge is to find the appropriate value for $\lambda$ which serves like a weight between the original part of the cost function and the second part, which penalizes theta vector for being larger. 
-So it tends to decrease the values of $\theta$. But if this lambda is too big than it then the hypothesis converges to  
-
-\begin{equation}{\label{eqn:costFuncRegularizedTooMuch}}
-h_\theta(x)
-=\,
-\theta_0 
-\end{equation} 
-
-since all terms are penalized except $\theta_0$ (which is not penalized by convention) such that
-
-\begin{equation}{\label{eqn:costFuncRegularizedTooMuchHow}}
-h_\theta(x)
-=\,
-\theta_0 + \xcancel{\theta_1 x}  + \xcancel{\theta_2 x^2}  + \xcancel{\theta_2 x^3}  + \cdots + \xcancel{\theta_n x^n}
-\end{equation} 
-
-Thus the hypothesis becomes underfit for large values of $\lambda$ thus should be tuned to acquire the optimal value.
 
 \subsubsection{Calculating parameters $\bm{\theta}$}
 
@@ -600,13 +561,14 @@ For the case of a simplified one feature example, the minimization problem can b
 \underaccent{{\displaystyle \theta_0, \theta_1}}{min} \ J(\theta_0,\theta_1)
 \end{equation} 
 
-To achieve this minimization problem, there are a variety of algorithms having different properties. 
-One of the easiest is gradient descent method which is selected to be mentioned here due to its simplicity.  Others include but not limited to conjugate gradient, BFGS, L-BFGS. 
-Most of them requires the cost function and its gradient to minimize the cost function. 
+To achieve this minimization problem, there are a variety of algorithms available. 
+One of the most common is gradient descent method which is selected to be mentioned here due to its simplicity.  
+Others include but not limited to conjugate gradient, BFGS (Broyden-Fletcher-Goldfarb-Shannon) algorithm, and L-BFGS (Limited-memory BFGS). 
+They usually require the cost function and its gradient in order to calculate the best $\bm{\theta}$ values.
 
 \textbf{Gradient Descent}
 
-The gradient descent algorithm will be presented for one feature example due to its simplicity for a linear regression model given in Equ.~\ref{eqn:linearRegressionTwoFeaturesSummary}
+The gradient descent will be presented for one feature problem due to its simplicity. Here a linear regression problem is considered, where its hypothesis (model) and cost function is given in Equ.~\ref{eqn:linearRegressionTwoFeaturesSummary}
 
 \begin{align}
 \label{eqn:linearRegressionTwoFeaturesSummary}
@@ -619,7 +581,9 @@ J(\theta_1,\theta_2)
 \end{split}
 \end{align}
 
-The gradient descent algorithm for one feature and also for generic case are given below. 
+\clearpage
+
+The gradient descent algorithm for one feature is given as 
 
  \begin{algorithm}
    \caption{Gradient Descent for one feature only}
@@ -667,6 +631,26 @@ Number of iterations, $num\_iter$ is also a parameter to be chosen.
 As a start, conventionally it can be selected as $num\_iter = 1000$ and then, convergence of the cost function should be checked. 
 If it has not yet converged but decreasing, a larger value for $num\_iter$ should be selected.
 
+An important point in the algorithm is to update the $\bm{\theta}$ simultaneously. 
+So during one iteration, the same $\bm{\theta}$ values should be substituted into $h_\theta(x)$, in order to calculate next values of $\theta_0, \theta_1$.
+ 
+Convergence of gradient descent can be debugged by plotting the cost function as a function of iterations of the optimization.
+In the preferred case, the cost function should decrease in each iteration, never increase, and should converge to a steady value at the end of the optimization algorithm. 
+Fig.~\ref{fig:visualizeCostFunc} shows two poor and one successful optimization by plotting the cost function versus iteration. 
+
+\begin{figure}[hbt]
+\begin{center}
+\includegraphics[width=15cm]{figures/visualizeCostFunc}    % The printed column width is 8.4 cm.
+\caption{Evolution of $J(\theta)$ with respect to number of iterations. Left two figures showing that the optimization problem is not converging. The figure in the far right is the $J(\theta)$ evolution expected} 
+\label{fig:visualizeCostFunc}
+\end{center}
+\end{figure}
+
+Usually, it is a good practice to declare convergence when $J(\theta)$ decreases by less than $10^{-3}$ in one iteration. 
+In case, gradient descent is not converging, a smaller $\alpha$ should be tried. 
+But too small values of $\alpha$ could result in a slow convergence. 
+
+And finally, generic gradient descent algorithm for multiple features can be given as below.
 
  \begin{algorithm}
    \caption{Gradient Descent}
@@ -693,31 +677,79 @@ If it has not yet converged but decreasing, a larger value for $num\_iter$ shoul
 \end{algorithmic}
 \end{algorithm}
 
-An important point in the algorithm is to update the $\bm{\theta}$ simultaneously. 
-So during one iteration, the same $\bm{\theta}$ values should be substituted into $h_\theta(x)$, in order to calculate next values of $\theta_0, \theta_1$.
- 
-Convergence of gradient descent can be debugged by plotting the cost function as a function of iterations of the optimization.
-In the preferred case, the plot should be decreasing, never increase, and converging to a steady value at the end of the optimization algorithm. 
-Fig.~\ref{fig:visualizeCostFunc} shows two poor and one successful optimization by plotting the cost function versus iteration. 
+\subsubsection{Overfitting}
 
-Usually, it is a good practice to declare convergence when $J(\theta)$ decreases by less than $10^{-3}$ in one iteration. 
-In case, gradient descent is not converging, a smaller $\alpha$ should be tried. 
-But too small values of $\alpha$ could result in a slow convergence. 
+Overfitting is common for complicated models or decision boundaries with high order polynomial terms as
 
+\begin{equation}{\label{eqn:featureMapping2}}
+\bm{x_{mapped}}
+=\,
+\begin{bmatrix}
+1 & x_1 & x_2 & x_1^2 & x_1x_2 & x_2^2 & x_1^3 \cdots & x_1x_2^5 & x_2^6 
+\end{bmatrix}
+\,^ T
+\end{equation} 
+
+If the model is suffering from overfitting, the learnt model might end up fitting very well to the training set, but fail to generalize to the new data during the prediction phase. 
+This means that the training set error is not a good predictor for how well the model would predict on new examples.
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=15cm]{figures/visualizeCostFunc}    % The printed column width is 8.4 cm.
-\caption{Evolution of $J(\theta)$ with respect to number of iterations. Left two figures showing that the optimization problem is not converging. The figure in the far right is the $J(\theta)$ evolution expected} 
-\label{fig:visualizeCostFunc}
+\includegraphics[width=16cm]{figures/underOverFit}    % The printed column width is 8.4 cm.
+\caption{Underfitting, just right or overfitting examples - left to right} 
+\label{fig:underOverFit}
 \end{center}
 \end{figure}
 
+Fig.~\ref{fig:underOverFit} show three models where it is easy to realize that the model is underfit, just right or overfit by visualizing the hypothesis. 
+But for problems with more features it might not be that obvious. Sometimes it might not even be possible to plot the model to realize if it is overfit or not.
+For such cases, methods to detect overfitting should be used. 
+To avoid overfitting, regularization parameter is used as explained in the next section.
+
+\textbf{Regularization}
+
+Regularization is practiced to avoid overfitting.
+In regularization, a term is added to the cost function in order to penalize parameters $\vec{\bm{\theta}}$ for being large (i.e to make $\vec{\bm{\theta}}$ as small as possible), except ${\theta}_0$ (is not penalized by convention). Cost function for linear regression with the added term for regularization is given as
+
+\begin{equation}{\label{eqn:costFuncRegularized}}
+J(\theta)
+=\,
+\frac{1}{2m} \bigg[ \sum\limits_{i=1}^{m} \Big(h_\theta(x^{(i)}) - (y^{(i)})\Big)^2 +\lambda \sum\limits_{j=1}^{n} \theta_j^2 \bigg] 
+\end{equation} 
+
+For logistic regression the regularized cost function can be written as (for two class e.g $y \in \{0,1\}$)
+
+\begin{equation}{\label{eqn:costFuncLogisticRegression}}
+J(\theta)
+=\,
+\frac{1}{m} \sum\limits_{i=1}^{m} \Big[-y^{(i)}log(h_\theta(x^{(i)})) - (1-(y^{(i)}))log(1-h_\theta(x^{(i)}))\Big] +\frac{\lambda}{2m} \sum\limits_{j=1}^{n} \theta_j^2
+\end{equation} 
+
+Here, the challenge is to find the appropriate value for $\lambda$ which serves like a weight between the original part of the cost function and the second part, which penalizes $\bm{\theta}$ for being large. 
+So it tends to decrease the values of $\theta$. But if this lambda is too big than it then the model converges to  
+
+\begin{equation}{\label{eqn:costFuncRegularizedTooMuch}}
+h_\theta(x)
+=\,
+\theta_0 
+\end{equation} 
+
+since all terms are penalized except $\theta_0$ (which is not penalized by convention) such that
+
+\begin{equation}{\label{eqn:costFuncRegularizedTooMuchHow}}
+h_\theta(x)
+=\,
+\theta_0 + \xcancel{\theta_1 x}  + \xcancel{\theta_2 x^2}  + \xcancel{\theta_2 x^3}  + \cdots + \xcancel{\theta_n x^n}
+\end{equation} 
+
+Thus the model becomes underfit for large values of $\lambda$, thus should be tuned to acquire the optimal value.
+
+
 \subsubsection{Visualizing error to diagnose over-fit/under-fit problems}
 
-To further debug the hypothesis, a guide is given in Fig.~\ref{fig:debuggingHypothesis}. 
+To further debug the model, a guide is given in Fig.~\ref{fig:debuggingHypothesis}. 
 Here, the error for training and cross validation sets has to be calculated for a variety of polynomial degree or regularization parameter. 
-When training and cross-validation errors are plotted as a function of polynomial degree (or complexity of hypothesis), a larger training and cross-validation error point toward a under-fit (high bias) hypothesis while a large cross-validation and low training error point an over-fit hypothesis (high variance) where training and cross validation errors are given as
+When training and cross-validation errors are plotted as a function of polynomial degree (or complexity of model), a larger training and cross-validation error point toward a under-fit (high bias) model while a large cross-validation and low training error point an over-fit model (high variance) where training and cross validation errors are given as
 
 \begin{equation}{\label{eqn:trainingError}}
 J_{training}(\theta)
@@ -870,10 +902,10 @@ This data set is saved in $\bm{X} \in {\rm I\!R^{m \times n}}  $ where $m,n$ cor
 The label information corresponding to the measurement instances is also fed to the SVM algorithm during the training phase as output vector $\bm{y} \in \{-1,1\}$. 
 
 The next step is to normalize the features of the data to make the values of features change with the same order of magnitude. 
-The reason is due to its benefits to the calculation of parameters of the hypothesis via an optimization algorithm and its convergence rate.  
+The reason is due to its benefits to the calculation of parameters of the model via an optimization algorithm and its convergence rate.  
 An important point is to keep that values $\mu_j, s_j$ and may be standard deviation if it is used instead of range $s_j$. 
 During prediction phase, the data first should be scaled with these values attained from learning data.
-If in the hypothesis artificial feature  $x_0 = 1$ is added to the features, do not apply scaling to the artificial feature, but this does not apply to SVM classification.
+If in the model artificial feature  $x_0 = 1$ is added to the features, do not apply scaling to the artificial feature, but this does not apply to SVM classification.
 
 The aim of SVM is to find an optimal hyperplane maximizing the margin by solving the optimization problem for non-linearly separable datasets. 
 SVM implements the idea of having a confidence in the prediction by using the concept of separating data with large margin. 
