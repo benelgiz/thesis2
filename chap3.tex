@@ -27,12 +27,12 @@ A force applied at a distance from the center of mass causes a rotation.
 A very common approach during aircraft control studies is to balance those rotations, by trimming the aircraft, such that the aircraft will not rotate.
 
 In this section, attitude motion is represented with kinematic and dynamics equations. 
-First different parametrization of attitude, such as euler angles and quaternions, are discussed. 
+First different parametrization of attitude, such as Euler angles and quaternions, are discussed. 
 Then kinematic and dynamic equations of attitude motion are derived for a general rigid body. 
 These equations are later specified for the aircraft as the rigid body of interest. 
 
 \subsection{Attitude representations}
-Let us say triad $b_1, b_2, b_3$ of unit vectors representing an orthogonal coordinate system is attached to a rigid body, such that
+Let us say triad $\bm{b_1}, \bm{b_2}, \bm{b_3}$ of unit vectors representing an orthogonal coordinate system is attached to a rigid body such that
 
 \begin{equation}
 \label{eqn:unitVectors}
@@ -47,7 +47,7 @@ Problem of representing attitude can simply be thought of specifying the orienta
 %\includegraphics[width=8.3cm]{figures/theTwoFrames}    % The printed column width is 8.4 cm.
 \includegraphics[width=13cm]{figures/DarkoAxesElgiz}    % The printed column width is 8.4 cm.
 \caption{Attitude representation is simply specifying the orientation of 
-aircraft body axes $b_1, b_2, b_3$ in the reference frame A} 
+aircraft body axes $\bm{b_1}, \bm{b_2}, \bm{b_3}$ in the reference frame A} 
 \label{fig:theTwoFrames}
 \end{center}
 \end{figure}
@@ -113,6 +113,7 @@ and
 \bm{C}\bm{C}^{\rm T} = \bm{C}^{\rm T}\bm{C} = \mathds{1}
 \end{equation}
 
+Where $\mathds{1}$ is the identity matrix.
 When the orientation is preserved, an additional condition occurs
 
 \begin{equation}
@@ -253,7 +254,10 @@ denotes a rotation of angle $\theta_{i}$, about the $i^{th}$ axis of the body fr
 \end{split}
 \end{align}
 
-If the set of rotations is selected in a different way, such as 
+Rotation sequence can be selected in different ways depending on the needs of the problem. 
+An example would be selecting rotation sequence for a transitioning vehicle. The assumption that the pitch angle having the constraint $0<\theta<90^\circ$ for a conventional drone to avoid singularity, is not really feasible for a transitioning vehicle which encounters $-90<\theta<90$ pitch during whole flight envelope. So for such a problem, selecting the sequence as yaw-roll-pitch rather than the conventional yaw-pitch-roll sequence is useful. 
+
+So for such a reason, if the set of rotations are selected in a different way, such as 
 
 \begin{align}
 \label{eqn:sequence2}
@@ -266,7 +270,7 @@ If the set of rotations is selected in a different way, such as
 \end{split}
 \end{align}
 
-then the direction cosine matrix would differ from the previous one.
+then the direction cosine matrix would differ from Eq.~\ref{eqn:C_B_AmatrixEuler}.
 
 For aircrafts, the Euler angles are called pitch, yaw and roll and can be seen in Fig.~\ref{fig:eulerAngSequence}.
 
@@ -311,7 +315,7 @@ $\bm{e}$ vector has the same components in body and reference frames such that
 \end{align}
  
 Rotating a rigid body about this axis $\bm{e}$, rotation from any given orientation to any other orientation can be achieved. 
-Such a rotation is named after the Swiss mathematician and theoretical physicist Leonard Euler (1707-1783), \emph{Euler axis}.
+Such an axis is called  \emph{Euler axis}, after the Swiss mathematician and theoretical physicist Leonard Euler (1707-1783).
 
 \emph{Euler symmetric parameters}, also known as \emph{quaternions}, are defined as:
  
@@ -788,7 +792,7 @@ In Fig.\ref{fig:attDyn1}, $\bm{r}$ is the position vector of $dm$ relative to O,
 \begin{figure}
 \begin{center}
 \includegraphics[width=10cm]{figures/attDyn2}    % The printed column width is 8.4 cm.
-\caption{Rigid body rotating about an arbitrary point O, given in the N frame} 
+\caption{Body frame B attached to the rigid body, given in the inertial frame N} 
 \label{fig:attDyn2}
 \end{center}
 \end{figure}
@@ -798,7 +802,7 @@ In Fig. \ref{fig:attDyn2}, $\bm{\rho}$  is the position vector of $dm$ mass with
 
 The angular velocity of the rigid body in the inertial frame N is denoted as $\bm{\omega} \equiv \bm{\omega}_B^{B/N}$. 
 It represents the angular velocity of the body frame B with respect to inertial frame N given in the body frame B. 
-Angular momentum vector $\bm{H}$ a rigid body about its center of mass given as,
+Angular momentum vector $\bm{H}$ of a rigid body about its center of mass given as,
 
 \begin{equation}{\label{eqn:kinematicEquDQM}}
 \bm{H} = \int \bm{\rho} \times \dot{\bm{R}} dm
@@ -813,7 +817,7 @@ Since $\bm{R}_C$ is constant
 And from rigidity of the body,
 
 \begin{equation}{\label{eqn:kinematicEquDQM}}
-\dot{\bm{\rho}} \equiv \bigg\{ \frac{d\bm{\rho}}{dt} \bigg\}_N = \bigg\{ \frac{d\bm{\rho}}{dt} \bigg\}_B + \bm{\omega} \times \bm{\rho} = \bm{\omega} \times \bm{\rho}
+\dot{\bm{\rho}} \equiv \bigg\{ \frac{d\bm{\rho}}{dt} \bigg\}_N = {\cancel{\bigg\{ \frac{d\bm{\rho}}{dt} \bigg\}}}_B + \bm{\omega} \times \bm{\rho} = \bm{\omega} \times \bm{\rho}
 \end{equation}
 
 Then the angular momentum is given as;
@@ -940,7 +944,7 @@ Time change of the position of the aircraft $\bm{x}_N$ expressed in the navigati
 \begin{split}
 \dot{\bm{x}}_N & = \frac{d}{dt} \big( \bm{x}_N \big) \\
                         & = \frac{d}{dt} \big(\bm{C}_B^N \bm{x}_B \big) \\
-                        & = \dot{\bm{C}}_B^N \bm{x}_B + \bm{C}_B^N  \dot{\bm{x}}_b \\
+                        & = \dot{\bm{C}}_B^N \bm{x}_B + \bm{C}_B^N  \dot{\bm{x}}_B \\
                         & = \bm{C}_B^N \bm{v}_B
 \end{split}
 \end{align}
@@ -963,6 +967,7 @@ w\\[0.2em]
 \end{bmatrix}
 \end{equation}
 
+Here, $\bm{v}_B = [u \quad v \quad w]^T$ is the inertial velocity of the center of mass of the body expressed in the body frame $B$. $N$ is assumed to be a local inertial frame.
 As mentioned before, the sequence of the transformation between frames effects the final transformation matrix so does the attitude kinematics equation. 
 In the course of the study, the sequence is assumed to be yaw - pitch - roll and the corresponding transformation matrix from the navigation frame to body-fixed frame is given in Eq. ~\ref{eqn:C_NtoB}.
 
@@ -1002,7 +1007,7 @@ To represent time derivation in the inertial frame in terms of time derivation i
 Substituting Eq. ~\ref{eqn:newtonsDerivationFrameDependency} in Eq. ~\ref{eqn:newtonsSecondLaw} and then projecting the vector variables in the body frame as well as assuming mass is constant give
 
 
- \begin{equation}{\label{eqn:newtonsSecondLaw}}
+ \begin{equation}{\label{eqn:newtonsSecondLaw2}}
 \frac{1}{m} \bigg( \sum_j \bm{F}_{B_j} \bigg)= \left. \frac{d\big(\bm{v}_B \big)}{dt}  \right|_B + \bm{\omega}_B^{B/I} \times \bm{v}_B
 \end{equation}
 
@@ -1161,7 +1166,7 @@ Here $L_b$ is the roll torque, $M_b$ is the pitch torque, and $N_b$ is the yaw t
 The stability derivatives required to calculate the moments are given under Table~\ref{arm:MAKOstabilityDeriv} for MAKO and under Table~\ref{arm:ethcraftStabilityDeriv}. 
 Those values for ETH drone are taken from \cite{ducard2009fault} while for MAKO they are calculated via AVL. 
 AVL is an open source program developed at MIT and uses vortex-lattice method for the aerodynamic and stability calculations.
-The output of the program is linearized at a selected condition, therefore all the coefficients are calculated around the equilibrium point at $14m/s$ cruise flight condition.
+The output of the program is linearized at a selected trim condition, therefore all the coefficients are calculated around the equilibrium point at $14m/s$ cruise flight condition.
 The center of gravity is located at $X_{CG}= 0.295\,m$, which corresponds to a $8\,\%$ of positive static margin that has been flight tested. %FIXME we have to check if we used modified AVL with viscous add-on or not...
 
 \subsubsection{Roll torque}
@@ -1234,6 +1239,7 @@ $C_{M_0}$ 			     & $\ \ \, 0$  &  pitch derivative \\\hline
 $C_{M_e}$ 			     & $-0.076 \times 10^{-1}$  &  pitch derivative \\\hline
 $C_{M_{\tilde{q}}} $               & $-1.6834$	                            & pitch derivative \\\hline
 $C_{M_\alpha} $                    & $-32.34 \times 10^{-2}$ 	   & pitch derivative \\\hline
+$C_{N_0}$                             & $\ \ \, 0$              	   & yaw derivative \\\hline
 $C_{N_a}$                             & $-0.0126 \times 10^{-2}$	   & yaw derivative \\\hline
 $C_{N_{\tilde{p}}}$                 & $-4.139 \times 10^{-2}$ 	   & yaw derivative \\\hline
 $C_{N_{\tilde{r}}}$                 & $-0.1002 \times 10^{-1}$	   & yaw derivative \\\hline
@@ -1369,7 +1375,7 @@ C_M = C_{M_{1}} + C_{M_{a1}} \, \delta_{a1} + C_{M_{a2}} \, \delta_{a2} + C_{M_{
 and for MAKO
 
 \begin{equation}{\label{eqn:makoC_M}}
-C_M =  C_{M_{e}} \, \delta_{e} + C_{M_{\tilde{q}}} \, \tilde{q} +  C_{M_\alpha} \, \alpha 
+C_M =  C_{M_{0}} + C_{M_{e}} \, \delta_{e} + C_{M_{\tilde{q}}} \, \tilde{q} +  C_{M_\alpha} \, \alpha 
 \end{equation}
 
 where the variables not introduced up to now are the dimensionless roll rate $\tilde{q}$, elevator deflection $\delta_{e}$ and angle of attack $\alpha$. Angle of attack $\alpha$ is defined as the angle between the projection of the airspeed vector $\bm{V_T}$ onto the $x_b-z_b$ plane and $x_b$ axis as can be seen in Fig.~\ref{fig:windFrame}, and calculated as
@@ -1395,7 +1401,7 @@ C_N= C_{N_{\delta r}} \, \delta_{r} + C_{N_{\tilde{r}}} \, \tilde{r} +  C_{N_\be
 and for the MAKO
 
 \begin{equation}{\label{eqn:makoC_N}}
-C_N= C_{N_{a}} \, \delta_{a} + C_{N_{\tilde{p}}} \, \tilde{p} + C_{N_{\tilde{r}}} \, \tilde{r} +  C_{N_\beta} \, \beta 
+C_N= C_{N_{0}} + C_{N_{a}} \, \delta_{a} + C_{N_{\tilde{p}}} \, \tilde{p} + C_{N_{\tilde{r}}} \, \tilde{r} +  C_{N_\beta} \, \beta 
 \end{equation}
 
 where $\bar{q}$ is the dynamic pressure, $V_T$ is the total airspeed of the aircraft, $\rho$ is the air density, $S$ is the wing total surface, $b$ is the wing span, and $\bar{c}$ mean aerodynamic wing chord. 
@@ -1447,7 +1453,7 @@ X^w = \bar{q} \, S \, C_{Z}(\alpha, \beta)
 and the dimensionless drag coefficient for MAKO \cite{bronz2016aerodynamic}
 
 \begin{equation}{\label{eqn:dragCoeffMAKO}}
-C_X(\alpha) = C_{X_1} + C_{X_k} \, C_Z^2 = C_{X_1} + C_{X_k} \, (C_{Z_1} + C_{Z_{\alpha}} \alpha )^2
+C_X(\alpha) = C_{X_0} + C_{X_k} \, C_Z^2 = C_{X_0} + C_{X_k} \, (C_{Z_0} + C_{Z_{\alpha}} \alpha )^2
 \end{equation}
 
 %%%% LATERAL FORCE %%%%
@@ -1553,7 +1559,7 @@ $D$                                 & $\ \ \, 0.79 \, m$                        
 The dimensionless thrust coefficient for MAKO is given as \cite{bronz2017flight}
 
 \begin{equation}{\label{eqn:thrustCoefMAKO}}
-C_{F_T} = C_{F_{T1}} + C_{F_{T2}} J^\prime + C_{F_{T_{rpm}}} \frac{n}{60} 
+C_{F_T} = C_{F_{T1}} + C_{F_{T2}} \cdot J^\prime + C_{F_{T_{rpm}}} \cdot n \cdot 60 
 \end{equation}
 
 with advance ratio
@@ -1584,14 +1590,14 @@ After the derivation of the aircraft flight kinematics \& dynamics for translati
 \begin{align}{\label{eqn:compactEquOfMotion}}
 \begin{split}
 \dot{\bm{x}}_{N} &= \bm{C}_B^N \bm{v}_B\\
-\dot{\bm{v}}_B &= \frac{1}{m} \big[ m \bm{g}_B + \bm{F}_{t_B} + \bm{F}_{a_B} \big] - {\bm{\omega}_{B/N}^B}^\times \bm{v}_B  \\
-\dot{q}_0 &= -\frac{1}{2} \bm{q}_\nu^T \bm{\omega}_{B/N}^B\\
-\dot{\bm{q}}_\nu &= \frac{1}{2}\Big(\bm{q}_\nu^\times + q_0 \bm{I}_3 \Big) \bm{\omega}_{B/N}^B \\
-\bm{J} \dot{\bm{\omega}}_{B/N}^B &= \bm{M}_B - {\bm{\omega}_{B/N}^B}^\times \bm{J} \bm{\omega}_{B/N}^B\\
+\dot{\bm{v}}_B &= \frac{1}{m} \big[ m \bm{g}_B + \bm{F}_{t_B} + \bm{F}_{a_B} \big] - {\big[ {\bm{\omega}^{B/N}_B} \big] }^\times \bm{v}_B  \\
+\dot{q}_0 &= -\frac{1}{2} \bm{q}_\nu^T \bm{\omega}^{B/N}_B\\
+\dot{\bm{q}}_\nu &= \frac{1}{2}\Big(\bm{q}_\nu^\times + q_0 \bm{I}_3 \Big) \bm{\omega}^{B/N}_B \\
+\bm{J} \dot{\bm{\omega}}^{B/N}_B &= \bm{M}_B - { \big[ {\bm{\omega}^{B/N}_B} \big]}^\times \bm{J} \bm{\omega}^{B/N}_B\\
 \end{split}
 \end{align}
 
-where $\bm{x}_{N} \in {\rm I\!R^3}  $ is the position of the center of mass of UAV in navigation frame $\mathcal{N}$, $\bm{v}_B$ is the velocity of the center of mass of UAV in body frame $\mathcal{B}$,  $\bm{q} = [q_0, \bm{q}_v^T] ^T \in {\rm I\!R^3} \times {\rm I\!R}$ is the unit quaternion representing the attitude of the body frame $\mathcal{B}$ with respect to navigation frame $\mathcal{N}$ expressed in the body frame $\mathcal{B}$, $\bm{\omega}_{b/n}^b$ is the angular velocity of the body frame $\mathcal{B}$ with respect to navigation frame $\mathcal{N}$ expressed in the body frame $\mathcal{B}$, $ \bm{J} \in {\rm I\!R^{3\times3}}  $ is the positive definite inertia matrix of the drone, $\bm{M}_B \in {\rm I\!R^3}$ represents the moments acting on the drone, $ \bm{C}_B^N$ is the direction cosine matrix which transforms a vector expressed in the body frame to its equal expressed in the navigation frame, $\bm{I}_3  \in {\rm I\!R^{3\times3}}$ is the identity matrix, $\bm{F}_{t_B} \in {\rm I\!R^3}$ is the thrust force expressed in the body frame,  $\bm{F}_{a_B} \in {\rm I\!R^3}$ are the aerodynamic forces given in the body frame. 
+where $\bm{x}_{N} \in {\rm I\!R^3}  $ is the position of the center of mass of UAV in navigation frame $\mathcal{N}$, $\bm{v}_B$ is the velocity of the center of mass of UAV in body frame $\mathcal{B}$,  $\bm{q} = [q_0, \bm{q}_v^T] ^T \in {\rm I\!R^3} \times {\rm I\!R}$ is the unit quaternion representing the attitude of the body frame $\mathcal{B}$ with respect to navigation frame $\mathcal{N}$ expressed in the body frame $\mathcal{B}$, $\bm{\omega}^{B/N}_B$ is the angular velocity of the body frame $\mathcal{B}$ with respect to navigation frame $\mathcal{N}$ expressed in the body frame $\mathcal{B}$, $ \bm{J} \in {\rm I\!R^{3\times3}}  $ is the positive definite inertia matrix of the drone, $\bm{M}_B \in {\rm I\!R^3}$ represents the moments acting on the drone, $ \bm{C}_B^N$ is the direction cosine matrix which transforms a vector expressed in the body frame to its equal expressed in the navigation frame, $\bm{I}_3  \in {\rm I\!R^{3\times3}}$ is the identity matrix, $\bm{F}_{t_B} \in {\rm I\!R^3}$ is the thrust force expressed in the body frame,  $\bm{F}_{a_B} \in {\rm I\!R^3}$ are the aerodynamic forces given in the body frame. 
 The navigation frame is assumed to be a local inertial frame in which Newton's Laws apply. 
 The notation $\bm{x} ^{\times} $ for a vector $x = [x_1 \quad x_2 \quad x_3]^ {\rm{T}}$ represents the skew-symmetric matrix
 
@@ -1634,7 +1640,7 @@ The accelerometer and gyro data is simulated as
 % $$ cift dolar arasi $$ satir atlayarak ortada denklem
 \end{align}
 
-where $\bm{\beta}$ is the bias, and $\bm{\eta}$ is the zero mean Gaussian process with $\bm{\sigma}^2$ variance and given in Table ~\ref{arm:sensorSpecs}.
+where $\bm{\beta}$ is the bias, and $\bm{\eta}$ is the zero mean Gaussian process with $\bm{\sigma}^2$ variance with values given in Table ~\ref{arm:sensorSpecs}.
 
 \begin{table}[!htbp]
 \caption{Specifications of the sensor suit InvenSense MPU-9250 Nine-axis (Gyro + Accelerometer + Compass) MEMS MotionTracking Device\cite{condomines2015developpement}}
@@ -1732,8 +1738,32 @@ where $\bm{u}_c $ is the desired control signal, $\bm{E} = diag(e_1, e_2, e_3)$ 
 %\end{center}
 %\end{table}
 
+\section{Conclusion}
+In this chapter, equations of motion of an aircraft are given. 
+Motion of an aircraft usually involves both translation and rotation. 
+Here, equations for translational and rotational motion are discussed separately in detail.
+After the equations are derived for a generic aircraft, calculation of forces and moments which are specific to an individual drone is presented (Aerodynamic force derivatives and stability derivatives are specific for each drone). For two different drone examples, a drone from ETH Zurich and MAKO (used in ENAC UAV LAB), calculation of forces and moments are given.
+Those forces and moments are inputs to the dynamic equations of motion. 
 
+The models derived here are not used in detection and diagnosis algorithms. 
+The detection and diagnosis algorithms used in this thesis use only data. 
+The need for data is the driving factor to simulate the drone motion. 
+Thus, data is simulated using MAKO drone model and specifications of IMU \emph{InvenSense MPU-9250 Nine-axis} used in \emph{Paparazzi Autopilot Apogee} onboard. 
+ 
+%To clarify, machine learning methods also train a model. 
+%But in that case, the model is not the equations of motion of an aircraft but rather a simpler model and may not explicitly describe the physical . 
+%The only exception to not using physical models in this work for diagnosis, is the part that the diagnosis is realized using spinors as features. To calculate the spinors, kinematic equations are numerically. But still, our idea to generalize by having no models holds since only kinematic equations are used. 
 
+In this thesis, the diagnosis is implemented on two types of data: 1. Simulated data, 2.
+Flight data. 
+If the reader is not interested in detection and diagnosis via simulated data, s/he can skip this chapter since this chapter explains the models that are used to simulate measurements.
+Even then, having a background information on the physics of the system might help to have a grasp on the features (translational acceleration and angular velocities) used in both model-based and data-driven fault diagnosis.
 
+Since the data is generated and available now for implementations, the methodology used in this thesis to diagnose faults are discussed in the next chapter. 
+In this thesis, \emph{Support Vector Machines} (SVM) are used as a classification method to diagnose faults onboard a drone. 
+Since SVM is a machine learning method, an introduction to machine learning methods have been given from an implementation perspective. 
+It starts with an introduction to terminology for machine learning methods, gives general explanations to prepare the inputs to the machine learning algorithm. 
+Then many application details are discussed that would help to user to apply those methods to their own problems. 
+Finally, SVM is introduced and three phases encountered during its implementation, \emph{training}, \emph{tuning} and \emph{evaluation} is explained.
 
 
