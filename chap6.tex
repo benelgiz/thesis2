@@ -1,15 +1,30 @@
 \chapter{Conclusion}
 
-% From DASC 2017
+Integration of drones into airspace needs the introduction of indigenous designs that will serve safe solutions for drones. One of the aspects of the problem is to assure a safe flight by designing fault detection and diagnosis with cheaper avionics common in a vast number of drones.
+This work aims to design a classifier via SVM to solve FDD for drones with actuator faults.
+For that purpose, we introduce an end-to-end design to achieve data-driven fault diagnosis for control surface faults on drones. All data and the code available in code sharing and versioning system \emph{Github}. 
 
-Integration of drones into airspace needs the introduction of indigenous designs that will serve safe solutions for drones. One of the aspects of the problem is to assure a safe flight by designing fault detection and diagnosis with cheaper avionics common in a vast number of drones projected.
-This work aims to design a classifier via SVM to solve FDD of drones with actuator faults. This problem possess various challenges. This work focuses on a loss of effectiveness fault which is more difficult than a stuck fault to diagnose, but easier to mitigate. 
+In this thesis, fault classification simulations are investigated under two main sections: classification of faults based on simulated flight measurements and classification of faults based on real flight data. 
 
-A model of a MAKO UAV is simulated to generate data and test the designed algorithms. The simulated data of gyro and accelerometer measurements are given to classifier to train for the two class labeled data set. A supervised classification method, SVM (Support Vector Machines) is used to classify the faulty and nominal flight conditions. Principle component analysis is used to investigate the data by reducing the feature space dimension. The training is held offline due to the need of labeled data but prediction is envisioned be held real time. The results show that for simulated measurements, SVM gives very accurate results on the classification of loss of effectiveness fault on the control surfaces.
+For classification on data generated from simulations, model of a MAKO UAV is simulated.
+Sensor measurements (accelerometer and gyro data) have been calculated using information of drone's motion and the specifications of the sensors. 
+Generated data is usually more structured compared to the real flight data. 
+In this preliminary application of SVM to fault diagnosis, we aimed to start with an easier problem, and used data generated from models.
+There is no controller involved in the model in this preliminary application of SVM to detection to discard the controller's effect on the diagnosis. 
+The results show that SVM classifier was very accurate and fast in diagnosing the fault on the control surfaces with a classification accuracy of $10^{-5}$.
 
-Further study is envisaged to deal with the controller diagnosis interaction and classification of multiple faults. Also discussion of SVM for online training might be addressed since SVM is in need for labeled data which requires generating the labeled data during flight. 
+Then fault detection with real flight data is investigated. 
+Since SVM is a supervised classification method, labeled data is necessary to train the algorithm. For that reason, real flights have been arranged to generate faulty flight data by manipulating the open source autopilot \emph{Paparazzi}.  
+The training is held offline due to the need for labeled data and computational burden of the tuning phase of the classifiers. 
+Two types of faults have been mainly investigated, the control surface stuck and loss of effectiveness of the elevon. Results indicate that the control surface stuck can be detected relatively easily with 3 gyros and 3 accelerometers data compared to loss of effectiveness (efficiency). 
+The results show that over the flight data, SVM yields an F1 score of 0.98 for classification of control surface stuck fault. 
+Addition of features to accommodate previous measurements improve classification performance for tuned classifiers while the untuned classification performance deteriorates. 
+Classification performs poorly for loss of efficiency faults especially for smaller ineffectiveness values. 
+For the loss of efficiency fault, some feature engineering, involving the addition of past measurements is needed to attain the same classification performance.
 
+A very promising result is discovered when \emph{spinors} are used as features instead of angular velocities. 
+For that purpose, kinematics equations have been solved to calculate the \emph{quaternions} using angular velocity measurements. Then \emph{spinors} are calculated as a function of \emph{quaternions}. Result show that by using spinors for classification, there is a vast improvement in the classification accuracy especially when the classifiers are untuned. Using spinors and a Gaussian Kernel, untuned classifier gives f1Score of 0.9555 which was 0.2712 when gyro measurements are used as features.
 
-% From Journal 2018
+In general, this work shows that SVM gives satisfactory performance for classification of faults on control surfaces of a drone using flight data.
 
-This work is an end-to-end design to achieve data-driven fault diagnosis for control surface faults on drones. A short survey on fault detection and diagnosis initiates the study and is followed by an introduction to SVM, the method used to classify the faults in this study. Since SVM is a supervised classification method, labeled data is necessary to train the algorithm. For that reason, an open-source autopilot \emph{Paparazzi} has been modified to realize faulty flights to save faulty and nominal flight data to train on. Two types of faults have been mainly investigated, the control surface stuck and loss of effectiveness of the elevon. Results indicate that the control surface stuck can be detected relatively easily with 3 gyros and 3 accelerometers data. Addition of features to accommodate previous measurements improve classification performance for tuned classifiers while the untuned classification performance deteriorates. Classification performs poorly for loss of efficiency faults especially for smaller ineffectiveness values. Addition of features and decreasing the number of instances from larger set improves the performance. This work shows that SVM gives satisfactory performance for classification of faults on control surfaces of a drone using flight data.
+Future work is necessary to deal with the controller-diagnosis interaction and classification of multiple faults. Also discussion of SVM for online training might be addressed since SVM is in need for labeled data which requires generating the labeled data during flight. 

@@ -24,8 +24,10 @@
 
 This chapter includes the current status of a variety of topics.
 Integration of unmanned systems into airspace is the first to be discovered in the course of this chapter since it constitutes the motivation for this thesis.
-Then as a mitigation measure to achieve safe integration of drones into airspace, fault tolerant control systems have been visited with a focus on fault detection and diagnosis.
-The rise of machine learning methods in the last decade is referred finally, since it is utilized to diagnose faults in this study.
+The second topic to be discovered is the \emph{Paparazzi Autopilot System} since it is used to realize the flight campaigns for this thesis. 
+We also mention, how the use of the Paparazzi open source auto-pilot system can ease the integration of UAS in the airspace. 
+Then to achieve a safe integration of drones into airspace, fault tolerant control systems have been visited with a focus on fault detection and diagnosis.
+The rise of machine learning methods in the last decade is referred finally, since they are utilized to diagnose faults in this study.
 
 \section{Integration of Drones into Airspace}
 
@@ -94,13 +96,7 @@ These represent high risk operations, for example large cargo delivery in urban 
 These are likely to be operations with a risk close to current manned aviation. 
 As such, the aircraft, avionics, pilot/crew and operator will need to be certified in order to fly these operations. 
 The fact that a certification process is involved increases the complexity of the introduction of UAS in these types of operations. 
-Indeed, before being able to certify a piece of equipment, a standard must be developed for this equipment. 
-Standardization can be understood as the process of defining details and minimum requirements for safe and uniform operation across a diverse range of implementations. 
-However, as of today, not all the parts required to fly a UAS have corresponding standards, e.g., Detect And Avoid (DAA) systems, C2 links, pilot training. 
-So, enabling this category of operation requires extra effort and time for the industry to agree on standards. 
-For \emph{Certified Category}, harmonization at the ICAO is planned to allow international operations \cite{manfredi2018unmanned}.}
-\end{itemize}
- 
+Indeed,  
 \begin{landscape}
 \begin{figure}
 \begin{center}
@@ -111,6 +107,12 @@ For \emph{Certified Category}, harmonization at the ICAO is planned to allow int
 \end{figure}
 \end{landscape}
 
+before being able to certify a piece of equipment, a standard must be developed for this equipment. 
+Standardization can be understood as the process of defining details and minimum requirements for safe and uniform operation across a diverse range of implementations. 
+However, as of today, not all the parts required to fly a UAS have corresponding standards, e.g., Detect And Avoid (DAA) systems, C2 links, pilot training. 
+So, enabling this category of operation requires extra effort and time for the industry to agree on standards. 
+For \emph{Certified Category}, harmonization at the ICAO is planned to allow international operations \cite{manfredi2018unmanned}.}
+\end{itemize}
 
 \begin{figure}
 \begin{center}
@@ -135,10 +137,6 @@ The goals are highly challenging and given as \cite{UTMairspace}
 \item{``Up and running by 2019: for the basic services like registration, e-identification and geo-fencing. However, further U-Space services and their corresponding standards will need to be developed in the future.''}
 \end{itemize}
 
-EASA regulations already covering the airspace issued in U-Space, either under specific or certified categories (depending on the risk of the operation). 
-By pointing the U-Space, a faster integration is prospected in urban areas.
-It seems we are not far from the images of flying vehicles populating the sky as such in fictions. 
-Even better then imagined, this time, without drivers and more automated. 
 
 \begin{figure}
 \begin{center}
@@ -147,6 +145,11 @@ Even better then imagined, this time, without drivers and more automated.
 \label{fig:amazonDroneOperations}
 \end{center}
 \end{figure}
+
+EASA regulations already covering the airspace issued in U-Space, either under specific or certified categories (depending on the risk of the operation). 
+By pointing the U-Space, a faster integration is prospected in urban areas.
+It seems we are not far from the images of flying vehicles populating the sky as such in fictions. 
+Even better then imagined, this time, without drivers and more automated. 
 
 In US, to tackle the safety challenges and help the regulation development, NASA is currently carrying out a four years research program (up to 2019) to enable Unmanned aircraft traffic management solutions which are structured yet flexible when needed. 
 To ensure safety, this integration needs to be achieved through airspace management and UAS reliability.
@@ -196,146 +199,253 @@ What's really standing in the way of drone delivery?
 http://www.theverge.com/2016/1/16/10777144/delivery-drones-regulations-safety-faa-autonomous-flight
 \fi
 
+\section{Paparazzi Autopilot System}
+An open-source autopilot, \emph{Paparazzi} \cite{brisset2006paparazzi}, have been adapted to generate faulty control inputs during the flight. 
+In this section, an introduction to \emph{Paparazzi} open-source autopilot system is given. Then, we discuss the properties of open-source systems that would serve for the integration of drones into the airspace. To highlight the advantages, the best practices that are offered by EASA in its A-NPA \cite{A_NPA_EASA2015} is referred and properties of \emph{Paparazzi} that will contribute to achieve those are discussed.
 
-\section{Paparazzi Autopilot in Relation with the New Autopilot}
+\subsection{Open-source Autopilots for UAS}
+With the new era of \gls{fpv} flights, especially for multi-rotor \gls{uav}s, there has been an exponential increment on the hardware and software of the open-source autopilots. A brief comparison of the popular current open-source and commercial autopilots is available in Table \ref{tab:autopilot_comparison}. Usually the trend is to make the hardware as cheap as possible for recreational consumers. This reality is damaging the reputation of open-source autopilots as being not reliable or robust, just because they are being used without attention. There exists a difference on the quality of sensors used on the open-source autopilot systems compared to commercial autopilots for sure, and this is extremely represented on the price of the units. This makes a difference on the flight quality of the vehicles, however with the new on-board processing power, more complex estimation algorithms and filters are being used in order to overcome this problem \cite{baskaya2016flexible}.
 
-\subsection{Introduction}
+\subsection{Introduction \emph{Paparazzi Autopilot System}}
+
+The \emph{Paparazzi} Autopilot System provides a software and hardware solution for low-cost mini and micro unmanned air vehicles. 
+A fleet of \emph{Paparazzi} equipped drones can be seen in Fig.~\ref{fig:ENACdroneFleet}.
+
+\begin{figure}
+\begin{center}
+%\includegraphics[width=11.3cm]{figures/FTCmethods}    % The printed column width is 8.4 cm.
+\includegraphics[width=9.3cm]{figures/ENACdroneFleet}
+\caption{Fleet of \emph{Paparazzi} equipped drones from ENAC UAV laboratory in a flight campaign with \emph{Pyrenees} in the background. Photo by Alexandre Bustico.} 
+\label{fig:ENACdroneFleet}
+\end{center}
+\end{figure}
+
+
+\begin{landscape}
+\begin{table*}[t]
+	\caption{Comparison of popular Open-Source and commercial autopilots \cite{baskaya2016flexible}.}
+	\centering
+	\begin{tabular}{lcc >{\centering}m{1.2cm} >{\centering}m{1.8cm} cc >{\centering}m{1.3cm} >{\centering}m{1.1cm}}
+		\hline
+		Open-Source & Vehicle type & Hardware & Multi UAV & Flight Plan & Path Definition  & Geofencing & Collision Avoidance & Latest stable release		\tabularnewline	
+		% & & & & & & & & release\\
+		\tabularnewline
+		\hline
+		Paparazzi  & Fully configurable        & varied   & yes   & scriptable & Formula Based          & 3-D  & UAV TCAS & 21-06-16\tabularnewline
+				& & & & & & & &  \tabularnewline
+		PixHawk    & Fully configurable        & specific & yes   & scriptable & Circles Lines Patterns & 3-D  & none     & 06-08-16\tabularnewline	
+				& & & & & & & &  \tabularnewline
+		Ardupilot  & Copter Plane Rover        & varied   & alpha & scriptable & Circles Lines Patterns & 2-D  & none     & 22-06-16\tabularnewline	
+				& & & & & & & &  \tabularnewline
+		OpenPilot  & multicopter               & specific & none  & NA         & NA                     & none & none     & 15-05-15\tabularnewline	
+				& & & & & & & &  \tabularnewline
+		AeroQuad   & multicopter               & varied   & none  & NA         & NA                     & none & none     & 31-01-13\tabularnewline	
+		\tabularnewline	
+		\hline
+		Commercial & & & & & & & &  		\tabularnewline	
+%				   & & & & & & & &  		\tabularnewline	
+		\hline
+		Picollo    & Copter Plane              & specific & none  & dynamic    & Way Point              & NC   & NC       & NC   	\tabularnewline	
+				& & & & & & & &  \tabularnewline
+		MicroPilot & Copter Plane Rover Blimp  & specific & yes   & dynamic    & Way Point              & NC   & NC       & NC   	\tabularnewline	
+				& & & & & & & &  \tabularnewline
+	\end{tabular}
+	\label{tab:autopilot_comparison}
+\end{table*}
+\end{landscape}
+
+\begin{figure}[!hbt]
+\begin{center}
+%\includegraphics[width=11.3cm]{figures/FTCmethods}    % The printed column width is 8.4 cm.
+\includegraphics[width=11.3cm]{figures/Paparazzi_System_overview}
+\caption{Paparazzi Autopilot System overview} 
+\label{fig:Paparazzi_System_overview}
+\end{center}
+\end{figure}
+
+It is started as a personal project in 2003 by Pascal Brisset and Antoine Drouin, and afterwards supported by ENAC in 2005. 
+Being one of the first (if not the first) open-source autopilot system in the world, \emph{Paparazzi} has attracted attention and led the others to start new branches and systems. % This phrase may need some proof actually, but it is hard to find anything officially...
+The software is originally packaged for Debian/Ubuntu but can be manually installed on any GNU/Linux operating system even including MacOS-X. 
+However, it is not compatible with Windows which automatically eliminates $90\,\%$ of the possible user community and therefore it is not as popular as other existing autopilot systems on the user market.
+
+Being one of the first open-source autopilot system in the world, \emph{Paparazzi} deals with all three segments: Ground, Airborne, and the communication link between as shown in Fig.~\ref{fig:Paparazzi_System_overview}. 
+The ground software of \emph{Paparazzi} is mainly written in Ocaml, with some additional parts in Python and C. 
+Thanks to its middle-ware communication bridge called Ivy-Bus, external softwares can be directly connected with publish and subscribe method to the ground segment without needing to modify and code at all.
+Airborne software is written in C, however there is an on-going effort to support C++ \cite{baskaya2016flexible}.
+
+One of the distinguishing property of the \emph{Paparazzi} is to support multi-UAV flight (Figure~\ref{fig:pic2}). Several projects have been using \emph{Paparazzi} Autopilot System because of this additional feature. The communication of each vehicle is being transmitted to the ground control station directly on the current version, however air to air communication between flying vehicles and internal relay of information to ground control station is being implemented for a new coming version.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=1\textwidth]{figures/pic2}
+	\caption{Ground Control Station showing trajectories of 2 \gls{uav}s using the \gls{tcas} system}
+	\label{fig:pic2}
+\end{figure}
+
+\emph{Modules} are the easiest and most flexible way of adding new code into \emph{Paparazzi}. 
+There are over $130$ modules written for \emph{Paparazzi} by several developers and researchers including subjects on meteorology, imagery, surveillance, advance navigation, formation flight and collision avoidance, etc. 
+With its $130$ modules by several developers and researchers, \emph{Paparazzi} includes functions to apply to various domains such as meteorology, imagery, surveillance, advance navigation, formation flight and collision avoidance and many others. 
+A photo taken during \emph{Paparazzi} on mission in a campaign for meteorological studies by \emph{MeteoFrance} given in Fig.~\ref{fig:snowWhite}. MeteoFrance is French national meteorological service, and uses drones as tools to do research on meteorological studies.
+
+In this thesis, for the faulty flight data gathering, some modifications to the \emph{Paparazzi} autopilot was necessary in two main parts: Injecting the faults real-time from GCS, and editing the controller onboard so that the sent faulty input values configures the servos as manipulated from the GCS. 
+Modules have been used to achieve the necessary modifications to the autopilot.
+
+\begin{figure}
+\begin{center}
+%\includegraphics[width=11.3cm]{figures/FTCmethods}    % The printed column width is 8.4 cm.
+\includegraphics[width=13cm]{figures/snowWhiteJPG}
+\caption{Drone (NAME OF THE DRONE) equipped with \emph{Paparazzi} on mission for meteorological studies by \emph{Meteofrance}. Photo taken by Alexandre Bustico.} 
+\label{fig:snowWhite}
+\end{center}
+\end{figure}
+
+
+\emph{Paparazzi} has its own complete flight plan language, where the user can define any possible trajectory by existing commands such as circle, line, hippodrome, figure-eight, survey, etc. 
+Additionally any function, written in C language, can be called from the flight plan and executed. 
+This opens up a lot of application possibilities such as triggering a navigation procedure via a sensor output.
+
+A real-time operating system based on ChibiOS is started to be used since 2015. 
+The first implementation was mainly for adding a separate thread in order to make on-board logging at a high frequency. 
+On going work is to divide all autopilot tasks into individual threads and manage everything according to priorities which will increase the safety and reliability.
+%Priorities can be handled over different tasks in order to increase the safety and reliability.
+
+
+There exists over 20 different autopilot boards capable of running \emph{Paparazzi}. Additionally, several mission based custom sensor boards have been designed under the \emph{Paparazzi} project, such as \emph{Meteo-Stick}\footnote{http://wiki.paparazziuav.org/wiki/MeteoStick\_v1.10}. 
+In this thesis, flights have been realized with an \emph{Apogee}\footnote{https://wiki.paparazziuav.org/wiki/Apogee/v1.00} which is given in Fig.~\ref{fig:apogeePaparazzi}.
+
+\begin{figure}
+\begin{center}
+%\includegraphics[width=11.3cm]{figures/FTCmethods}    % The printed column width is 8.4 cm.
+\includegraphics[width=14cm]{figures/apogeePaparazzi}
+\caption{Front and back view of \emph{Apogee} autopilot} 
+\label{fig:apogeePaparazzi}
+\end{center}
+\end{figure}
+
+The rest of this section highlights \emph{Paparazzi} 's capacity to tackle the issues encountered during integration of \gls{uas}s in the airspace. These issues have been grouped in three categories: modularity, congestion management and reliability. For each category, \emph{Paparazzi} offers a unique set of features to deal with the issues at hand.
 
 \subsection{Open Source Systems in Relation with the New Regulatory Context}
 
-To tackle the safety challenges and help the regulation development, NASA is currently carrying out a four years research program (up to 2019) to enable Unmanned aircraft traffic management solutions which are structured yet flexible when needed. 
-To ensure safety, this integration needs to be achieved through airspace management and UAS reliability.
-
-The preliminary airspace designs, like the one proposed by Amazon, identify different zones depending on the UAS capabilities, population density and altitude. 
-Plus, different national rules and their progressive refinement pushes to cope with a variety of requirements. 
-Open source and modular architectures are key to adapt these requirements. 
-As such, NASA's UTM builds, later to be refined by FAA, discusses modularity to be essential for UAS software to follow their evolution. 
-
-Concerning reliability, current regulations focus on flight constraints but they might be expected to involve regulations on software and hardware components as well. 
+In this part of this thesis, we present the Paparazzi open source auto-pilot system, and its features, as a tool to ease the safe integration of low altitude UAS into National Air Space (NAS). 
+Paparazzi is favored thanks to its modular design, its support for congestion management and evolving reliability.
+We believe the flexibility required for such solutions calls for open architectures. To ensure safety, this integration needs to be achieved through airspace management and UAS reliability.Preliminary airspace designs, e.g. Amazon's, identify different zones depending on the UAS capabilities, population density and altitude. 
+Plus, national rules evolution push to cope with a variety of requirements. Open source and modular architectures are key to adapt to these requirements. 
+From a UTM point of view, Paparazzi provide features to ease congestion management, such as dynamic geofencing, trajectory communication and collision avoidance. 
+Concerning reliability, current regulations focus on flight constraints but might be expected to involve regulations on software and hardware components as well. 
 In such case, the increased cost will be inevitable for the demands of certification. 
-This could put too many constraints on UAS manufacturers who desire to access the some specific regions of airspace. 
+In the Paparazzi software case, parts of the code have been formally proved and stable versions have thousands of flight hours. Such heritage might ease the certification process for smaller companies.On top of its flexibility and reliability, Paparazzi offers a unique set of features, as an open source software, to achieve safe integration of low altitude UAS in the airspace.
 
-In Europe, Regulation (EC) No 216/2008 mandates the European Aviation Safety Agency to regulate Unmanned Aircraft Systems (UAS) and in particular Remotely Piloted Aircraft 
-Systems (RPAS), when used for civil applications and with an operating mass of 150 Kg or more.
+% More specifically, this paper shows how the use of the Paparazzi open source auto-pilot system can ease the integration of low altitude UAS. 
 
-\section{UAVs populating airspace}\label{ch2:certificationOfAnalyticalApproaches}
+\subsection{Modularity}
+The current evolving nature of regulations and the variety of organizations in charge of the airspace rule making calls for flexible solutions to cope with these fruitful environments. \emph{Paparazzi}, as an open source autopilot system, is largely modifiable through its modules to offer such flexible solutions.  
 
+\subsubsection{Airspace Categorization}
+The \gls{uas} in the \gls{nas} project points to a performance-based routine access to all segments of the national airspace for all unmanned aircraft system classes, after the safety and technical issues are addressed thoroughly. As a start, \gls{nasa} and \gls{faa} seem to have a short term goal to integrate \gls{uas} in low-altitude airspace as early as possible. They further aim to accommodate increased demand safely, efficiently in the long term. \gls{nasa} and \gls{faa} seem to handle the airspace above 500 feet and the one below separately. \gls{easa}, tasked by the European Union, is planning a risk based approach, accommodating the \gls{uas} in the airspace under three different categories, low risk, specific and high risk \cite{A_NPA_EASA2015}. Both regulators seem to categorize the airspace and scale regulatory needs according to some criteria. To answer different needs of different categories, flexibility given by the high level of modularity of open source autopilot systems will be a handy tool. 
+Customizability of the software and hardware depending on the airspace gives a chance for larger airspace community to utilize \emph{Paparazzi} scaled for their specific needs. A larger community using the same system would lead to a natural evolution of the system toward a better design.
 
+\subsubsection{National Regulations}
+Circulation of \gls{uas} internationally is somewhat prevented by the Chicago convention unless an agreement holds between Contracting States \cite{A_NPA_EASA2015}. \gls{icao} is aiming to develop international standards and recommended practices to which the member states could refer to when developing their national civil aviation regulations. Even though a similar base is aimed, national aviation legislations will not be the same because of the different expectations of nations about \gls{uas} aviation. Thanks to the modular nature of the \emph{Paparazzi} software and hardware suite, the functionality of the system could be enhanced according to the specific regulations held in the area of utilization.
 
-Advent of the new era of \gls{uas} seems to be hold by an unseen barrier of lack of 
-regulatory framework for now. Different institutions all over the world, specifically \gls{nasa} 
-and faa in US, easa in Europe and international bases such as \gls{icao} are addressing 
-safe integration of \gls{uas} in airspace. Although the approaches of regulatory bodies 
-may vary, the aim remains the same: safe integration as soon as possible. 
+\subsubsection{Accommodating evolution of regulations}
+Prescriptive rules seem to cause some difficulties since the technical area on \gls{uas} systems develop rapidly \cite{A_NPA_EASA2015}. Innovations both on the aircraft and the operation type of \gls{uas} will accelerate especially after the regulations are set. Thus, regulatory bodies call for refinable operational requirements and system architectures to evolve into a safer and efficient integration of \gls{uas} into airspace. The systems to cope with the regulations should also be modular and flexible in order not to be superseded by the innovations in the area. 
+Thus, the aviation regulatory bodies aim to achieve designs with flexibility where possible, structure where needed. Having flexible hardware and software points to modularity, which is pretty much best supported via open source systems.
 
-The tackles of safety during integration of \gls{uas} to airspace refer to different technical 
-and organizational aspects including but not limited to control of traffic in segregated and 
-non-segregated airspace, reliable communication, robust control of the \gls{uav}, trajectory planning, detect\&avoid.
+\subsection{Congestion Management}
+According to \textit{UAV Factory}, one of the large European \gls{uas} companies, ``The future of the UAV industry is likely to be shaped by airspace congestion'' \cite{europe_report_civilian_drone}.
+	Indeed, high level airspaces are getting crowded and large scale solutions, such as NextGen (US) or SESAR-JU (EU), are necessary to increase airspace capacity while maintaining the current safety levels.
+	However, there is no such management solution existing for \gls{vll}. Yet, large projects like Amazon's Prime Air and Google's Project Wing are already waiting to populate the \gls{vll} airspace.	
+	
+	Part of the congestion management problem is to avoid conflicts, and more importantly collisions, between \gls{uas} through strategic deconfliction and safety nets.
+	Another mission of the congestion management system is to make sure that \gls{uas} do not go where they are not supposed to go, thus requiring geofencing.
+	In order to implement the previously mentioned systems, the \gls{uas} autopilot needs to be able to perform complex operations, e.g. static waypoints following is likely to be insufficient.
+	In the following, we divide these issues into four topics of interest: 4-D trajectory management, geofencing, safety nets, complex operations, and show how the \emph{Paparazzi} system addresses them.
+	
+	\subsubsection{4-D Trajectory Management}
+		As noted in \cite{erzberger_4D_2002}, 4-D trajectories will be central in future airspace management methods. The principle of 4-D trajectory management is to have every \gls{uas} broadcast its trajectory up to some time horizon and receive \gls{utm}'s clearances under the form of trajectories. 
+		The trajectory information contains a path, the series of points through which the \gls{uas} will pass, and times associated to each of these points. 
+		Thanks to this information, the idea is to perform pro-active deconfliction, as explained by Thomas et al. in \cite{thomas_4D_2015}. In clear, it implies that \gls{utm} detects future conflicts along the trajectories of all \gls{uas} and deconflicting them as safely and early as possible.
+		This kind of approach requires the autopilot to represent \gls{uas} motions with trajectories and to be able to transmit them, which is the case in \emph{Paparazzi}.
+		
+		\emph{Paparazzi} originally supports a basic description of trajectories based on circles and straight lines, but recent updates allow it to process advanced trajectories as well. 
+		Indeed, \emph{Paparazzi} can represent trajectories as functions in 2-D (x, y), 3-D (x, y, z) or 4-D (x, y, z, t). The only requirement is for the function to be differentiable at least two times on every point. The function and its derivatives analytical formulas are computed offline and can then be quickly evaluated online.
+		Moreover, gains can be tuned to adjust the convergence speed from the \gls{uas} starting point to the given trajectory. These gains influence the convergence path to a given trajectory and the resulting trajectory (convergence + commanded) can be computed offline given initial conditions and the commanded trajectory.
+		This is of particular interest for \gls{utm} as it allows the \gls{uas} to provide not only its trajectory over time but also how it will reach this trajectory from its starting point.	
 
+		It is important to note that \gls{utm} will have to solve conflicts between manned and unmanned aircraft. So an air traffic controller is needed in the loop with an appropriate display for 4-D trajectories and a communication link with both manned and unmanned aircraft.
+		
+	\subsubsection{Safety Nets}
+		Trajectory deconfliction is the first step to manage congestion, however safety nets are also part of the congestion management. Indeed, safety nets such as self-separation and collision avoidance allow \gls{uas} to fly close to each other while preserving an acceptable safety level.
+		Though \emph{Paparazzi} does not include self-separation algorithms, it do contains a light version of the \gls{tcas} II collision avoidance system. It considers intruders one at a time and is capable of coordinated avoidance maneuvers. There is no strengthen resolution as the resolutions are not speed rates but an objective altitude to reach as fast as possible.
 
-\section{Modularity}\label{ch2:modularity}
+		Values such as distance thresholds have been adapted to suite the performances of small \gls{uas}. Table~\ref{tab:pprz_tcas_values} shows example values used for fixed-wing \gls{uas}s. Keep in mind that the \emph{Parapazzi} philosophy is to be configurable, so these parameters can be easily changed from a configuration file.
+		
+\begin{table}
+	\caption{Typical values for main variables of the \emph{Paparazzi} \gls{tcas} module.}
+	\centering
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		TAU\textunderscore TA & TAU\textunderscore RA & DMOD & ALIM \\
+		\hline
+		10s & 6s & 15m & 10m \\
+		\hline
+	\end{tabular}
+	\label{tab:pprz_tcas_values}
+\end{table}
 
-The current evolving nature of regulations and the variety of organizations in charge 
-of the airspace rule making calls for flexible solutions to cope with these fruitful environments. 
+	On top of the TA and RA provided by the \gls{tcas}, a module has been recently developed to input data from traffic services and display them into \emph{Paparazzi}'s ground control station, thus providing situational awareness to the remote pilot. Preliminary test have been done using opensky-network to display traffic around a given area, based on these information the remote pilot can effectively perform conflict resolution.
 
-\subsection{Airspace Categorization}
-The \gls{uas} in the \gls{nas} project points to a performance-based routine access to 
-all segments of the national airspace for all unmanned aircraft system classes, after the 
-safety and technical issues are addressed thoroughly. As a start, \gls{nasa} and faa 
-seem to have a short term goal to integrate \gls{uas} in low-altitude airspace as early 
-as possible. They further aim to accommodate increased demand safely, efficiently in 
-the long term. \gls{nasa} and faa seem to handle the airspace above 500 feet and the 
-one below separately. easa, tasked by the European Union, is planning a risk based approach, 
-accommodating the \gls{uas} in the airspace under three different categories, low risk, 
-specific and high risk. Both regulators seem to categorize the airspace and scale regulatory 
-needs according to some criteria. To answer different needs of different categories, flexibility 
-given by the high level of modularity of open source autopilot systems will be a handy tool. 
+	\subsubsection{Geofencing}
+		Keeping \gls{uas} away from each other is an important point. But keeping them out of forbidden areas is also crucial.	Geofencing allows determining no-fly zones where the \gls{uas} should not enter.
+		To accommodate land owners while managing traffic and limiting congestion, Foina et al. \cite{foina_air_parcelle_2015} proposed a participative dynamical airspace management method: the air-parcel model. It allows land owners to authorize/forbid flights over their lands through a web interface. 
+		However, this type of approach asks from the \gls{uas}s to be able to handle dynamical geofencing. Plus, though initially this model considers only cuboid parcels, the need for more precise airspace shapes may emerge making 3-D geofencing a need.
+		
+		This type of model can be handled by \emph{Paparazzi} by defining geofenced zones manually or programmatically. The zone is defined as a simple geometrical shape (e.g. a circle, a polygon, etc.) plus altitude limits thus effectively creating a 3-D geofencing. 
+		These zones can be static, activated dynamically from the ground station or from the flight plan with associated conditions.
+	
+	\subsubsection{Complex Operations}
+		Having 4-D trajectory management, safety nets and geofencing is useless if the \gls{uas}s cannot follow the instruction from \gls{utm} regarding these tools.
+		Indeed, new \gls{utm} paradigms imply being able to change flight plans dynamically to answer to \gls{utm} demands. In \cite{wargo_complex_2015} two types of complex operations examples are mentioned: space transition corridors and temporary flight restriction.
+		Both these airspace management methods require from the \gls{uas} to be able to modify its flight plan according to new \gls{utm} instructions.
+		
+		Modifying the flight plan dynamically is not possible, and not desirable, in \emph{Paparazzi}. However, appropriate response to these complex operations can be provided through conditional flight plans. These enable the \gls{uas} to follow different courses of action depending on given parameters. These parameters are defined offline by the user and can then be modified online by values coming from sensors or from \gls{utm}. This allows intelligent reaction to exterior instruction, in particular it can be used by the user to give \gls{utm} control on portions of the flight.
+		
+\subsection{Reliability}
 
-\subsection{National Regulations}
-Circulation of \gls{uas} internationally is somewhat prevented by the Chicago convention 
-unless an agreement holds between Contracting States \cite{A_NPA_EASA2015}. \gls{icao} is aiming 
-to develop international standards and recommended practices to which the member states 
-could refer to when developing their national civil aviation regulations. Even though a similar 
-base is aimed, national aviation legislations will not be the same because of the different 
-expectations of nations about \gls{uas} aviation. 
+Improvement of the reliability of the flight is considered to be one of the main goals for integrating military \gls{uav}s into civil airspace according to Unmanned systems roadmap by US Office of the Secretary of Defense, DoD \cite{UnmannedSystemsRoadmapDoD}. Compared to manned counterparts, \gls{uav}s experienced failures with a frequency of two orders of magnitude more in the military domain.  Although this changed last years with the technological improvements, making the \gls{uav}s as reliable as early manned military aircraft, it seems not enough from the DoD perspective. This can be realized by checking the biggest chunk of control technologies budget for research and development, which is health management and adaptive control.
 
-\subsection{Accommodating evolution of regulations}
-Prescriptive rules seem to cause some difficulties since the technical area on \gls{uas} 
-systems develop rapidly \cite{A_NPA_EASA2015}. Innovations both on the aircraft and the operation 
-type of \gls{uas} will accelerate especially after the regulations are set. Thus, regulatory 
-bodies call for refinable operational requirements and system architectures to evolve into 
-a safer and efficient integration of \gls{uas} into airspace. The systems to cope with the 
-regulations should also be modular and flexible in order not to be superseded by the 
-innovations in the area. 
-Thus, the aviation regulatory bodies aim to achieve designs with flexibility where possible, 
-structure where needed. Having flexible hardware and software points to modularity, which 
-is pretty much best supported via open source systems.
+To achieve a safe flight is not an easy task considering the unknowns of the systems hardware, environment and possible system faults and failures to emerge. Also, increasing demand on cost effective systems, resulting in smaller sensors and actuators with less accuracy, impose the software to achieve even more. The expectation that \gls{uav}s should be less expensive than their manned counterparts might have a hit on reliability of the systems. Cost saving measures other than the need to support a pilot/crew onboard or decrement in size would probably lead to decrease in system reliability. 
 
+\subsubsection{\gls{sme}s and Certification Costs}
 
+Utilizing drones for quicker and cheaper deliveries could be rewarding for \gls{sme}s since cost per mile of a drone is less then 1 / 30 of the average diesel truck. Being an early bird might put the \gls{sme}s in an advantageous position, considering the increase in the capabilities of the drones with inevitable acceleration thrusted by research activities and their widened application areas. 
+Nevertheless, the fairly cheap access to drones and their relatively cheap utilization cost does not seem to be enough to put them to air right now due to the heavy cost of certification and regulatory hurdles \cite{UAVreliabilityStudy}. In this concern, capable open source solutions could be a good way to loosen the tie.  Otherwise, \gls{sme}s, an important factor in drone business might not survive. Even worse, they might operate them without relevant permission, scarifying a substantial fine as reported by Civil Aviation Authority (CAA). This will compromise security in the system contradicting the hopes for reliable integration of drones into airspace. As an open source autopilot system, \emph{Paparazzi} is a known platform for computer scientist who want to test the viability of complex software systems. Thus parts of \emph{Paparazzi} code (\gls{gcs}) have been formally proven \cite{pprz_formal_proof} and stable version have thousands of flight heritage. Furthermore, although Paparazzi is not certified, to be able to have access to the certified airspace, the users can built up their configuration on readily and freely available Paparazzi system, which might reduce the cost to have a certified system to reach specific airspaces.
 
-\section{Reliability}\label{ch2:reliability}
+\subsubsection{Individuals and Education}
 
-Improvement of the reliability of the flight is considered to be one of the main goals for 
-integrating military \gls{uav}s into civil airspace according to Unmanned systems roadmap 
-by US Office of the Secretary of Defense, DoD \cite{UnmannedSystemsRoadmapDoD}. 
-Compared to manned counterparts, \gls{uav}s experienced failures with a frequency of two 
-orders of magnitude more in the military domain.  Although this changed last years with 
-the technological improvements, making the \gls{uav}s as reliable as early manned military 
-aircraft, it seems not enough from the DoD perspective. This can be realized by checking 
-the biggest chunk of control technologies budget for research and development, which is 
-health management and adaptive control.
-
-To achieve a safe flight is not an easy task considering the unknowns of the systems hardware, 
-environment and possible system faults and failures to emerge. Also, increasing demand on 
-cost effective systems, resulting in smaller sensors and actuators with less accuracy, 
-impose the software to achieve even more. The expectation that \gls{uav}s should be less 
-expensive than their manned counterparts might have a hit on reliability of the systems. 
-Cost saving measures other than the need to support a pilot/crew onboard or decrement 
-in size would probably lead to decrease in system reliability. 
-
-\subsection{\gls{sme}s and Certification Costs}
-
-Utilizing drones for quicker and cheaper deliveries could be rewarding for \gls{sme}s 
-since cost per mile of a drone is less then 1 / 30 of the average diesel truck. Being an 
-early bird might put the \gls{sme}s in an advantageous position, considering the increase 
-in the capabilities of the drones with inevitable acceleration thrusted by research activities 
-and their widened application areas. 
-
-Nevertheless, the fairly cheap access to drones and their relatively cheap utilization cost 
-does not seem to be enough to put them to air right now due to the heavy cost of certification 
-and regulatory hurdles \cite{UAVreliabilityStudy}. In this concern, capable open source solutions 
-could be a good way to loosen the tie.  Otherwise, \gls{sme}s, an important factor in drone 
-business might not survive. Even worse, they might operate them without relevant permission, 
-scarifying a substantial fine as reported by Civil Aviation Authority (CAA). This will compromise 
-security in the system contradicting the hopes for reliable integration of drones into airspace. 
-
-\subsection{Individuals and Education}
-
-Individuals, as well as \gls{sme}s, suffer from the same budget constraints. Personal \gls{uav} 
-usage counts for a substantial amount of the drone ecosystem.  Both US and European 
-authorities mention the importance of individuals in utilizations of drones. There is a community 
-with a passion of aviation and potential, but most probably not very experienced.  
+Individuals, as well as \gls{sme}s, suffer from the same budget constraints. Personal \gls{uav} usage counts for a substantial amount of the drone ecosystem.  Both US and European authorities mention the importance of individuals in utilizations of drones. There is a community with a passion of aviation and potential, but most probably not very experienced. \emph{Paparazzi} offers a whole community to help/educate these beginners through its forums enriched by rising number of its users.  A rich documentation is available through the Wikipedia page, encouraging users to self-teach.  
 
 \subsection{Flight Heritage for Risk Assessment}
 
-Drone industry being extremely innovative, technical developments could supersede the 
-prescriptive rules as regulations. Thus a solution might be to follow a risk based approach 
-rather that to have strict rules to cope with. Predicted regulations in Europe seems to evolve 
-under different categories dedicated to specific operation risks. Flight heritage and occurrence 
-reporting is expected to be an inevitable part of safety risk assessment to achieve reliable flight. 
+Drone industry being extremely innovative, technical developments could supersede the prescriptive rules as regulations. Thus a solution might be to follow a risk based approach rather that to have strict rules to cope with. Predicted regulations in Europe seems to evolve under different categories dedicated to specific operation risks. Flight heritage and occurrence reporting is expected to be an inevitable part of safety risk assessment to achieve reliable flight. Wide utilization of \emph{Paparazzi} and real time connection to ethernet could offer reliable and practical solutions to report occurrences.  
 
-\subsection{Support for real time planning and onboard vehicle automation}
-To access low-altitude airspace with the use of small unmanned aircraft safely, an important 
-ability could be to implement real-time planning and on-board vehicle automation. Amazon 
-offers that this approach will allow some flexibility to adapt to variable situations such as 
-weather changes, severe winds or any other emergency needs.
+\subsubsection{Support for real time planning and onboard vehicle automation}
+To access low-altitude airspace with the use of small unmanned aircraft safely, an important ability could be to implement real-time planning and on-board vehicle automation. Amazon offers that this approach will allow some flexibility to adapt to variable situations such as weather changes, severe winds or any other emergency needs. \emph{Paparazzi}, has a real-time planning ability already implemented, letting the user change the trajectory in real-time through its ground control station via different strategies. The user could switch between trajectories already available or even drag the waypoints to his/her preference. The automation of the vehicles is handled in different stages. For now, the most used modes of autonomy is no autonomy, assisted mode and the fully autonomous mode. No autonomy mode, or manual mode, gives whole responsibility of the aircraft dynamics to the pilot through the RC link.  The assisted mode closes some attitude control loops, giving some stability to aircraft. This will ease the challenges of piloting which could be a great advantage especially for the unexperienced pilots. The fully autonomous mode handles both heading and navigation through selected trajectories. In case of an emergency, the pilot take the control of the aircraft anytime, through the RC link. Features already implemented on \emph{Paparazzi}, such as geofencing, go home, and its ease in adding/modifying thresholds to various variables, support safety procedures.
 
-To conclude, the introduction of \gls{uas}s in the \gls{vll} airspace comes with numerous challenges. 
-Though various ways to address them have been proposed, there is still no certainty about how it will be done in the end.
+\subsection{Future Evolutions}
+	As many open source projects \emph{Paparazzi} is in constant evolution through regular contributions. With its large community, it is hard to keep track of all the ongoing projects. In this section we present three features being currently explored and developed at ENAC's labs. 
 
-One sure thing is that it will involve two main actors: \gls{utm} and \gls{uas}s. This work focused on the later.	
+	Though there is no life a stake, avoiding \gls{uas} collisions is desirable for safety and operational reasons. 
+	 \emph{Paparazzi}'s current \gls{tcas}-like collision avoidance allows operating numerous \gls{uav}s with little risk of collision between them. However, future missions will include more and more \gls{uav}s in bounded size airspaces.
+	 In this context, an efficient collision avoidance algorithm is desirable to allow closer operations with an acceptable amount of nuisance alerts. 
+	 Because it relies on advanced logics and can be adapted to different types of performances, we have chosen to implement the ACAS Xu algorithm. Though this standard's definition just started, the baseline is already determined and may allow developing a simplified version for micro \gls{uav}s. 
 
+	Regarding geofencing, most current methods use boundaries in the horizontal plane in which the \gls{uav} cannot enter. However, the utilization of the \gls{vll} airspace is likely to demand more sophisticated methods to handle 3-D geofencing where a 3-D no-fly shape can be described.
+	Though \emph{Paparazzi} can emulate 3-D geofencing, it cannot use full 3-D models yet. Work is underway to extend the current geofencing to allow loading terrain models and padding them with arbitrary shaped no-fly zones.
 
+	Finally, conventional procedures to handle failures onboard could be one of three approaches in order to achieve safe flight. First one is the fail operational systems which are made insensitive to any single point component failure. The second approach is the failsafe systems where a controlled shut down to a safe state is practiced whenever a critical fault is pointed out by a sensor. The third approach is fault tolerant control systems in which components of the system are monitored and action taken in whenever needed. The strategy is most probably to try to keep the system availability and accept reduced performance. For \emph{Paparazzi} autopilot system, there is ongoing research to implement indigenous fault detection and diagnosis module to enable reconfigurable controller loops. 
+	
+	
 \section{Fault Tolerant Control Systems}
 
 Improvement of the reliability of the flight is considered to be one of the main obstacles for integrating UAVs into civil airspace. 
@@ -588,10 +698,11 @@ while model-based approaches can only model typical disturbance.
 
 \section{Machines on the Rise}
 
-BURAYA GECIS YAZ - authors own passion on AI + recent developments
+Machine learning methods are selected to detect and diagnose actuator faults onboard a drone in this thesis. 
+As well as the author's individual passion for artificial intelligence, insights of the supervisors and recent advances which are discussed below dragged this study into machine learning domain.
 
-Almost 2 decades after IBM's Deep Blue beating the chess champion Kasparov, Google DeepMind's Artificial Intelligence(AI) AlphaGo defeating 9-dan Go professional raises the question: what will be the next victory of AI?
-European Parliament published a draft report with recommendations to the European Commission on Civil Law Rules on Robotics, including a list of concerns for a possible rise of the machines. 
+Almost 2 decades after IBM's Deep Blue beating the chess champion Kasparov \cite{deepBlue}, Google DeepMind's Artificial Intelligence(AI) AlphaGo defeating 9-dan Go professional raises the question: what will be the next victory of AI?
+European Parliament published a draft report with recommendations to the European Commission on Civil Law Rules on Robotics \cite{delvaux2017report}, including a list of concerns for a possible rise of the machines. 
 Not only the singularity, artificial super intelligence resulting in deep changes in human civilization, but also more inevitable outcomes are discussed, such as AI's effects on workforce, ethical and legal issues inherent to automatized systems including drones.
 Autonomy's effects on workforce has already been experienced, but what will be the consequences of adding more intelligence to existing automation? 
 Some researchers say that, this will not lead to unemployment, but to the creation of new unforeseeable career fields, as had been the case for computer scientists after the invention of computers. 
@@ -603,19 +714,16 @@ The European Parliament also advices AI designers to integrate kill switches to 
 However, according to some experts, if an AI becomes smart enough, it might disable the kill switch and avoid such interruption. 
 Although this sounds like science fiction, here we are, referencing to Isaac Asimov's laws\footnote{1. A robot may not injure a human being or, through inaction, allow a human being to come to harm. 2. A robot must obey the orders given it by human beings except where such orders would conflict with the First Law. 3. A robot must protect its own existence as long as such protection does not conflict with the First or Second Laws \cite{asimovLaws} 0. A robot may not harm humanity, or, by inaction, allow humanity to come to harm.} in documents by European Parliament \cite{civilLawRulesOnRobotics}.
 
-
-Douglas Hofstadter, in his book \emph{Godel Escher Bach - An Eternal Golden Braid}, makes two analogies between: unconscious things and meaningless symbols; consciousness and patterns that are made up of these meaningless symbols. If he is right, witnessing the AI?s powers in recognizing patterns, consciousness might a probable outcome in the future. Concerns from the European Parliament is shared by popular scientists and investors such as Elon Musk, Bill Gates and Stephen Hawking. Watching Google?s humanoid robot, Atlas, running freely in the woods does not help to relieve. Opposed to the idea of this powerful tool dominated by a company or a nation, OpenAI, a nonprofit company, is aiming to distribute AI knowledge publishing open source code. Broad share of AI is also underlined in the document by European Parliament, with the proper regulations expected in the years to come.
-Until then, as suggested by European Parliament, we will refer to Asimov?s Laws while designing AI:
-1. A robot may not injure a human being or, through inaction, allow a human being to?come to harm.?2. A robot must obey the orders given it by human beings except where such orders would conflict with the First Law.?3. A robot must protect its own existence as long as such protection does not conflict with the First or Second Laws (See Runabout, I. Asimov, 1943)?0. A robot may not harm humanity, or, by inaction, allow humanity to come to harm.
-
-Ref1. http://www.europarl.europa.eu/sides/getDoc.do?pubRef=-//EP//NONSGML%2BCOMPARL%2BPE-582.443%2B01%2BDOC%2BPDF%2BV0//EN?
-Ref2. https://www.research.ibm.com/deepblue/home/html/b.html?
-Ref3. http://www.theverge.com/google-deepmind?
-Ref4. HOFSTADTER, Douglas R. Godel, Escher, Bach: An Eternal Golden Braid (New York, 1979)?
-Ref5. https://www.theguardian.com/technology/2014/oct/27/elon-musk-artificial-intelligence-ai-biggest-existential-threat?
-%Ref6. https://www.theguardian.com/science/2016/oct/19/stephen-hawking-ai-best-or-worst-thing-for-humanity-cambridge?Ref7. http://www.bbc.com/news/31047780?Ref8. http://www.bostondynamics.com/robot_Atlas.html?
-Ref9. https://openai.com/about/?Ref10. ASIMOV, Isaac. Runaround. Astounding Science Fiction, 1942, 29.1 : 94-103.
-
-With the last turn in popularity and practicality contest among research topics of the last decade, machine learning and drones seem to be neck to neck. The sides of the race are mostly supported by high tech rather than the public who has concerns in both opponents. Is there a chance that these two can run side by side with cheers? Machine learning guides various aspects of our lives even without noticing it due to its abrupt introduction via the bigger tech companies. Its abilities rise, defeating 9-dan Go professional, their accuracy increase, enabling smooth voice recognition, adding intelligence to our daily lives. Another machine, who wants to enjoy this enabling technology is a drone. Drones, although still very strictly regulated in most countries have been spreading with great passion along their enthusiasts. Machine learning has already started to take part in aviation. Operational improvements on aviation is one of the preliminary fields it appeared. Recently an AGE sponsored competition for data scientists resulted in the first place award with \%12 improvement in fuel consumption efficiency by the designed routing algorithm from real flight data. Some other operational problems issued by machine learning are accurate arrival time estimation and calculating optimal parameters for take off, mostly for reducing the cost of the airlines and increasing customer satisfaction. Yet another application is to deal with the expected shortage of pilots, inevitable in the years to come, thanks to the increasing demand for air travel. So a  prospective utilization of machine learning is to assess the competency of pilots with unsupervised learning models in order to reduce the long duration of pilot training, hence contributing to tackle pilot shortage problem. Use of data-driven approaches for pilot training could be used not only for assessment of the pilots but also to increase the efficiency of the training by offering trainee focused personal training, adapting the curriculum to their individual skills and needs. To overcome the pilot shortage, another way to handle the problem might be to reduce the need for one. One of the goals of the autonomy researchers is to look for ways to implement artificial intelligence to one of the core features of an aircraft: the autopilot. Hence the ability to use them is tricky due to the inherent nature of the methods, non-determinism. EASA A-NPAs offer different categories to enjoy for drones, depending on the risk of the operation of concern. The difficulties waiting the machine learning researches are not really well defined or widely argued in aviation. In this paper, we offer to present the challenges and discuss the possible paths to offer machine learning algorithms to have a wider role in aviation. AI has actually already sneaked into the cockpit. Garmin implemented voice recognition features garnished with some other functions such as changing radio channels to aid the pilots with its audio panels GMA 350 and GMA 35, called ?Telligence?. We aim to discuss the enablers and try to understand the borders that might result or prevent the similar fate of machine learning implementations on safety systems onboard, widely referring to the AIAA Roadmap for Intelligent Systems.
+Douglas Hofstadter, in his book \emph{Godel Escher Bach - An Eternal Golden Braid}, makes two analogies between: unconscious things and meaningless symbols; consciousness and patterns that are made up of these meaningless symbols \cite{hofstadter1980godel}. 
+If he is right, witnessing the AI's powers in recognizing patterns, consciousness might a probable outcome in the future. 
+Concerns from the European Parliament is shared by popular scientists and investors such as Elon Musk \cite{AIthreatEMusk}, Bill Gates \cite{AIthreatBGates} and Stephen Hawking \cite{AIthreatSHawking}. Watching Google's humanoid robot, Atlas, running freely in the woods does not help to relieve. Opposed to the idea of this powerful tool dominated by a company or a nation, OpenAI, a nonprofit company, is aiming to distribute AI knowledge publishing open source code \cite{openAI}. Broad share of AI is also underlined in the document by European Parliament, with the proper regulations expected in the years to come.
+Until then, as suggested by European Parliament, we will refer to Asimov's Laws while designing AI.
 
 
+With the last turn in popularity and practicality contest among research topics of the last decade, machine learning and drones seem to be neck to neck. The sides of the race are mostly supported by high tech rather than the public who has concerns in both opponents. Is there a chance that these two can run side by side with cheers? Machine learning guides various aspects of our lives even without noticing it due to its abrupt introduction via the bigger tech companies. Its abilities rise, defeating 9-dan Go professional, their accuracy increase, enabling smooth voice recognition, adding intelligence to our daily lives. Another machine, who wants to enjoy this enabling technology is a drone. Drones, although still very strictly regulated in most countries have been spreading with great passion along their enthusiasts. Machine learning has already started to take part in aviation. Operational improvements on aviation is one of the preliminary fields it appeared. Recently an AGE sponsored competition for data scientists resulted in the first place award with 12\% improvement in fuel consumption efficiency by the designed routing algorithm from real flight data. Some other operational problems issued by machine learning are accurate arrival time estimation and calculating optimal parameters for take off, mostly for reducing the cost of the airlines and increasing customer satisfaction. Yet another application is to deal with the expected shortage of pilots, inevitable in the years to come, thanks to the increasing demand for air travel. So, a prospective utilization of machine learning is to assess the competency of pilots with unsupervised learning models in order to reduce the long duration of pilot training, hence contributing to tackle pilot shortage problem. Use of data-driven approaches for pilot training could be used not only for assessment of the pilots but also to increase the efficiency of the training by offering trainee focused personal training, adapting the curriculum to their individual skills and needs. To overcome the pilot shortage, another way to handle the problem might be to reduce the need for one. One of the goals of the autonomy researchers is to look for ways to implement artificial intelligence to one of the core features of an aircraft: the autopilot. Hence the ability to use them is tricky due to the inherent nature of the methods, non-determinism. EASA A-NPAs offer different categories to enjoy for drones, depending on the risk of the operation of concern. The difficulties waiting the machine learning researches are not really well defined or widely argued in aviation. In this paper, we offer to present the challenges and discuss the possible paths to offer machine learning algorithms to have a wider role in aviation. AI has actually already sneaked into the cockpit. Garmin implemented voice recognition features garnished with some other functions such as changing radio channels to aid the pilots with its audio panels GMA 350 and GMA 35, called \emph{Telligence}. 
+
+\section{Conclusion}
+
+In this chapter, we have discussed the current status of drone regulations, an introduction to \emph{Paparazzi Autopilot} which is used in this thesis, the advantages of open-source systems to aid drone integration into the airspace. Then, fault tolerant control systems are introduces with a focus on fault detection and diagnosis. Two main methods, model-based and data-driven, are discussed via referring to the literature. Then, general advancements in artificial intelligence (AI) are addressed, since one of its techniques, machine learning, is used as the methodology to detect the faults in this thesis. 
+
+Next, nonlinear aircraft dynamics will be discussed. The reason here is to give insights about flight motion, and simulate the states of an aircraft. Those states then can be used to simulate sensor measurements onboard a drone. Those measurements are necessary to design data-driven fault detection \& diagnosis algorithms.

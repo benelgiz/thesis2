@@ -131,11 +131,27 @@ Results shows as in  Fig.~\ref{fig:post_prob} that proper tuning achieves very a
 %\end{center}
 %\end{figure*}
 
-
+\begin{figure}
+\begin{center}
+%\includegraphics[width=17cm]{figures/paparazziControlModes}    % The printed column width is 8.4 cm.
+\includegraphics[width=1\textwidth]{figures/flightCampaign}    % The printed column width is 8.4 cm.
+\caption{A scene from one of many flight campaigns realized by ENAC UAV laboratory team. Safety pilot can be seen in the photo holding the remote control. Photo taken by Alexandre Bustico.} 
+\label{fig:flightCampaign}
+\end{center}
+\end{figure}
 
 \section{Fault detection from real flight data}
 
-This second section of the chapter discusses the classification results using real flight data. First, the injection of faults to the flights have been explained throughly. The Paparazzi GCS has been altered to inject real-time faults, controllers in some of flight modes have been changed to accommodate faults. After, the selection of the faults and nominal phases and also labeling data have been presented. Finally, the labeled data have been used to train classifiers for elevon stuck and loss of efficiency faults separately and the classifiers have been evaluated. A variety of techniques implemented to improve the performance such as feature engineering and tuning the classifiers. 
+This second section of the chapter discusses the classification results using real flight data. 
+Flight campings have been realized in the presence of a safety pilot to recover the drone in case of loss of control when the faults are injected. 
+An scene from one of many flight campaigns realized by ENAC UAV laboratory team is given in Fig.~\ref{fig:flightCampaign}. 
+Safety pilot can be seen in the photo holding the remote control.
+
+In this section, first, the injection of faults to the flights have been explained throughly. 
+The Paparazzi GCS has been altered to inject real-time faults, controllers in some of flight modes have been changed to accommodate faults. 
+After, the selection of the faults and nominal phases and also labeling data have been presented. 
+Finally, the labeled data have been used to train classifiers for elevon stuck and loss of efficiency faults separately and the classifiers have been evaluated. 
+A variety of techniques implemented to improve the performance such as feature engineering and tuning the classifiers. 
 
 \subsection{Injecting faults in flight from Paparazzi GCS}
 
@@ -332,7 +348,7 @@ The output of this file is the accelerometer and gyro measurements corresponding
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=15cm]{figures/labelingGyroAccel}    % The printed column width is 8.4 cm.
+\includegraphics[width=15.1cm]{figures/labelingGyroAccel}    % The printed column width is 8.4 cm.
 \caption{Indexing SETTINGS, to find fault and nominal flight intervals, indexing GYRO measurements to AND with FAULT indexes to find the indexes of faulty gyro measurements} 
 \label{fig:labelingGyroAccel}
 \end{center}
@@ -358,16 +374,15 @@ During the flights, the most challenging fault to realize was the control surfac
 The drone reacted very fast with an uncontrollable dive towards the ground and the safety pilot initiated manual recovery by triggering the safety switch shown in Fig.~\ref{fig:faultInjectionPaparazzi}. 
 So the time past starting from the ignition of the control surface stuck fault until the manual pilot's intervention is very short ($\sim$2 seconds) which can be seen from the accelerometer x-direction readings in Fig.~\ref{fig:acc_x}. 
 
+This causes the problem of skew-class classification where there is a big difference between the number of instances belonging to different classes and requires some special treatment as explained above under section ~\ref{evalClassifier}.
 
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[width=0.7\textwidth]{figures/acc_x}    % The printed column width is 8.4 cm.
 \caption{Accelerometer readings along $x$-direction during flight interval just before control surface stuck (nominal, represented with blue) and during control surface stuck at $\SI{0}{\degree}$ until the safety pilot's intervention} 
 \label{fig:acc_x}
 \end{center}
 \end{figure}
-
-This causes the problem of skew-class classification where there is a big difference between the number of instances belonging to different classes and requires some special treatment as explained above under section ~\ref{evalClassifier}.
 
 First problem considered for classification is the right elevon stuck at $\SI{0}{\degree}$.
 Gyro and accelerometer measurements are saved to SD card onboard at 60 Hz. 
@@ -378,6 +393,16 @@ Usually, the performance of the learning algorithms are quite dependent on the l
 Fig.~\ref{fig:acc_x} shows accelerometer x-axis measurements for a duration of $\sim$20 seconds. 
 Measurements plotted in blue indicates the part of the flight where elevon works correctly while red part of the plot corresponds to the faulty phase. 
 It can be interpreted from the Fig.~\ref{fig:acc_x} that the fault injected shows a distinct change in the x-axis accelerometer measurements when the fault is injected. 
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=0.78\textwidth]{figures/acc_x_evenLongerNominal}    % The printed column width is 8.4 cm.
+\caption{Accelerometer readings along $x$-direction during flight interval before control surface stuck (nominal, represented with blue) and during control surface stuck at  $\SI{0}{\degree}$ until the safety pilot's intervention} 
+\label{fig:acc_x_evenLongerNominal}
+\end{center}
+\end{figure}
+
+
 
 %\begin{figure}
 %\begin{center}
@@ -395,19 +420,12 @@ It can be interpreted from the Fig.~\ref{fig:acc_x} that the fault injected show
 %\end{center}
 %\end{figure}
 
-\begin{figure}
-\begin{center}
-\includegraphics[width=0.66\textwidth]{figures/acc_x_evenLongerNominal}    % The printed column width is 8.4 cm.
-\caption{Accelerometer readings along $x$-direction during flight interval before control surface stuck (nominal, represented with blue) and during control surface stuck at  $\SI{0}{\degree}$ until the safety pilot's intervention} 
-\label{fig:acc_x_evenLongerNominal}
-\end{center}
-\end{figure}
 
 
 To investigate further, measurements have been plotted during a larger time scale involving $\sim$70 seconds of measurements as shown in Fig.~\ref{fig:acc_x_evenLongerNominal}. 
 Here, it is seen that the accelerometer measurements corresponding to faulty phase could be observed during the nominal flight phase as well, thus it might be necessary to check the time change of translational acceleration to catch a difference in behavior. 
 
-\begin{figure}[!h]
+\begin{figure}
 \begin{center}
 \includegraphics[width=0.66\textwidth]{figures/acc_z}    % The printed column width is 8.4 cm.
 \caption{Accelerometer measurements along z direction $a_z$ for faulty and nominal flight data} 
@@ -415,7 +433,7 @@ Here, it is seen that the accelerometer measurements corresponding to faulty pha
 \end{center}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}
 \begin{center}
 \includegraphics[width=0.65\textwidth]{figures/gyro_x}    % The printed column width is 8.4 cm.
 \caption{Angular velocity $w_x$  for faulty nominal flight data} 
@@ -426,7 +444,7 @@ Here, it is seen that the accelerometer measurements corresponding to faulty pha
 Fig.~\ref{fig:acc_z} and Fig.~\ref{fig:gyro_x} show the accelerometer measurements along z-direction and angular velocities along x-direction during a short time interval. 
 Here, although an average of faulty measurements would result in an obvious difference, individual measures might correspond to nominal phase of the flight as well.
 
-\begin{figure}[!h]
+\begin{figure}
 \begin{center}
 \includegraphics[width=0.65\textwidth]{figures/feat1vsfeat3FaultStuck}    % The printed column width is 8.4 cm.
 \caption{$a_x$ vs $a_z$ feature space for faulty nominal flight data} 
@@ -434,7 +452,7 @@ Here, although an average of faulty measurements would result in an obvious diff
 \end{center}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}
 \begin{center}
 \includegraphics[width=0.65\textwidth]{figures/feat1vsfeat2FaultStuck}    % The printed column width is 8.4 cm.
 \caption{$a_x$ vs $a_y$ feature space for faulty nominal flight data} 
@@ -815,4 +833,21 @@ Table~\ref{tab:GaussianTuned} shows the results except the simulations using spi
 \end{tabular}
 \end{table}
 
+\section{Conclusion}
 
+In this chapter, we focus on the results of SVM classification application to Fault Detection \& Diagnosis problem. Fault classification simulations are explained under two main sections: classification of faults based on simulated flight measurements and classification of faults based on real flight data. 
+
+First part of this chapter gives the results of SVM classification on data generated from simulations. 
+To simulate the data, equations of motions given in \emph{Nonlinear Aircraft Model} has been numerically solved for the states. 
+Then sensor measurements (accelerometer and gyro data) have been calculated using the states and the specifications of the sensors. 
+Generated data is usually more structured compared to the real flight data. 
+In this preliminary application of SVM to fault diagnosis, we aimed to start with an easier problem, and used data generated from models.
+There is no controller involved in the model in this preliminary application of SVM to detection to discard the controller's effect on the diagnosis. 
+
+The second part investigates the fault detection with real flight data. 
+SVM, being a supervised learning algorithm, requires labeled data for both nominal and faulty flight conditions. 
+So faulty flights were realized with a security pilot ready to recover in loss of control of the aircraft.
+For the faulty flight data gathering, some modifications to the \emph{Paparazzi} autopilot was necessary in two main parts: Injecting the faults real-time from GCS, and editing the controller onboard so that the sent faulty input values configures the servos as manipulated from the GCS. 
+
+With the flight data, two main classes of faults, control surface stuck and loss of effectiveness, have been investigated separately. 
+A variety of techniques implemented to improve the performance of the classification such as feature engineering and tuning the classifiers. 
