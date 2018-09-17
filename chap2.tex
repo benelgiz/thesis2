@@ -211,14 +211,10 @@ With the new era of \gls{fpv} flights, especially for multi-rotor \gls{uav}s, th
 The \emph{Paparazzi} Autopilot System provides a software and hardware solution for low-cost mini and micro unmanned air vehicles. 
 A fleet of \emph{Paparazzi} equipped drones can be seen in Fig.~\ref{fig:ENACdroneFleet}.
 
-\begin{figure}
-\begin{center}
-%\includegraphics[width=11.3cm]{figures/FTCmethods}    % The printed column width is 8.4 cm.
-\includegraphics[width=9.3cm]{figures/ENACdroneFleet}
-\caption{Fleet of \emph{Paparazzi} equipped drones from ENAC UAV laboratory in a flight campaign with \emph{Pyrenees} in the background. Photo by Alexandre Bustico.} 
-\label{fig:ENACdroneFleet}
-\end{center}
-\end{figure}
+It is started as a personal project in 2003 by Pascal Brisset and Antoine Drouin, and afterwards supported by ENAC in 2005. 
+Being one of the first (if not the first) open-source autopilot system in the world, \emph{Paparazzi} has attracted attention and led the others to start new branches and systems. % This phrase may need some proof actually, but it is hard to find anything officially...
+The software is originally packaged for Debian/Ubuntu but can be manually installed on any GNU/Linux operating system even including MacOS-X. 
+However, it is not compatible with Windows which automatically eliminates $90\,\%$ of the possible user community and therefore it is not as popular as other existing autopilot systems on the user market.
 
 
 \begin{landscape}
@@ -257,16 +253,22 @@ A fleet of \emph{Paparazzi} equipped drones can be seen in Fig.~\ref{fig:ENACdro
 \begin{figure}[!hbt]
 \begin{center}
 %\includegraphics[width=11.3cm]{figures/FTCmethods}    % The printed column width is 8.4 cm.
+\includegraphics[width=13.3cm]{figures/ENACdroneFleet}
+\caption{Fleet of \emph{Paparazzi} equipped drones from ENAC UAV laboratory in a flight campaign with \emph{Pyrenees} in the background. Photo by Alexandre Bustico.} 
+\label{fig:ENACdroneFleet}
+\end{center}
+\end{figure}
+
+
+\begin{figure}[!hbt]
+\begin{center}
+%\includegraphics[width=11.3cm]{figures/FTCmethods}    % The printed column width is 8.4 cm.
 \includegraphics[width=11.3cm]{figures/Paparazzi_System_overview}
 \caption{Paparazzi Autopilot System overview} 
 \label{fig:Paparazzi_System_overview}
 \end{center}
 \end{figure}
 
-It is started as a personal project in 2003 by Pascal Brisset and Antoine Drouin, and afterwards supported by ENAC in 2005. 
-Being one of the first (if not the first) open-source autopilot system in the world, \emph{Paparazzi} has attracted attention and led the others to start new branches and systems. % This phrase may need some proof actually, but it is hard to find anything officially...
-The software is originally packaged for Debian/Ubuntu but can be manually installed on any GNU/Linux operating system even including MacOS-X. 
-However, it is not compatible with Windows which automatically eliminates $90\,\%$ of the possible user community and therefore it is not as popular as other existing autopilot systems on the user market.
 
 Being one of the first open-source autopilot system in the world, \emph{Paparazzi} deals with all three segments: Ground, Airborne, and the communication link between as shown in Fig.~\ref{fig:Paparazzi_System_overview}. 
 The ground software of \emph{Paparazzi} is mainly written in Ocaml, with some additional parts in Python and C. 
@@ -328,12 +330,14 @@ The rest of this section highlights \emph{Paparazzi} 's capacity to tackle the i
 
 In this part of this thesis, we present the Paparazzi open source auto-pilot system, and its features, as a tool to ease the safe integration of low altitude UAS into National Air Space (NAS). 
 Paparazzi is favored thanks to its modular design, its support for congestion management and evolving reliability.
-We believe the flexibility required for such solutions calls for open architectures. To ensure safety, this integration needs to be achieved through airspace management and UAS reliability.Preliminary airspace designs, e.g. Amazon's, identify different zones depending on the UAS capabilities, population density and altitude. 
+We believe the flexibility required for such solutions calls for open architectures. To ensure safety, this integration needs to be achieved through airspace management and UAS reliability.
+Preliminary airspace designs, e.g. Amazon's, identify different zones depending on the UAS capabilities, population density and altitude. 
 Plus, national rules evolution push to cope with a variety of requirements. Open source and modular architectures are key to adapt to these requirements. 
 From a UTM point of view, Paparazzi provide features to ease congestion management, such as dynamic geofencing, trajectory communication and collision avoidance. 
 Concerning reliability, current regulations focus on flight constraints but might be expected to involve regulations on software and hardware components as well. 
 In such case, the increased cost will be inevitable for the demands of certification. 
-In the Paparazzi software case, parts of the code have been formally proved and stable versions have thousands of flight hours. Such heritage might ease the certification process for smaller companies.On top of its flexibility and reliability, Paparazzi offers a unique set of features, as an open source software, to achieve safe integration of low altitude UAS in the airspace.
+In the Paparazzi software case, parts of the code have been formally proved and stable versions have thousands of flight hours. Such heritage might ease the certification process for smaller companies.
+On top of its flexibility and reliability, Paparazzi offers a unique set of features, as an open source software, to achieve safe integration of low altitude UAS in the airspace.
 
 % More specifically, this paper shows how the use of the Paparazzi open source auto-pilot system can ease the integration of low altitude UAS. 
 

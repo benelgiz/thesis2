@@ -12,7 +12,7 @@
 %% file should be \input (not \include 'd) from cover.tex.
 
 The new era of small UAVs populating the airspace introduces many safety concerns due to the lack of a pilot onboard and less accurate nature of the sensors. 
-This necessitates intelligent approaches to address the emergency situations that will be inevitable for all classes of UAVs defined by EASA (European Aviation Safety Agency). 
+This necessitates intelligent approaches to address the emergency situations that will be inevitable for all classes of UAV operations defined by EASA (European Aviation Safety Agency). 
 The hardware limitations for these small vehicles point the utilization of \emph{analytical redundancy} rather than the usual practice of hardware redundancy in manned aviation. 
 In the course of this study, machine learning practices are implemented to diagnose faults on a small fixed-wing UAV to avoid the burden of accurate modeling needed in model-based fault diagnosis. 
 A supervised classification method, SVM (Support Vector Machines) is used to classify the faults. 
@@ -20,10 +20,10 @@ The data used to diagnose the faults are gyro and accelerometer measurements.
 The idea to restrict the data set to accelerometer and gyro measurements is to check the method's abilities of classification even with a small and inexpensive chip set without the need to access the data from the autopilot such as the control input information. 
 % To access information from the autopilot used was quite easy since it is open-source, but still a solution for a wider community is pursued involving the systems equipped with closed solutions. 
 % Although serving for flexibility, lacking control input information from the autopilot introduces challenges mainly due to lack of knowledge about the controller's compensation for the fault. 
-This work only addresses the faults in the control surfaces of a UAV. 
+This work addresses the faults in the control surfaces of a UAV. 
 More specifically, the faults considered are the control surface stuck at an angle and loss of effectiveness. 
 % Since SVM is a supervised machine learning algorithm, labeled data is needed to accomplish the training of the classifier. 
-First, a model of an aircraft is simulated. This model is not used for the design of Fault Detection and Diagnosis (FDD) algorithms, but instead utilized to generate data and test the designed algorithms. 
+First, a model of an aircraft is simulated. This model is not used for the design of Fault Detection and Diagnosis (FDD) algorithms, but instead utilized to generate data. 
 Simulated data is opted instead of flight data to isolate the probable effects of the controller on the diagnosis, which will complicate a preliminary study on FDD for drones.
 The results show that for simulated measurements, SVM gives very accurate results on the classification of loss of effectiveness fault on the control surfaces. 
 Those promising results called for further investigation to assess SVM performance on fault classification with flight data.
@@ -32,4 +32,6 @@ All data and the code available in code sharing and versioning system \emph{Gith
 The training is held offline due to the need for labeled data and computational burden of the tuning phase of the classifiers. 
 The results show that over the flight data, SVM yields an F1 score of 0.98 for classification of control surface stuck fault. 
 For the loss of efficiency fault, some feature engineering, involving the addition of past measurements is needed to attain the same classification performance. 
-Use of spinors as features also improves accuracy of the classifier even for an untuned classifier.
+A very promising result is discovered when \emph{spinors} are used as features instead of angular velocities. 
+Result show that by using spinors for classification, there is a vast improvement in the classification accuracy especially when the classifiers are untuned. Using spinors and a Gaussian Kernel, untuned classifier gives f1Score of 0.9555 which was 0.2712 when gyro measurements are used as features.
+In summary, this work shows that SVM gives satisfactory performance for classification of faults on control surfaces of a drone using flight data.
