@@ -11,8 +11,23 @@ Motion of an aircraft usually involves both translation and rotation.
 Studying aircraft motion is complicated since those two motions are coupled, e.g a rotation might cause a change in aerodynamic forces which affects the translation. 
 Thus, to ease the process, the motion is broken into easier problems utilizing some assumptions. 
 Such an assumption for the aircraft motion is to assume that the aircraft is a point mass, all its mass is collected at its center of gravity, so translates from one point to the other. 
-Then, the aircraft's rotation is investigated by no longer assuming it as a point mass but a rigid body in space.
-In this chapter, modeling both of these motions is presented in detail.
+Then, the aircraft's rotation is investigated by no longer assuming it as a point mass but a rigid body in space. 
+
+In this chapter, modeling both of these motions (translation and rotation motion) is presented in detail.
+Equations of rotation and translation motion are driven for generic aircraft. Then, calculation of forces and moments, which are required to solve those equations, are given for two types drones (Aerodynamic force derivatives and stability derivatives are specific for each drone). 
+Those two examples of drones are a drone by ETH Zurich and MAKO (used in ENAC UAV LAB).
+ 
+In this thesis, drone motion is simulated to generate data.
+The accelerometer and gyro data are generated for MAKO model, considering the specifications of IMU \emph{InvenSense MPU-9250 Nine-axis} used in \emph{Paparazzi Autopilot Apogee} onboard. 
+The models derived here are not used in detection and diagnosis algorithms. 
+The detection and diagnosis algorithms implemented in this thesis use only data. 
+
+If the reader is not interested in detection and diagnosis via simulated data but interested in detection and diagnosis via real data, s/he can skip this chapter since this chapter explains the models that are used to simulate measurements.
+Even then, having a background information about the physics of the system might help to have a grasp on the features (translational acceleration and angular velocities) used in both model-based and data-driven fault diagnosis.
+
+%To clarify, machine learning methods also train a model. 
+%But in that case, the model is not the equations of motion of an aircraft but rather a simpler model and may not explicitly describe the physical . 
+%The only exception to not using physical models in this work for diagnosis, is the part that the diagnosis is realized using spinors as features. To calculate the spinors, kinematic equations are numerically. But still, our idea to generalize by having no models holds since only kinematic equations are used. 
   
 \section{Attitude motion modeling}
 
@@ -1701,7 +1716,7 @@ where $\bm{u}_c $ is the desired control signal, $\bm{E} = diag(e_1, e_2, e_3)$ 
 \begin{figure}
 \begin{center}
 \includegraphics[width=14cm]{figures/actuatorFaults}    % The printed column width is 8.4 cm.
-\caption{Probable actuator faults \cite{ducard2009fault}. (a) Loss of effectiveness: The actuator does respond to the control signals but does so in an abnormal way such as low actuation level or low response time. (b) Lock-in-place: A total control loss of the control surface actuators. The actuator freezes at a particular position. (c) Hard-over: A total control loss of the control surface actuators. The actuator freezes at the minimum or maximum position limit. (d) A total control loss of the control surface actuators. Actuator does not contribute to the control.} 
+\caption{Probable actuator faults \cite{ducard2009fault}. (a) Loss of effectiveness: The actuator does respond to the control signals but does so in an abnormal way such as low actuation level or low response time. (b) Lock-in-place: A total control loss of the control surface actuators. The actuator freezes at a particular position. (c) Hard-over: A total control loss of the control surface actuators. The actuator freezes at the minimum or maximum position limit. (d) A total control loss of the control surface actuators. Actuator does not contribute to the control authority.} 
 \label{fig:actuatorFaults}
 \end{center}
 \end{figure}
@@ -1752,7 +1767,7 @@ where $\bm{u}_c $ is the desired control signal, $\bm{E} = diag(e_1, e_2, e_3)$ 
 In this chapter, equations of motion of an aircraft are given. 
 Motion of an aircraft usually involves both translation and rotation. 
 Here, equations for translational and rotational motion are discussed separately in detail.
-After the equations are derived for a generic aircraft, calculation of forces and moments which are specific to an individual drone is presented (Aerodynamic force derivatives and stability derivatives are specific for each drone). For two different drone examples, a drone from ETH Zurich and MAKO (used in ENAC UAV LAB), calculation of forces and moments are given.
+After the equations are derived for a generic aircraft, calculation of forces and moments which are specific to an individual drone is presented (aerodynamic force derivatives and stability derivatives are specific for each drone). For two different drone examples, a drone from ETH Zurich and MAKO (used in ENAC UAV LAB), calculation of forces and moments are given.
 Those forces and moments are inputs to the dynamic equations of motion. 
 
 The models derived here are not used in detection and diagnosis algorithms. 
@@ -1773,7 +1788,5 @@ Since the data is generated and available now for implementations, the methodolo
 In this thesis, \emph{Support Vector Machines} (SVM) are used as a classification method to diagnose faults onboard a drone. 
 Since SVM is a machine learning method, an introduction to machine learning methods have been given from an implementation perspective. 
 It starts with an introduction to terminology for machine learning methods, gives general explanations to prepare the inputs to the machine learning algorithm. 
-Then many application details are discussed that would help to user to apply those methods to their own problems. 
-Finally, SVM is introduced and three phases encountered during its implementation, \emph{training}, \emph{tuning} and \emph{evaluation} is explained.
-
-
+Then, many application details are discussed that would help the user to apply those methods to their own problems. 
+Finally, SVM is introduced and three phases encountered during its implementation, \emph{training}, \emph{tuning} and \emph{evaluation} are explained.

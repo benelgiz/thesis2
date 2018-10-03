@@ -70,3 +70,19 @@ A very promising result is discovered when \emph{spinors} are used as features i
 Result show that by using spinors for classification, there is a vast improvement in the classification accuracy especially when the classifiers are untuned. Using spinors and a Gaussian Kernel, untuned classifier gives f1Score of 0.9555 which was 0.2712 when gyro measurements are used as features.
 
 In general, this work shows that SVM gives satisfactory performance for classification of faults on control surfaces of a drone using flight data.
+
+\section{Thesis Outline}
+
+\textbf{Chapter 1} starts with an introduction to the thesis. It is followed by the motivation and contribution. Then, the thesis outline is given.\\
+\textbf{Chapter 2} presents the state of the art on topics: 
+\begin{itemize}
+\item{Integration of drones into airspace}
+\item{Paparazzi Autopilot}
+\item{Fault Tolerant Control Systems with a focus on Fault Detection and Diagnosis}
+\item{Machine Learning and Artificial Intelligence in general}
+\end{itemize}
+Integration for drones into the airspace constitutes the motivation of this thesis. To assure a safe integration of drones into the airspace, design of vehicle health management systems is crucial. Fault detection and diagnosis plays an important role in vehicle health management, thus literature review of that topic is also presented in this chapter. In this thesis, the method selected to detect and diagnose faults is Support Vector Machines, which is a machine learning method. Thus, state of the art for machine learning is also given. \emph{Paparazzi} autopilot has been used to realize flights to generate faulty data, thus it is also introduced in this chapter.\\
+\textbf{Chapter 3} focuses on equations of motion of an aircraft. In this chapter, equations for translational and rotational motion are discussed separately in detail. After the equations are derived for a generic aircraft, calculation of forces and moments which are specific to an individual drone is presented. Then, modeling accelerometer and gyro data is explained. Modeling faults in the control surfaces of an aircraft is also discussed in this chapter.\\
+\textbf{Chapter 4} is dedicated to machine learning algorithms with a focus on applications. Support Vector Machines (SVM) is discussed since it is the selected method to classify the faults from nominal conditions.\\
+\textbf{Chapter 5} focuses on the results of fault classification results under two main sections: classification of faults based on simulated  flight measurements and classification of faults based on real flight data. In the first part, flight data is simulated using the mathematical equations explained in Chapter 3. SVM algorithm is trained with the simulated data to classify the faulty and nominal phases of the simulated flight. The second part starts with explanations on faulty flight experiments realized. \emph{Paparazzi} Autopilot has been modified to introduce faults to control surfaces during the flight. Then, classification of control surface stuck and loss of effectiveness faults have been investigated separately.\\
+\textbf{Chapter 6} concludes the thesis with an outlook on the contributions and results acquired during the thesis.

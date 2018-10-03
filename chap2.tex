@@ -22,11 +22,11 @@
 
 \chapter{State of the Art}
 
-This chapter includes the current status of a variety of topics.
-Integration of unmanned systems into airspace is the first to be discovered in the course of this chapter since it constitutes the motivation for this thesis.
-The second topic to be discovered is the \emph{Paparazzi Autopilot System} since it is used to realize the flight campaigns for this thesis. 
+This chapter includes the current state of the art of a variety of topics.
+Integration of unmanned systems into airspace is the first topic addressed in this chapter since it constitutes the motivation for this thesis.
+The second topic addressed is the \emph{Paparazzi Autopilot System} since it is used to realize the flight campaigns for this thesis. 
 We also mention, how the use of the Paparazzi open source auto-pilot system can ease the integration of UAS in the airspace. 
-Then to achieve a safe integration of drones into airspace, fault tolerant control systems have been visited with a focus on fault detection and diagnosis.
+Then, to achieve a safe integration of drones into airspace, fault tolerant control systems have been visited with a focus on fault detection and diagnosis.
 The rise of machine learning methods in the last decade is referred finally, since they are utilized to diagnose faults in this study.
 
 \section{Integration of Drones into Airspace}
@@ -34,22 +34,22 @@ The rise of machine learning methods in the last decade is referred finally, sin
 Commercial advantages offered by drones are already targeted by big companies worldwide. 
 The airspace regulatory authorities seem to be squeezed in between the companies, demanding a fast as possible access to airspace, and the concerns of the public about potential privacy breaches, 
 safety and liability issues \cite{droneDisasters,droneImageProblem}. 
-Even with today's strictly regulated airspace, reported occurrences show that there are hurdles to solve before a further integration of \gls{uas} to airspace.
+Even with today's strictly regulated airspace, reported occurrences show that there are hurdles to solve before a further integration of \gls{uas} into airspace.
 
 With Riga Conference\footnote{The Future of Flying, Conference on remotely piloted aircraft systems, Riga, 6 March 2015} in 2015, Europe has entered a path towards a unified regulatory framework design to allocate airspace with a growing number of drones. 
 Its diversity, innovation, and international structure is offering huge potential for new jobs. 
 EASA (European Aviation Safety Agency) has been assigned by European Commission to develop two main aspects:
 
 \begin{itemize}
-\item{EU Regulatory Framework for drone operation}
-\item{Proposals for the regulation of low-risk drone operations, key elements of the future Implementation Rules (IRs)}
+\item{EU Regulatory Framework for drone operations;}
+\item{Proposals for the regulation of low-risk drone operations, key elements of the future Implementation Rules (IRs).}
 \end{itemize}
 
 
-With a starting point in Riga Declaration \cite{rigaDeclaration}, and building up on Regulations (EC) No 216/2008 (Basic Regulation) \cite{basicRegulation}, A-NPA (Advance Notice of Proposed Amendment) \cite{A_NPA_EASA2015} introduces three main category of operations and asks for a public consultation. 
-This consultation period has already over, but to see how these reviews are accounted for in the Technical Opinion \cite{technicalOpinion}, the Explanatory Note of the opinion can be referred.
+With a starting point in Riga Declaration \cite{rigaDeclaration}, and building up on Regulations (EC) No 216/2008 (Basic Regulation) \cite{basicRegulation}, A-NPA (Advance Notice of Proposed Amendment) \cite{A_NPA_EASA2015} introduces three main categories of operations and asks for a public consultation. 
+%This consultation period is already over, but to see how these reviews are accounted for in the Technical Opinion \cite{technicalOpinion}, the Explanatory Note of the opinion can be referred.
 In the report, drones are grouped under two main categories; remotely piloted and autonomous. 
-An autonomous drone, defined by ICAO (International Civil Aviation Organization) \cite{ICAO_RPASmanuel} as: A drone that does not allow pilot intervention in the management of the flight. 
+An autonomous drone is defined by ICAO (International Civil Aviation Organization) \cite{ICAO_RPASmanuel} as: A drone that does not allow pilot intervention in the management of the flight. 
 Aside sounding like science fiction, one of the reasons that EASA has switched to using the term drone and categorize it (remotely piloted or autonomous) rather than using UAS or RPAS to point the system, is to ensure a fast growing development of autonomy of drones.
 
 \begin{figure}
@@ -62,21 +62,21 @@ Aside sounding like science fiction, one of the reasons that EASA has switched t
 \end{figure}
 
 
-While mentioning the efforts by different organizations to accommodate drones in airspace, let's look at the present regulatory context from european and international perspectives.
+While mentioning the efforts by different organizations to accommodate drones in airspace, let's have a look at the present regulatory context from european and international perspectives.
 ICAO is a United Nations Organization working with 191 Member States of Chicago Convention (Convention on International Civil Aviation) and global aviation organizations. 
 For now, international circulation of drones are not allowed by Article 8 of Chicago Convention \cite{chicagoConvention}. 
-Starting from 2003, ICAO starts to study on Standards and Recommended Practices (SARPs) on drones, to which member states will refer when developing their legally enforceable national civil aviation regulations. 
+Starting from 2003, ICAO starts to study on Standards and Recommended Practices (SARPs) for drones, to which member states will refer when developing their legally enforceable national civil aviation regulations. 
 2018 is the proposed year for draft SARPs with a focus on international drone operations. 
 Until then, the work of ICAO can be traced by studies of UAS Study Group (set up by ICAO in 2007), which developed Circular 328 AN/190 on Unmanned Aircraft Systems \cite{ICAO_Circular}, an amendment to Annex 2 (Rules of the Air) \cite{amendment43toAnnex2} and to Annex 7 (Aircraft Nationality and Registration Marks) \cite{amendment6toAnnex6}.
-From European perspective, Basic Regulation (Regulation EC No.216/2008) \cite{basicRegulation} is the one holds right now. 
+From European perspective, Basic Regulation (Regulation EC No.216/2008) \cite{basicRegulation} is the one that holds right now. 
 Its Article 2 and Annex II limit the regulation to apply to only drones with a maximum take off mass above 150 kg and/or except operations on military, customs, police, firefighting, search and rescue, and experimental work. 
 Those that are not covered by Basic Regulation are handled by national aviation legislations, which are not really harmonized and mostly designed with an assumption that small drones are operating locally.
 EASA is working on different aspects of drone integration into airspace. 
-Last year, EASA published the `Prototype' Commission Regulation on Unmanned Aircraft Operations \cite{prototypeRegulation}, after an public consultancy with A-NPA 2015-10 (Advance Notice of Proposed Amendment) \cite{A_NPA_EASA2015} and its resulting Opinion \cite{technicalOpinion} with an Explanatory Note of Opinion. 
-Another work from EASA aims to authorize general principles for the type certification for fixed wing and helicopter drones separately utilizing a policy adopted by agency in 2009 (E.Y013-01) \cite{EY013_01policyStatementAirworthinessCertification}.
+Last year, EASA published the `Prototype' Commission Regulation on Unmanned Aircraft Operations \cite{prototypeRegulation}, after public consultancy with A-NPA 2015-10 (Advance Notice of Proposed Amendment) \cite{A_NPA_EASA2015} and its resulting Opinion \cite{technicalOpinion} with an Explanatory Note of Opinion. 
+Another work from EASA aims to authorize general principles for the type certification for fixed wing and helicopter drones separately using a policy adopted by agency in 2009 (E.Y013-01) \cite{EY013_01policyStatementAirworthinessCertification}.
 
 In the proposed regulation by EASA, an operation and risk centric categorization has been followed. 
-\emph{Open}, \emph{specific}, and \emph{certified} are the three categories proposed corresponding to different risk levels they possess.
+\emph{Open}, \emph{specific}, and \emph{certified} are the three categories proposed, corresponding to different risk levels they possess.
 
 \begin{itemize}
 \item{\textbf{Open Category} encompasses low risk operations, like most of leisure flights and some professional activities. 
@@ -85,12 +85,12 @@ But, they are subject to strict operational limitations (e.g., no proximity to p
 These operational limitations are sufficient to mitigate the low risk. 
 Though some professional activities fit in this category, the main goal is to regulate leisure types of operations \cite{manfredi2018unmanned}.}
 \item{\textbf{Specific Category} regroups medium risk operations, such as operation beyond visual line of sight (i.e., no visual contact between pilot and UAV during flight). 
-To facilitate the regulation process, a set of scenarios with specific operational limitations are designed. 
+To facilitate the regulation process, a set of scenarii with specific operational limitations are designed. 
 To operate within a scenario, the UAS needs to comply with a list of requirements.
-For operations outside the scope of the scenarios, a risk analysis must be carried out to show that the existing risks are properly mitigated. 
+For operations outside the scope of the scenarii, a risk analysis must be carried out to show that the existing risks are properly mitigated. 
 To facilitate this risk analysis process, JARUS developed a framework called the Specific Operations Risk Assessment (SORA). 
-SORA considers threats, which contribute to the risk, and barriers, which mitigate the risk, to evaluate the actual risk of an operation and decide if the resulting mitigated risk is low enough to allow the operation as illustrated in Fig.~\ref{fig:sora_barriersSmallerVersion}.
-The risk analysis needs to be validated by the authorities in order to authorize an operation not included in the standard scenarios \cite{manfredi2018unmanned}.}
+SORA considers threats, which contribute to the risk, and barriers, which mitigate the risk, to evaluate the actual risk of an operation and decide if the resulting mitigated risk is low enough to allow the operation as illustrated in Fig.~\ref{fig:sora_barriersReduced}.
+The risk analysis needs to be validated by the authorities in order to authorize an operation not included in the standard scenarii \cite{manfredi2018unmanned}.}
 \item{\textbf{Certified Category}  Operations with risk that cannot be mitigated in \emph{Specific Category} are evaluated in \emph{Certified Category}. 
 These represent high risk operations, for example large cargo delivery in urban areas. 
 These are likely to be operations with a risk close to current manned aviation. 
@@ -100,15 +100,15 @@ Indeed,
 \begin{landscape}
 \begin{figure}
 \begin{center}
-\includegraphics[width=24cm]{figures/sora_barriersSmallerVersion}    % The printed column width is 8.4 cm.
+\includegraphics[width=24cm]{figures/sora_barriersReduced}    % The printed column width is 8.4 cm.
 \caption{SORA structure: threats, threat barriers, hazard, harm barriers, harms} 
-\label{fig:sora_barriersSmallerVersion}
+\label{fig:sora_barriersReduced}
 \end{center}
 \end{figure}
 \end{landscape}
 
 before being able to certify a piece of equipment, a standard must be developed for this equipment. 
-Standardization can be understood as the process of defining details and minimum requirements for safe and uniform operation across a diverse range of implementations. 
+Standardization can be understood as the process of defining details and minimum requirements for safe and uniform operations across a diverse range of implementations. 
 However, as of today, not all the parts required to fly a UAS have corresponding standards, e.g., Detect And Avoid (DAA) systems, C2 links, pilot training. 
 So, enabling this category of operation requires extra effort and time for the industry to agree on standards. 
 For \emph{Certified Category}, harmonization at the ICAO is planned to allow international operations \cite{manfredi2018unmanned}.}
@@ -124,12 +124,12 @@ For \emph{Certified Category}, harmonization at the ICAO is planned to allow int
 
 Latest efforts for the integration of drones into airspace, welcomed a relatively new concept called the `U-Space'. 
 This approach has been injected to immediate plans at European level, to accommodate drones in urban areas. 
-While EASA is searching for solutions for the integration of drones in a variety of presumed airspaces, commissioner Violeta Bulc mentions other pillars in high level conference\footnote{Drones as a leverage for jobs and new business opportunities} in Warsaw. 
+While EASA is searching for solutions for the integration of drones in a variety of presumed airspaces, commissioner Violeta Bulc mentions other pillars in a high level conference\footnote{Drones as a leverage for jobs and new business opportunities \cite{warsawDeclaration}} in Warsaw. 
 She offers that in parallel to the efforts of EASA, two other pillars has to be tackled, UTM (UAS Traffic Management) and the U-Space.
 U-Space covers the usage of drones especially in U-rban areas and equal share of airspace, in which case `\emph{U}' stands for `\emph{you}'.
 To point out its availability to everyone, the services available through a portable phone is illustrated as in Fig.~\ref{fig:USpacePortable}.
 The sympathetic name riddles seem to be the search of public acceptance for drones in urban areas.
-The goals are highly challenging and given as \cite{UTMairspace}
+The goals are highly challenging \cite{UTMairspace}:
 
 \begin{itemize}
 \item{``Safe: safety at low altitude levels will be just as good as that for traditional manned aviation. The concept is to develop a system similar to that of Air Traffic Management for manned aviation.''}
@@ -146,17 +146,17 @@ The goals are highly challenging and given as \cite{UTMairspace}
 \end{center}
 \end{figure}
 
-EASA regulations already covering the airspace issued in U-Space, either under specific or certified categories (depending on the risk of the operation). 
+EASA regulations already cover the airspace issued in U-Space, either under specific or certified categories (depending on the risk of the operation). 
 By pointing the U-Space, a faster integration is prospected in urban areas.
-It seems we are not far from the images of flying vehicles populating the sky as such in fictions. 
+It seems we are not far from the images of flying vehicles populating the sky as such as in fictions. 
 Even better then imagined, this time, without drivers and more automated. 
 
-In US, to tackle the safety challenges and help the regulation development, NASA is currently carrying out a four years research program (up to 2019) to enable Unmanned aircraft traffic management solutions which are structured yet flexible when needed. 
+In US, to tackle the safety challenges and help the regulation development, NASA is currently carrying out a four years research program (up to 2019) to enable Unmanned aircraft traffic management solutions which are structured and flexible when needed. 
 To ensure safety, this integration needs to be achieved through airspace management and UAS reliability.
 Also, preliminary airspace designs, like the one proposed by Amazon shown in Fig.~\ref{fig:amazonDroneOperations}, identify different zones depending on the UAS capabilities, population density and altitude. 
 
 United Arab Emirates (UAE) accelerates the safe integration of drones into urban airspace, by settling and agreement for UAS Traffic Management (UTM) with Nokia as part of its `Next generation network for mission-critical and smart city services' \cite{nokiaDubai}.
-Aiming tracking/managing all drones in the airspace, Nokia is offering solutions for automated flight permissions, no-fly zone regulation, beyond visual line of sight (BVLOS) safety operations utilizing LTE protocols for low latency, reliable and resilient communication. 
+Aiming at tracking/managing all drones in the airspace, Nokia is offering solutions for automated flight permissions, no-fly zone regulation, beyond visual line of sight (BVLOS) safety operations utilizing LTE protocols for low latency, reliable and resilient communication. 
 For compatibility with this system, drones will be equipped with LTE dongles, and access modules for telemetry data access.
 
 
@@ -201,12 +201,12 @@ http://www.theverge.com/2016/1/16/10777144/delivery-drones-regulations-safety-fa
 
 \section{Paparazzi Autopilot System}
 An open-source autopilot, \emph{Paparazzi} \cite{brisset2006paparazzi}, have been adapted to generate faulty control inputs during the flight. 
-In this section, an introduction to \emph{Paparazzi} open-source autopilot system is given. Then, we discuss the properties of open-source systems that would serve for the integration of drones into the airspace. To highlight the advantages, the best practices that are offered by EASA in its A-NPA \cite{A_NPA_EASA2015} is referred and properties of \emph{Paparazzi} that will contribute to achieve those are discussed.
+In this section, an introduction to \emph{Paparazzi} open-source autopilot system is given. Then, we discuss the properties of open-source systems that would serve for the integration of drones into the airspace. To highlight the advantages of this autopilot, the best practices that are offered by EASA in its A-NPA \cite{A_NPA_EASA2015} are referred and properties of \emph{Paparazzi} that will contribute to achieve those are discussed.
 
 \subsection{Open-source Autopilots for UAS}
-With the new era of \gls{fpv} flights, especially for multi-rotor \gls{uav}s, there has been an exponential increment on the hardware and software of the open-source autopilots. A brief comparison of the popular current open-source and commercial autopilots is available in Table \ref{tab:autopilot_comparison}. Usually the trend is to make the hardware as cheap as possible for recreational consumers. This reality is damaging the reputation of open-source autopilots as being not reliable or robust, just because they are being used without attention. There exists a difference on the quality of sensors used on the open-source autopilot systems compared to commercial autopilots for sure, and this is extremely represented on the price of the units. This makes a difference on the flight quality of the vehicles, however with the new on-board processing power, more complex estimation algorithms and filters are being used in order to overcome this problem \cite{baskaya2016flexible}.
+With the new era of \gls{fpv} flights \cite{whatIsFPV}, especially for multi-rotor \gls{uav}s, there has been an exponential increment on the hardware and software of the open-source autopilots. A brief comparison of the popular current open-source and commercial autopilots is available in Table \ref{tab:autopilot_comparison}. Usually, the trend is to make the hardware as cheap as possible for recreational consumers. This reality is damaging the reputation of open-source autopilots as being not reliable or robust, just because they are being used without attention. There exists a difference on the quality of sensors used on the open-source autopilot systems compared to commercial autopilots for sure, and this is confirmed by the price of the units. This makes a difference on the flight quality of the vehicles, however, with the new on-board processing power, more complex estimation algorithms and filters are being used in order to overcome this problem \cite{baskaya2016flexible}.
 
-\subsection{Introduction \emph{Paparazzi Autopilot System}}
+\subsection{Introduction to \emph{Paparazzi Autopilot System}}
 
 The \emph{Paparazzi} Autopilot System provides a software and hardware solution for low-cost mini and micro unmanned air vehicles. 
 A fleet of \emph{Paparazzi} equipped drones can be seen in Fig.~\ref{fig:ENACdroneFleet}.
@@ -275,7 +275,7 @@ The ground software of \emph{Paparazzi} is mainly written in Ocaml, with some ad
 Thanks to its middle-ware communication bridge called Ivy-Bus, external softwares can be directly connected with publish and subscribe method to the ground segment without needing to modify and code at all.
 Airborne software is written in C, however there is an on-going effort to support C++ \cite{baskaya2016flexible}.
 
-One of the distinguishing property of the \emph{Paparazzi} is to support multi-UAV flight (Figure~\ref{fig:pic2}). Several projects have been using \emph{Paparazzi} Autopilot System because of this additional feature. The communication of each vehicle is being transmitted to the ground control station directly on the current version, however air to air communication between flying vehicles and internal relay of information to ground control station is being implemented for a new coming version.
+One of the distinguishing property of the \emph{Paparazzi} is to support multi-UAV flights (Figure~\ref{fig:pic2}). Several projects have been using \emph{Paparazzi} Autopilot System because of this additional feature. The communication with each vehicle is established by the ground control station, however air to air communication between flying vehicles and internal relay of information to ground control station is being implemented (for a new coming version).
 
 \begin{figure}
 	\centering
@@ -285,32 +285,28 @@ One of the distinguishing property of the \emph{Paparazzi} is to support multi-U
 \end{figure}
 
 \emph{Modules} are the easiest and most flexible way of adding new code into \emph{Paparazzi}. 
-There are over $130$ modules written for \emph{Paparazzi} by several developers and researchers including subjects on meteorology, imagery, surveillance, advance navigation, formation flight and collision avoidance, etc. 
-With its $130$ modules by several developers and researchers, \emph{Paparazzi} includes functions to apply to various domains such as meteorology, imagery, surveillance, advance navigation, formation flight and collision avoidance and many others. 
-A photo taken during \emph{Paparazzi} on mission in a campaign for meteorological studies by \emph{MeteoFrance} given in Fig.~\ref{fig:snowWhite}. MeteoFrance is French national meteorological service, and uses drones as tools to do research on meteorological studies.
-
-In this thesis, for the faulty flight data gathering, some modifications to the \emph{Paparazzi} autopilot was necessary in two main parts: Injecting the faults real-time from GCS, and editing the controller onboard so that the sent faulty input values configures the servos as manipulated from the GCS. 
-Modules have been used to achieve the necessary modifications to the autopilot.
+There are over $130$ modules written for \emph{Paparazzi} by several developers and researchers including meteorology, imagery, surveillance, advance navigation, formation flight and collision avoidance, etc. 
+A photo taken during \emph{Paparazzi} mission in a campaign for meteorological studies by \emph{MeteoFrance} is given in Fig.~\ref{fig:snowWhite}. 
+MeteoFrance is French national meteorological service, and uses drones as tools to do research on meteorological studies.
 
 \begin{figure}
 \begin{center}
 %\includegraphics[width=11.3cm]{figures/FTCmethods}    % The printed column width is 8.4 cm.
 \includegraphics[width=13cm]{figures/snowWhiteJPG}
-\caption{Drone (NAME OF THE DRONE) equipped with \emph{Paparazzi} on mission for meteorological studies by \emph{Meteofrance}. Photo taken by Alexandre Bustico.} 
+\caption{Drone equipped with \emph{Paparazzi} on mission for meteorological studies by \emph{Meteofrance}. Photo taken by Alexandre Bustico.} 
 \label{fig:snowWhite}
 \end{center}
 \end{figure}
 
 
 \emph{Paparazzi} has its own complete flight plan language, where the user can define any possible trajectory by existing commands such as circle, line, hippodrome, figure-eight, survey, etc. 
-Additionally any function, written in C language, can be called from the flight plan and executed. 
+Additionally, any function written in C language, can be called from the flight plan and executed. 
 This opens up a lot of application possibilities such as triggering a navigation procedure via a sensor output.
 
-A real-time operating system based on ChibiOS is started to be used since 2015. 
+A real-time operating system based on ChibiOS has been used since 2015. 
 The first implementation was mainly for adding a separate thread in order to make on-board logging at a high frequency. 
 On going work is to divide all autopilot tasks into individual threads and manage everything according to priorities which will increase the safety and reliability.
 %Priorities can be handled over different tasks in order to increase the safety and reliability.
-
 
 There exists over 20 different autopilot boards capable of running \emph{Paparazzi}. Additionally, several mission based custom sensor boards have been designed under the \emph{Paparazzi} project, such as \emph{Meteo-Stick}\footnote{http://wiki.paparazziuav.org/wiki/MeteoStick\_v1.10}. 
 In this thesis, flights have been realized with an \emph{Apogee}\footnote{https://wiki.paparazziuav.org/wiki/Apogee/v1.00} which is given in Fig.~\ref{fig:apogeePaparazzi}.
@@ -324,6 +320,8 @@ In this thesis, flights have been realized with an \emph{Apogee}\footnote{https:
 \end{center}
 \end{figure}
 
+In this thesis, for the faulty flight data gathering, some modifications to the \emph{Paparazzi} autopilot was necessary in two main parts: Injecting the real-time faults from GCS, and editing the controller onboard so that the sent faulty input values configures the servos when changed from the GCS. 
+
 The rest of this section highlights \emph{Paparazzi} 's capacity to tackle the issues encountered during integration of \gls{uas}s in the airspace. These issues have been grouped in three categories: modularity, congestion management and reliability. For each category, \emph{Paparazzi} offers a unique set of features to deal with the issues at hand.
 
 \subsection{Open Source Systems in Relation with the New Regulatory Context}
@@ -332,33 +330,33 @@ In this part of this thesis, we present the Paparazzi open source auto-pilot sys
 Paparazzi is favored thanks to its modular design, its support for congestion management and evolving reliability.
 We believe the flexibility required for such solutions calls for open architectures. To ensure safety, this integration needs to be achieved through airspace management and UAS reliability.
 Preliminary airspace designs, e.g. Amazon's, identify different zones depending on the UAS capabilities, population density and altitude. 
-Plus, national rules evolution push to cope with a variety of requirements. Open source and modular architectures are key to adapt to these requirements. 
-From a UTM point of view, Paparazzi provide features to ease congestion management, such as dynamic geofencing, trajectory communication and collision avoidance. 
+Furthermore, national rules evolution push to cope with a variety of requirements. Open source and modular architectures are keys to adapt to these requirements. 
+From an UTM point of view, Paparazzi provides features to ease congestion management, such as dynamic geofencing, trajectory communication and collision avoidance. 
 Concerning reliability, current regulations focus on flight constraints but might be expected to involve regulations on software and hardware components as well. 
-In such case, the increased cost will be inevitable for the demands of certification. 
+In such a case, the increased cost will be inevitable for the demands of certification. 
 In the Paparazzi software case, parts of the code have been formally proved and stable versions have thousands of flight hours. Such heritage might ease the certification process for smaller companies.
 On top of its flexibility and reliability, Paparazzi offers a unique set of features, as an open source software, to achieve safe integration of low altitude UAS in the airspace.
 
 % More specifically, this paper shows how the use of the Paparazzi open source auto-pilot system can ease the integration of low altitude UAS. 
 
 \subsection{Modularity}
-The current evolving nature of regulations and the variety of organizations in charge of the airspace rule making calls for flexible solutions to cope with these fruitful environments. \emph{Paparazzi}, as an open source autopilot system, is largely modifiable through its modules to offer such flexible solutions.  
+The current evolving nature of regulations and the variety of organizations in charge of the airspace rules make calls for flexible solutions to cope with these fruitful environments. \emph{Paparazzi}, as an open source autopilot system, is easily modifiable through its modules to offer such flexible solutions.  
 
 \subsubsection{Airspace Categorization}
-The \gls{uas} in the \gls{nas} project points to a performance-based routine access to all segments of the national airspace for all unmanned aircraft system classes, after the safety and technical issues are addressed thoroughly. As a start, \gls{nasa} and \gls{faa} seem to have a short term goal to integrate \gls{uas} in low-altitude airspace as early as possible. They further aim to accommodate increased demand safely, efficiently in the long term. \gls{nasa} and \gls{faa} seem to handle the airspace above 500 feet and the one below separately. \gls{easa}, tasked by the European Union, is planning a risk based approach, accommodating the \gls{uas} in the airspace under three different categories, low risk, specific and high risk \cite{A_NPA_EASA2015}. Both regulators seem to categorize the airspace and scale regulatory needs according to some criteria. To answer different needs of different categories, flexibility given by the high level of modularity of open source autopilot systems will be a handy tool. 
+The \gls{uas} in the \gls{nas} project points to a performance-based routine access to all segments of the national airspace for all unmanned aircraft system classes, after the safety and technical issues are addressed thoroughly. As a start, \gls{nasa} and \gls{faa} seem to have a short term goal to integrate \gls{uas} in low-altitude airspace as early as possible. They further aim to accommodate increased demand safely and efficiently in the long term. \gls{nasa} and \gls{faa} seem to handle the airspace above 500 feet and the one below separately. \gls{easa}, tasked by the European Union, is planning a risk based approach, accommodating the \gls{uas} in the airspace under three different categories, low risk, specific and high risk \cite{A_NPA_EASA2015}. Both regulators seem to categorize the airspace and scale regulatory needs according to some criteria. To answer different needs of different categories, flexibility given by the high level of modularity of open source autopilot systems will be a handy tool. 
 Customizability of the software and hardware depending on the airspace gives a chance for larger airspace community to utilize \emph{Paparazzi} scaled for their specific needs. A larger community using the same system would lead to a natural evolution of the system toward a better design.
 
 \subsubsection{National Regulations}
-Circulation of \gls{uas} internationally is somewhat prevented by the Chicago convention unless an agreement holds between Contracting States \cite{A_NPA_EASA2015}. \gls{icao} is aiming to develop international standards and recommended practices to which the member states could refer to when developing their national civil aviation regulations. Even though a similar base is aimed, national aviation legislations will not be the same because of the different expectations of nations about \gls{uas} aviation. Thanks to the modular nature of the \emph{Paparazzi} software and hardware suite, the functionality of the system could be enhanced according to the specific regulations held in the area of utilization.
+International \gls{uas} flight is somewhat prevented by the Chicago convention unless an agreement holds between Contracting States \cite{A_NPA_EASA2015}. \gls{icao} is aiming to develop international standards and recommended practices to which the member states could refer to when developing their national civil aviation regulations. Even though a similar base is aimed, national aviation legislations will not be the same because of the different expectations of nations about \gls{uas} aviation. Thanks to the modular nature of the \emph{Paparazzi} software and hardware suite, the functionality of the system could be enhanced according to the specific regulations held in the area of utilization.
 
 \subsubsection{Accommodating evolution of regulations}
-Prescriptive rules seem to cause some difficulties since the technical area on \gls{uas} systems develop rapidly \cite{A_NPA_EASA2015}. Innovations both on the aircraft and the operation type of \gls{uas} will accelerate especially after the regulations are set. Thus, regulatory bodies call for refinable operational requirements and system architectures to evolve into a safer and efficient integration of \gls{uas} into airspace. The systems to cope with the regulations should also be modular and flexible in order not to be superseded by the innovations in the area. 
-Thus, the aviation regulatory bodies aim to achieve designs with flexibility where possible, structure where needed. Having flexible hardware and software points to modularity, which is pretty much best supported via open source systems.
+Prescriptive rules seem to cause some difficulties since the technical area on \gls{uas} systems develops rapidly \cite{A_NPA_EASA2015}. Innovations, both on the aircraft and on the operation type of \gls{uas} will accelerate especially after the regulations are set. Thus, regulatory bodies call for refinable operational requirements and system architectures to evolve into a safer and efficient integration of \gls{uas} into airspace. The systems to cope with the regulations should also be modular and flexible in order not to be superseded by the innovations in the area. 
+Thus, the aviation regulatory bodies aim to achieve designs with flexibility where possible, and structure where needed. Having flexible hardware and software increases modularity, which is pretty much supported via open source systems.
 
 \subsection{Congestion Management}
 According to \textit{UAV Factory}, one of the large European \gls{uas} companies, ``The future of the UAV industry is likely to be shaped by airspace congestion'' \cite{europe_report_civilian_drone}.
 	Indeed, high level airspaces are getting crowded and large scale solutions, such as NextGen (US) or SESAR-JU (EU), are necessary to increase airspace capacity while maintaining the current safety levels.
-	However, there is no such management solution existing for \gls{vll}. Yet, large projects like Amazon's Prime Air and Google's Project Wing are already waiting to populate the \gls{vll} airspace.	
+	However, there is no such management existing solution for \gls{vll}. Yet, large projects like Amazon's Prime Air and Google's Project Wing are already waiting to populate the \gls{vll} airspace.	
 	
 	Part of the congestion management problem is to avoid conflicts, and more importantly collisions, between \gls{uas} through strategic deconfliction and safety nets.
 	Another mission of the congestion management system is to make sure that \gls{uas} do not go where they are not supposed to go, thus requiring geofencing.
@@ -366,24 +364,28 @@ According to \textit{UAV Factory}, one of the large European \gls{uas} companies
 	In the following, we divide these issues into four topics of interest: 4-D trajectory management, geofencing, safety nets, complex operations, and show how the \emph{Paparazzi} system addresses them.
 	
 	\subsubsection{4-D Trajectory Management}
-		As noted in \cite{erzberger_4D_2002}, 4-D trajectories will be central in future airspace management methods. The principle of 4-D trajectory management is to have every \gls{uas} broadcast its trajectory up to some time horizon and receive \gls{utm}'s clearances under the form of trajectories. 
+		As noted in \cite{erzberger_4D_2002}, 4-D trajectories will be central in future airspace management methods. The principle of 4-D trajectory management is to have every \gls{uas} broadcasting its trajectory up to some time horizon and receive \gls{utm}'s clearances under the form of trajectories. 
 		The trajectory information contains a path, the series of points through which the \gls{uas} will pass, and times associated to each of these points. 
-		Thanks to this information, the idea is to perform pro-active deconfliction, as explained by Thomas et al. in \cite{thomas_4D_2015}. In clear, it implies that \gls{utm} detects future conflicts along the trajectories of all \gls{uas} and deconflicting them as safely and early as possible.
+		Thanks to this information, the idea is to perform pro-active deconfliction, as explained by Thomas et al. in \cite{thomas_4D_2015}. It implies that \gls{utm} detects future conflicts along the trajectories of all \gls{uas} and deconflicting them as safely and early as possible.
 		This kind of approach requires the autopilot to represent \gls{uas} motions with trajectories and to be able to transmit them, which is the case in \emph{Paparazzi}.
 		
 		\emph{Paparazzi} originally supports a basic description of trajectories based on circles and straight lines, but recent updates allow it to process advanced trajectories as well. 
-		Indeed, \emph{Paparazzi} can represent trajectories as functions in 2-D (x, y), 3-D (x, y, z) or 4-D (x, y, z, t). The only requirement is for the function to be differentiable at least two times on every point. The function and its derivatives analytical formulas are computed offline and can then be quickly evaluated online.
+		Indeed, \emph{Paparazzi} can represent trajectories as functions in 2-D (x, y), 3-D (x, y, z) or 4-D (x, y, z, t). The only requirement is for the function to be differentiable at least two times at every point. The function and its derivatives closed forms are computed offline and can then be quickly evaluated online.
 		Moreover, gains can be tuned to adjust the convergence speed from the \gls{uas} starting point to the given trajectory. These gains influence the convergence path to a given trajectory and the resulting trajectory (convergence + commanded) can be computed offline given initial conditions and the commanded trajectory.
 		This is of particular interest for \gls{utm} as it allows the \gls{uas} to provide not only its trajectory over time but also how it will reach this trajectory from its starting point.	
 
-		It is important to note that \gls{utm} will have to solve conflicts between manned and unmanned aircraft. So an air traffic controller is needed in the loop with an appropriate display for 4-D trajectories and a communication link with both manned and unmanned aircraft.
+		It is important to note that \gls{utm} will have to solve conflicts between manned and unmanned aircraft. So, an air traffic controller is needed in the loop with an appropriate display for 4-D trajectories and a communication link with both manned and unmanned aircraft.
 		
 	\subsubsection{Safety Nets}
 		Trajectory deconfliction is the first step to manage congestion, however safety nets are also part of the congestion management. Indeed, safety nets such as self-separation and collision avoidance allow \gls{uas} to fly close to each other while preserving an acceptable safety level.
-		Though \emph{Paparazzi} does not include self-separation algorithms, it do contains a light version of the \gls{tcas} II collision avoidance system. It considers intruders one at a time and is capable of coordinated avoidance maneuvers. There is no strengthen resolution as the resolutions are not speed rates but an objective altitude to reach as fast as possible.
+		Though \emph{Paparazzi} does not include self-separation algorithms, it do contains a light version of the \gls{tcas} II collision avoidance system. It considers intruders one at a time and is capable of coordinated avoidance maneuvers. 
+		%There is no strengthen resolution as the resolutions are not speed rates but an objective altitude to reach as fast as possible.
 
-		Values such as distance thresholds have been adapted to suite the performances of small \gls{uas}. Table~\ref{tab:pprz_tcas_values} shows example values used for fixed-wing \gls{uas}s. Keep in mind that the \emph{Parapazzi} philosophy is to be configurable, so these parameters can be easily changed from a configuration file.
-		
+		Values such as distance thresholds have been adapted to suite the performances of small \gls{uas}. 
+		%Table~\ref{tab:pprz_tcas_values} shows example values used for fixed-wing \gls{uas}s. 
+		Keep in mind that the \emph{Parapazzi} philosophy is to be configurable, so these parameters can be easily changed from a configuration file.
+
+\iffalse	
 \begin{table}
 	\caption{Typical values for main variables of the \emph{Paparazzi} \gls{tcas} module.}
 	\centering
@@ -396,34 +398,35 @@ According to \textit{UAV Factory}, one of the large European \gls{uas} companies
 	\end{tabular}
 	\label{tab:pprz_tcas_values}
 \end{table}
+\fi
 
-	On top of the TA and RA provided by the \gls{tcas}, a module has been recently developed to input data from traffic services and display them into \emph{Paparazzi}'s ground control station, thus providing situational awareness to the remote pilot. Preliminary test have been done using opensky-network to display traffic around a given area, based on these information the remote pilot can effectively perform conflict resolution.
+	A module has been recently developed to input data from traffic services and display them into \emph{Paparazzi}'s ground control station, thus providing situational awareness to the remote pilot. Preliminary tests have been done using opensky-network to display traffic around a given area, based on these information the remote pilot can effectively perform conflict resolution.
 
 	\subsubsection{Geofencing}
 		Keeping \gls{uas} away from each other is an important point. But keeping them out of forbidden areas is also crucial.	Geofencing allows determining no-fly zones where the \gls{uas} should not enter.
 		To accommodate land owners while managing traffic and limiting congestion, Foina et al. \cite{foina_air_parcelle_2015} proposed a participative dynamical airspace management method: the air-parcel model. It allows land owners to authorize/forbid flights over their lands through a web interface. 
-		However, this type of approach asks from the \gls{uas}s to be able to handle dynamical geofencing. Plus, though initially this model considers only cuboid parcels, the need for more precise airspace shapes may emerge making 3-D geofencing a need.
+		However, this type of approach asks from the \gls{uas}s to be able to handle dynamical geofencing. Furthermore, this model considers only cuboid parcels, the need for more precise airspace shapes may emerge making 3-D geofencing a need.
 		
-		This type of model can be handled by \emph{Paparazzi} by defining geofenced zones manually or programmatically. The zone is defined as a simple geometrical shape (e.g. a circle, a polygon, etc.) plus altitude limits thus effectively creating a 3-D geofencing. 
+		This type of model can be handled by \emph{Paparazzi} by defining geofenced zones manually or as a function. Zones are defined as a simple geometrical shapes (e.g. a circle, a polygon, etc.) plus altitude limits thus effectively creating a 3-D geofencing. 
 		These zones can be static, activated dynamically from the ground station or from the flight plan with associated conditions.
 	
 	\subsubsection{Complex Operations}
-		Having 4-D trajectory management, safety nets and geofencing is useless if the \gls{uas}s cannot follow the instruction from \gls{utm} regarding these tools.
-		Indeed, new \gls{utm} paradigms imply being able to change flight plans dynamically to answer to \gls{utm} demands. In \cite{wargo_complex_2015} two types of complex operations examples are mentioned: space transition corridors and temporary flight restriction.
-		Both these airspace management methods require from the \gls{uas} to be able to modify its flight plan according to new \gls{utm} instructions.
+		Having 4-D trajectory management, safety nets and geofencing are useless if the \gls{uas}s cannot follow the instruction from \gls{utm} regarding these tools.
+		Indeed, new \gls{utm} paradigms imply being able to change flight plans dynamically to answer to \gls{utm} demands. In \cite{wargo_complex_2015} two types of complex operations examples are mentioned: space transition corridors and temporary flight restrictions.
+		Both methods require from the \gls{uas} to be able to modify its flight plan according to the new \gls{utm} instructions.
 		
-		Modifying the flight plan dynamically is not possible, and not desirable, in \emph{Paparazzi}. However, appropriate response to these complex operations can be provided through conditional flight plans. These enable the \gls{uas} to follow different courses of action depending on given parameters. These parameters are defined offline by the user and can then be modified online by values coming from sensors or from \gls{utm}. This allows intelligent reaction to exterior instruction, in particular it can be used by the user to give \gls{utm} control on portions of the flight.
+		Modifying the flight plan dynamically is not possible, and not desirable, in \emph{Paparazzi}. However, appropriate response to these complex operations can be provided through conditional flight plans. This enables the \gls{uas} to follow different courses of action depending on given parameters. These parameters are defined offline by the user and can then be modified online by values coming from sensors or from \gls{utm}. This allows intelligent reaction to exterior instruction, in particular it can be used by the user to give \gls{utm} control on portions of the flight.
 		
 \subsection{Reliability}
 
-Improvement of the reliability of the flight is considered to be one of the main goals for integrating military \gls{uav}s into civil airspace according to Unmanned systems roadmap by US Office of the Secretary of Defense, DoD \cite{UnmannedSystemsRoadmapDoD}. Compared to manned counterparts, \gls{uav}s experienced failures with a frequency of two orders of magnitude more in the military domain.  Although this changed last years with the technological improvements, making the \gls{uav}s as reliable as early manned military aircraft, it seems not enough from the DoD perspective. This can be realized by checking the biggest chunk of control technologies budget for research and development, which is health management and adaptive control.
+Improvement of the reliability of the flight is considered to be one of the main goals for integrating military \gls{uav}s into civil airspace according to Unmanned systems roadmap of US Office of the Secretary of Defense, DoD \cite{UnmannedSystemsRoadmapDoD}. Compared to manned counterparts, civil \gls{uav}s experienced more failures with a frequency of two orders of magnitude compared with military \gls{uav}s.  Although this changed last years, with the technological improvements, making the \gls{uav}s as reliable as early manned military aircraft seems not enough from the DoD perspective. This can be realized by checking the biggest chunk of control technologies budget for research and development, which is health management and adaptive control.
 
-To achieve a safe flight is not an easy task considering the unknowns of the systems hardware, environment and possible system faults and failures to emerge. Also, increasing demand on cost effective systems, resulting in smaller sensors and actuators with less accuracy, impose the software to achieve even more. The expectation that \gls{uav}s should be less expensive than their manned counterparts might have a hit on reliability of the systems. Cost saving measures other than the need to support a pilot/crew onboard or decrement in size would probably lead to decrease in system reliability. 
+To achieve a safe flight is not an easy task considering the unknowns of the systems hardware, environment and possible system faults and failures to emerge. Also, increasing demand on cost effective systems, resulting in smaller sensors and actuators with less accuracy, impose the software to achieve even more. The expectation that \gls{uav}s should be less expensive than their manned counterparts might have a hit on reliability of the systems. 
 
 \subsubsection{\gls{sme}s and Certification Costs}
 
-Utilizing drones for quicker and cheaper deliveries could be rewarding for \gls{sme}s since cost per mile of a drone is less then 1 / 30 of the average diesel truck. Being an early bird might put the \gls{sme}s in an advantageous position, considering the increase in the capabilities of the drones with inevitable acceleration thrusted by research activities and their widened application areas. 
-Nevertheless, the fairly cheap access to drones and their relatively cheap utilization cost does not seem to be enough to put them to air right now due to the heavy cost of certification and regulatory hurdles \cite{UAVreliabilityStudy}. In this concern, capable open source solutions could be a good way to loosen the tie.  Otherwise, \gls{sme}s, an important factor in drone business might not survive. Even worse, they might operate them without relevant permission, scarifying a substantial fine as reported by Civil Aviation Authority (CAA). This will compromise security in the system contradicting the hopes for reliable integration of drones into airspace. As an open source autopilot system, \emph{Paparazzi} is a known platform for computer scientist who want to test the viability of complex software systems. Thus parts of \emph{Paparazzi} code (\gls{gcs}) have been formally proven \cite{pprz_formal_proof} and stable version have thousands of flight heritage. Furthermore, although Paparazzi is not certified, to be able to have access to the certified airspace, the users can built up their configuration on readily and freely available Paparazzi system, which might reduce the cost to have a certified system to reach specific airspaces.
+Using drones for quicker and cheaper deliveries could be rewarding for \gls{sme}s. Being an early bird might put the \gls{sme}s in an advantageous position, considering the increase in the capabilities of the drones with inevitable acceleration thrusted by research activities and their widened application areas. 
+Nevertheless, the fairly cheap access to drones and their relatively cheap utilization cost does not seem to be enough to put them to air right now due to the heavy cost of certification and regulatory hurdles \cite{UAVreliabilityStudy}. In this concern, capable open source solutions could be a good way to loosen the tie.  Otherwise, \gls{sme}s might not survive. Even worse, they might operate them without relevant permission, scarifying a substantial fine as reported by Civil Aviation Authority (CAA). This will compromise security in the system contradicting the hopes for reliable integration of drones into airspace. As an open source autopilot system, \emph{Paparazzi} is a known platform for computer scientist who want to test the viability of complex software systems. Thus, parts of \emph{Paparazzi} code (\gls{gcs}) have been formally proven \cite{pprz_formal_proof} and stable version have thousands of flight heritage. Furthermore, although Paparazzi is not certified, to be able to have access to the certified airspace, the users can built up their configuration on readily and freely available Paparazzi system, which might reduce the cost to have a certified system to reach specific airspaces.
 
 \subsubsection{Individuals and Education}
 
@@ -431,13 +434,13 @@ Individuals, as well as \gls{sme}s, suffer from the same budget constraints. Per
 
 \subsection{Flight Heritage for Risk Assessment}
 
-Drone industry being extremely innovative, technical developments could supersede the prescriptive rules as regulations. Thus a solution might be to follow a risk based approach rather that to have strict rules to cope with. Predicted regulations in Europe seems to evolve under different categories dedicated to specific operation risks. Flight heritage and occurrence reporting is expected to be an inevitable part of safety risk assessment to achieve reliable flight. Wide utilization of \emph{Paparazzi} and real time connection to ethernet could offer reliable and practical solutions to report occurrences.  
+Drone industry being extremely innovative, technical developments could supersede the prescriptive rules as regulations. Thus, a solution might be to follow a risk based approach rather than to have strict rules to cope with. Predicted regulations in Europe seems to evolve under different categories dedicated to specific operation risks. Flight heritage and occurrence reporting is expected to be an inevitable part of safety risk assessment to achieve reliable flight. Wide utilization of \emph{Paparazzi} and real time connection to ethernet could offer reliable and practical solutions to report occurrences.  
 
 \subsubsection{Support for real time planning and onboard vehicle automation}
-To access low-altitude airspace with the use of small unmanned aircraft safely, an important ability could be to implement real-time planning and on-board vehicle automation. Amazon offers that this approach will allow some flexibility to adapt to variable situations such as weather changes, severe winds or any other emergency needs. \emph{Paparazzi}, has a real-time planning ability already implemented, letting the user change the trajectory in real-time through its ground control station via different strategies. The user could switch between trajectories already available or even drag the waypoints to his/her preference. The automation of the vehicles is handled in different stages. For now, the most used modes of autonomy is no autonomy, assisted mode and the fully autonomous mode. No autonomy mode, or manual mode, gives whole responsibility of the aircraft dynamics to the pilot through the RC link.  The assisted mode closes some attitude control loops, giving some stability to aircraft. This will ease the challenges of piloting which could be a great advantage especially for the unexperienced pilots. The fully autonomous mode handles both heading and navigation through selected trajectories. In case of an emergency, the pilot take the control of the aircraft anytime, through the RC link. Features already implemented on \emph{Paparazzi}, such as geofencing, go home, and its ease in adding/modifying thresholds to various variables, support safety procedures.
+To access low-altitude airspace with the use of small unmanned aircraft safely, an important ability could be to implement real-time planning and on-board vehicle automation. Amazon offers that this approach will allow some flexibility to adapt to different situations such as weather changes, severe winds or any other emergency needs. \emph{Paparazzi}, has a real-time planning ability already implemented, letting the user change the trajectory in real-time through its ground control station via different strategies. The user could switch between trajectories already available or even drag the waypoints to his/her preference. The automation of the vehicles is handled in different stages. For now, the most used modes of autonomy is no autonomy, assisted mode and fully autonomous mode. No autonomy mode, or manual mode, gives whole responsibility of the aircraft dynamics to the pilot through the remote control link.  The assisted mode closes some attitude control loops, giving some stability to aircraft. This will ease the challenges of piloting which could be a great advantage especially for the unexperienced pilots. The fully autonomous mode handles both heading and navigation through selected trajectories. In case of an emergency, the pilot take the control of the aircraft anytime, through the RC link. Features already implemented on \emph{Paparazzi}, such as geofencing, go home, and its ease in adding/modifying thresholds to various variables, support safety procedures.
 
 \subsection{Future Evolutions}
-	As many open source projects \emph{Paparazzi} is in constant evolution through regular contributions. With its large community, it is hard to keep track of all the ongoing projects. In this section we present three features being currently explored and developed at ENAC's labs. 
+	As many open source projects, \emph{Paparazzi} is in constant evolution through regular contributions. With its large community, it is hard to keep track of all ongoing projects. In this section we present three features being currently explored and developed at ENAC's labs. 
 
 	Though there is no life a stake, avoiding \gls{uas} collisions is desirable for safety and operational reasons. 
 	 \emph{Paparazzi}'s current \gls{tcas}-like collision avoidance allows operating numerous \gls{uav}s with little risk of collision between them. However, future missions will include more and more \gls{uav}s in bounded size airspaces.
@@ -447,18 +450,18 @@ To access low-altitude airspace with the use of small unmanned aircraft safely, 
 	Regarding geofencing, most current methods use boundaries in the horizontal plane in which the \gls{uav} cannot enter. However, the utilization of the \gls{vll} airspace is likely to demand more sophisticated methods to handle 3-D geofencing where a 3-D no-fly shape can be described.
 	Though \emph{Paparazzi} can emulate 3-D geofencing, it cannot use full 3-D models yet. Work is underway to extend the current geofencing to allow loading terrain models and padding them with arbitrary shaped no-fly zones.
 
-	Finally, conventional procedures to handle failures onboard could be one of three approaches in order to achieve safe flight. First one is the fail operational systems which are made insensitive to any single point component failure. The second approach is the failsafe systems where a controlled shut down to a safe state is practiced whenever a critical fault is pointed out by a sensor. The third approach is fault tolerant control systems in which components of the system are monitored and action taken in whenever needed. The strategy is most probably to try to keep the system availability and accept reduced performance. For \emph{Paparazzi} autopilot system, there is ongoing research to implement indigenous fault detection and diagnosis module to enable reconfigurable controller loops. 
+	Finally, conventional procedures to handle failures onboard could be one of the three approaches in order to achieve safe flight. The first one is the fail operational systems which are made insensitive to any single component failure. The second approach is the failsafe systems where a controlled shut down to a safe state is practiced whenever a critical fault is pointed out by a sensor. The third approach is fault tolerant control systems in which components of the system are monitored and actions taken in whenever needed. The strategy is most probably to try to keep the system availability and accept reduced performance. For \emph{Paparazzi} autopilot system, there is ongoing research to implement indigenous fault detection and diagnosis module to enable reconfigurable controller loops. 
 	
 	
 \section{Fault Tolerant Control Systems}
 
 Improvement of the reliability of the flight is considered to be one of the main obstacles for integrating UAVs into civil airspace. 
-To achieve a safe flight is not an easy task considering the unknowns of the systems, environment and possible system faults and failures to emerge. 
+To achieve a safe flight is not an easy task considering the unknowns of the systems, environment and possible system faults/failures to emerge. 
 
 \subsection{Loss of Control in Aviation}
 
 One of the biggest contributors to fatal accidents is considered as aircraft \emph{loss of control} (LOC). 
-Joint Safety Analysis Team (JSAT) defines LOC as an ``significant, unintended departure of the aircraft from controlled flight, the operational flight envelope, or usual flight attitudes, including ground even'' where \emph{significant} refers to events resulting with an incidence or accident \cite{russell2000joint}. 
+Joint Safety Analysis Team (JSAT) defines LOC as ``significant, unintended departure of the aircraft from controlled flight, the operational flight envelope, or usual flight attitudes, including ground even''. Here, \emph{significant} refers to events resulting with an incidence or accident \cite{russell2000joint}. 
 Control failures, inappropriate pilot action (inaction) in a healthy aircraft, and vehicle impairment are examples of LOC events \cite{richards2016vehicle}.
 
 LOC-I (loss of control in-flight) is defined as ``an extreme manifestation of a deviation from intended flight path'' and is the most deadly accident type with 37 fatal accidents per year (for fixed-wings) \cite{easa:LOC}.
@@ -469,41 +472,40 @@ To offer prevention strategies, the causes of LOC accidents and upsets should be
 LOC events have been categorized by Ref.\cite{lambregts2008airplane} under five main topics, two of them being the most common. 
 Aerodynamic stall and flight control system are the biggest factors that led to LOC accidents and upsets in 15 years log of LOC accidents in transport airplanes.
 Autopilot commands and control surface failures are considered under flight control failures category, the second most fatal LOC of all types \cite{lambregts2008airplane}. 
-The same study also shows that, the percentage if flight control system upset incidents among other LOC events has risen from 9\% to 22\% after 1993 (Pre-1993 compared to 1993-2007).
-An educated guess for the reason behind this could be increased complexity of onboard systems suppressing the technological advancements in fault detection and recovery. 
-Thus addressing onboard fault detection and recovery could contribute to reduce the likelihood of LOC accidents and/or fatalities. 
-The importance of those emergency recovery measures are magnified for unmanned systems considering the number of drones in the airspace will eventually increase, and difficulties inherent in unmanned systems. 
+The same study also shows that, the percentage of flight control system upset incidents have risen from 9\% to 22\% after 1993 (Pre-1993 compared to 1993-2007).
+This could be caused by increased complexity of onboard systems suppressing the technological advancements in fault detection and recovery. 
+Thus, addressing onboard fault detection and recovery could contribute to reduce the likelihood of LOC accidents and/or fatalities. 
+The importance of those emergency recovery measures are magnified for unmanned systems, considering the increase in number of drones, and difficulties inherent in unmanned systems. 
 
-Unmanned systems are more susceptible to LOC events they are less robust to disturbances and recovery must be held by the onboard computer or a remote pilot\cite{richards2016vehicle}.
-Studies for drone regulations accelerated the pace for the assessment of risk for drone operations. A recently published \emph{Annual Safety Review 2017} \cite{annualSafetyReview} discusses the aviation accidents in detail containing a chapter specialized for drones. 
+Unmanned systems are more susceptible to LOC events; they are less robust to disturbances and recovery must be held by the onboard computer or a remote pilot\cite{richards2016vehicle}.
+Studies for drone regulations speed up the pace for the assessment of risk for drone operations. A recently published \emph{Annual Safety Review 2017} \cite{annualSafetyReview} discusses the aviation accidents in detail, with a chapter specialized for drones. 
 This report by EASA, involves the data from European Central Repository (ECR) experienced by EASA member states.
-With the increase in the number of drones and possibly raising consciousness on reporting occurrences, the numbers of non-fatal accidents raised by 470\% in 2016 relative to 2011-2015 average, luckily maintaining zero fatalities. 
-Most of the times, it is commercial airliner pilots to report the occurrences, and rarely the UAS pilot.
-The prior key risk areas has been investigated and aircraft upsets is by far the most common cause of the occurrences and set as the first key risk to address for safe integration of drones into airspace. 
-50\% of RPAS accidents falls in this case which often results in a damage or destruction of UAS following loss of the control of the drone by the pilot.
-Second key risk area is airborne collision although it is rarely encountered due to probable frequency with exponential increase in the number of drones. 
-Obstacle collision is the 3rd risk area which will tend to increase with integration of drones especially in urban areas.
+With the increase of the number of drones and possibly raising consciousness on reporting occurrences, the numbers of non-fatal accidents raised by 470\% in 2016 relative to 2011-2015 average, luckily maintaining zero fatalities. 
+Most of the times, it is commercial airliner pilots who report the occurrences, and rarely the UAS pilot.
+The prior key risk areas has been investigated and aircraft upsets is, by far, the most common cause of occurrence and set as the first key risk to address for safe integration of drones into airspace. 
+50\% of RPAS accidents falls in this case which often results in a damage or destruction of UAS, following loss of the control of the drone by the pilot.
+Second key risk area is airborne collision although it is rarely encountered right now. The risk is expected to increase due to probable increase in the number of drones. 
+Obstacle collision is the 3rd risk area which will tend to increase with integration of drones, especially in urban areas.
 
 Designing recovery measures for unmanned systems has further challenges due to lack of redundancies utilized in manned aviation and use of cheaper and less accurate components.
 Introducing intelligent algorithms to reduce the risk of harm is usually adopted for those systems which are limited in hardware. 
 Fault tolerant control systems (FTCS) are designed to issue solutions to systems which are under fault/failure. 
 There are a wide range of different strategies offered for this solution such as passive or active FTCS, where the latter requires a fault detection and diagnosis (FDD) phase \cite{ducard2009fault}. 
-FDD methods are used to find out if there is any fault/failure in the system and the kind of the fault. 
+FDD methods are used to find out if there is any fault/failure in the system and to determine the kind of the fault. 
 
 After the fault is known, an assessment of the current abilities of the drone is vital. 
-The severity of the situation should be evaluated to decide if a recovery is viable. 
-If it is, current situation of the drone should be considered during the design of recovery control methodologies.
+The severity of the situation should be evaluated to decide if a recovery is possible. 
+If so, current situation of the drone should be considered during the design of recovery control methodologies.
 In the case a recovery is likely to fail, a safe ditch maneuver can abruptly decrease the number of fatalities. 
 Maps pointing zones with no or minimum population could be uploaded onboard and the safest region to ditch can be selected. 
 Since those situations are handled by the pilot for manned aviation, the number of works to assess and plan ditch maneuvers is very few for unmanned systems. 
-NASA is offering \emph{Safe2Ditch} \cite{nasa:safe2ditch} to offer autonomous crash management yet it is at design stage now. 
+NASA is offering \emph{Safe2Ditch} \cite{nasa:safe2ditch} to offer autonomous crash management but it is only at design stage now. 
 
 
 \subsection{FTCS Terminology}\label{ch2:terminology}
 
-Systems are often susceptible to faults of different nature. 
-Existing irregularities in sensors, actuators, or controller Fig.~\ref{fig:faultsInTheSystem} could be amplified due to the control system design 
-and lead to failures. 
+Systems are often sensitive to faults of different nature. 
+Existing irregularities in sensors, actuators, or controller could be amplified due to the control system design and lead to failures (Fig.~\ref{fig:faultsInTheSystem}). 
 A fault could be hidden thanks to the control action \cite{ducard2009fault}.
 
 \begin{figure}
@@ -514,55 +516,51 @@ A fault could be hidden thanks to the control action \cite{ducard2009fault}.
 \end{center}
 \end{figure}
 
-Since fault tolerant control is comprised of a set of different disciplines and a relatively new topic, the terminology is not solid. 
+Since fault tolerant control is comprised of a set of different disciplines and is a relatively new topic, the terminology is not really established. 
 FDI could be a proper example to this ambiguity. 
 In some works, it stands for Fault Detection and Isolation while in some other Fault Detection and Identification, which could also named after Fault Detection and Diagnosis, 
 meaning that identification is added to Fault Detection and Isolation \cite{zhang2008bibliographical}.
 
 One of the first attempts to unify the terminology is carried out by IFAC SAFEPROCESS technical committee in 1996 and published by \cite{isermann1997trends}. 
-Fault, failure, and the methodology to handle those such as fault detection, fault isolation, fault identification, fault diagnosis and supervision terms explained separately to avoid the ongoing ambiguity 
+Fault, failure, and the methodology to handle those, such as fault detection, fault isolation, fault identification, fault diagnosis and supervision terms explained separately to avoid the ongoing ambiguity 
 in this field. 
-Although fault detection methods are clearer in the work, difference between the methods for two steps of fault diagnosis, namely the fault isolation and fault identification is not very obvious.
+Although fault detection methods are clearer, difference between the methods for two steps of fault diagnosis, namely the fault isolation and fault identification is not very obvious.
 
 \subsection{Conventions for a Safe Flight}\label{ch2:conventions}
 
 The widely used method to increase reliability is to use more reliable components and/or hardware redundancy. 
-Both requires an increase in the cost of the UAS conflicting one of the main reasons of UAS design itself band consumer expectations 
+Both requires an increase in the cost of the UAS.
 \cite{angelov2012sense}. To offer solutions for all different foreseen categories of 
 airspace, a variety of approaches should be considered. While hardware redundancy 
 could cope with the failure situations of UAVs in the certified airspace, it may not be 
 suitable for UAVs in open or some subsets of specific categories due to budget 
-constraints. Analytical redundancy is another solution, may be not as effective and 
-simple as hardware redundancy, but relies on the design of intelligent methods to 
+constraints. Analytical redundancy is another solution, but it may be not as effective and 
+simple as hardware redundancy, and it relies on the design of intelligent methods to 
 utilize every bit of information onboard aircraft wisely to deal with the instances.  
 
 There are three approaches to achieve safe FTC in standard flight conventions. 
-First one is the fail operational systems which are made insensitive to any single 
+The first one is the fail operational systems which are made insensitive to any single 
 point component failure. The second approach is the fail safe systems where a 
 controlled shut down to a safe state is practiced whenever a critical fault is pointed 
-out by a sensor. The level of degradation assures to switch to robust (alternate) or 
+out by a sensor. The level of degradation ensures to switch to robust (alternate) or 
 direct (minimal level of stability augmentation independent of the nature of the fault) mode. 
 Switching from nominal mode to the robust and direct modes leads to a decrease 
-in the available GNC functions. This causes a degradation in ease of piloting. And 
-also some optimality conditions could have been compromised. The third approach 
+in the available GNC functions. This causes a degradation in ease of piloting. Furthermore, some optimality conditions could have been compromised. The third approach 
 is fault tolerant control systems in which redundancy in the plant and the automation 
-system is employed to design software that monitors the components and takes in 
-action whenever needed. The strategy is most probably to try to keep plant availability 
-and accept reduced performance \cite{blanke2000fault}.
+system is used to design software that monitors the components and takes in 
+actions whenever needed. The strategy is most probably to try to keep plant availability 
+and to accept reduced performance \cite{blanke2000fault}.
 
-RECONFIGURE project of FP7 \cite{goupil2015overview} aims to attack at this 
-problem of piloting degradation and optimality compromisation by attacking 
-Flight Parameter Estimation (FPE) which is the online estimation of aircraft parameters, 
-FDD and FTC in case of off-nominal events \cite{RECONFIGURE} They utilize a black 
-box nonlinear model of aircraft and The project uses some outputs of a previous FP 7 
-project ADDSAFE leaded by Deimos Space \cite{ADDSAFE}.
+RECONFIGURE project of FP7 \cite{goupil2015overview} aims to address at this 
+problem of piloting degradation and optimality compromise by Flight Parameter Estimation (FPE) which is the online estimation of aircraft parameters, FDD and FTC in case of off-nominal events \cite{RECONFIGURE}.
+They utilize a black box nonlinear model of aircraft and the project uses some outputs of a previous FP 7 project ADDSAFE leaded by Deimos Space \cite{ADDSAFE}.
 
 \subsection{Methods for Fault Tolerant Control Systems}\label{ch1:methodsFTCS}
 
-Among different categorizations for the fault tolerance, there are options to handle 
+Among different categorizations of the fault tolerance, there are options to handle 
 faults on-line or off-line. Employing fault diagnosis schemes on-line is a way to 
-achieve fault tolerance. In this case, as soon as a fault detected, a supervisory 
-agent is informed via a discrete event signal. Then accommodation of the faults 
+achieve fault tolerance. In this case, as soon as a fault is detected, a supervisory 
+agent is informed via a discrete event signal. Then, accommodation of the faults 
 are handled either with the selection of a predetermined controller for the specific 
 fault case, or by designing the action online with real-time analysis and optimization \cite{blanke2000fault}.
 
@@ -586,29 +584,23 @@ most probably fails.
 
 
 Even with a long list of available methods, aerospace industry has not implemented 
-FTC widely, except some space systems, due to the evolving nature of the methods, 
+FTC widely, except for some space systems, because of the evolving nature of the methods, 
 the tricks coming with the nonlinear nature of the problem, design complexity and high 
 possibility of wrong alarms in case of large disturbances and/or modeling uncertainties. 
-So the already carried reliability measures concerning the hardware redundancy is 
-now the preferred way because of its ease and maturity being implemented on various 
-critical missions with considering human lives.
+So, the hardware redundancy is now the preferred way because of its ease and maturity being implemented on various critical missions with human lives.
 
 \subsection{Fault Detection and Diagnosis}
 
 FDD is handled in two main steps; fault detection and fault diagnosis. Fault diagnosis 
-encapsulates fault isolation and fault identification. The methods for detection and 
-diagnosis are investigated for their frequency of utilization separately for sensor, 
-actuator, process and controller faults in \cite{isermann1997trends}. FDD should 
-not only be sensitive to the faults but also robust to the model uncertainties and 
+encapsulates fault isolation and fault identification. FDD should 
+not only be sensitive to faults but also must be robust to the model uncertainties and 
 external disturbances.
 
 Two distinct options to proceed in analytical redundancy are the model based 
-approaches and data-driven approaches. They form the two ends of a continuous 
-solution set line, so utilizing them in a combination might end up with better solutions. 
+approaches and data-driven approaches.
 Model based fault diagnosis highlights the components of a system and the connections 
-in-between, and their corresponding fault modes. Data driven fault diagnosis rely on 
-the observational data and prefers dense, redundant and with a  frequency larger than 
-the failure rate. 
+in-between, and their corresponding fault modes. 
+Data driven fault diagnosis rely on the observational data and it prefers dense, redundant data with a frequency larger than the failure rate. 
 
 % This is an example of how you would use tgrind to include an example
 % of source code; it is commented out in this template since the code
@@ -620,32 +612,43 @@ the failure rate.
 \subsubsection{Model Based Methods}
 
 In model based approaches, relations between measurements and estimated 
-states are exploited to detect possible dysfunction. The most common ways to 
+states are exploited to detect possible dysfunctions. The most common ways to 
 implement a model based approach is to estimate the states, estimate the model 
-parameters, or parity-space. The accuracy of the results depend on the type of 
+parameters, or parity-space. The accuracy of the results depends on the type of 
 faults (additive or multiplicative). Additive faults affects the variables of the process 
 by a summation whereas the multiplicative faults by a multiplication.  When only 
-output signal can be measured, signal model based methods can be employed for 
+output signal can be measured, signal model based methods can be used for 
 fault detection such as Bandpass filters, Spectral analysis(FFT) and maximum entropy estimation. 
-For the case, both the input and output signals are available, the utilized methods 
-for fault detection are called the process based methods: State and output 
+For the case where both the input and output signals are available, the methods used 
+for fault detection are called process based methods such as: State and output 
 observers(estimators), Parity equations and Identification and parameter estimation. 
-They generate residuals for state variables or output variables. When previous works 
-investigated, it is concluded that the most widely used technique for sensor and actuator 
-faults is the state and output observers (estimators) and for process faults, identification 
-and parameter estimation \cite{isermann1997trends}.
+They generate residuals for state variables or output variables. 
+The most widely used technique for sensor and actuator faults is the state and output observers (estimators) and for process faults, identification and parameter estimation \cite{isermann1997trends}.
 
-The output of the model based fault detection methods is the stochastic behaviour 
+The output of the model based fault detection methods is the stochastic behavior 
 with mean values and variances. With the use of change detection methods, deviations 
 from the normal behavior can be detected. For that purpose, three available methods 
 considered are, mean and variance estimation, likelihood-ratio-test and Bayes decision, 
-run-sum test andtwo-probe t-test. Fault detection is only supported by simple threshold 
+run-sum test and two-probe t-test. Fault detection is only supported by simple threshold 
 logic or hypothesis testing in most of the applications \cite{isermann1997trends}.
 
-A bunch of studies discovers the band of different approaches for model-based fault detection. 
+There are a variety of different approaches for model-based fault detection and diagnosis in the literature.
 Detecting sensor and actuator faults via state estimation, utilizing an EKF is applied to a 
 F-16 model in \cite{hajiyev2005sensor}. Parameter identification via $H_{\infty}$ filter 
 is used to indicate icing in \cite{melody2001h}.
+Another method to detect and isolate actuator/sensor faults is the multiple model adaptive estimation (MMAE) method \cite{ducard2009fault}. In MMAE \cite{magill1965optimal}, multiple Kalman filters are used as shown in Fig.~\ref{fig:mmaeScheme}. In this method, each Kalman filter $k$ uses a different system model to calculate the state estimates $\hat{x}_k$. This multiple Kalman Filters can be run in parallel, since each filter $k$ is not dependent on other Kalman Filters. The difference between the predicted measurements (calculated using the estimated states) and the real measurements $z$, gives the residual $r_k$. Residuals are used in the hypothesis conditional probability computation since they represent each model's closeness to the real model. Finally, the conditional probability $p_k$ for each model $k$ is calculated. Then, based on the conditional probabilities, state estimates are blended through a probability weighted average, that results in the final state estimate  $\hat{x}$ \cite{miller1998modified}.
+
+\begin{figure}
+\begin{center}
+%\includegraphics[width=11.3cm]{figures/FTCmethods}    % The printed column width is 8.4 cm.
+\includegraphics[width=14.7cm]{figures/mmaeScheme}
+\caption{Multiple model adaptive estimation algorithm \cite{miller1998modified}} 
+\label{fig:mmaeScheme}
+\end{center}
+\end{figure}
+
+%%% I AM HERE
+
 
 A drawback of model-based approaches is that they require accurate model of the 
 aircraft for successful detection. In a small UAV system susceptible to various 

@@ -42,12 +42,14 @@ This model makes it possible to simulate all four types of actuator faults shown
 \end{center}
 \end{figure}
 
-Most of the FDD algorithms are implemented to open-loop systems, ignoring the probable influences of the controller might cause on the detection performance \cite{pandita2013closed}. Throughout this first section, the system is open-loop as well.  
-Here, a step by step approach is followed. In this first section the effect of controller is ignored while in the next section, in which real flight data is utilized, diagnosis is achieved aside a functioning controller.
+Most of the FDD algorithms are implemented to open-loop systems, ignoring the probable influences of the controller might cause on the detection performance \cite{pandita2013closed}. 
+Throughout this first section, the system is open-loop as well.  
+In this chapter, a step by step approach is followed. 
+In this first section (diagnosis with simulated data) the effect of controller is ignored while in the next section (diagnosis with real flight data), diagnosis is achieved aside a functioning controller.
 
 The code for simulations in this section can be reached in \emph{Github}\footnote{https://github.com/benelgiz/curedRone}. 
 First, the measurements are simulated for faulty and nominal flight conditions. 
-An example control input in case of loss of efficiency condition could be an actual aileron command of $\delta_{a}^a=1^\circ$ corresponding to a desired $\delta_{a}^d=4^\circ$. In the simulation, the fault is introduced after 120 s. Actual aileron command and corresponding simulated accelerometer $x-axis$ readings can be seen in Fig.~\ref{fig:faultSimulation}. 
+An example control input, 75\% loss of efficiency, could be an actual aileron command of $\delta_{a}^a=1^\circ$ corresponding to a desired $\delta_{a}^d=4^\circ$. In the simulation, this fault, is introduced after 120 s. Actual aileron command and corresponding simulated accelerometer $x-axis$ readings can be seen in Fig.~\ref{fig:faultSimulation}. 
 The measurements are labeled, and an example plot showing simulated measurements in two-dimensional feature space, $a_x$ - $a_y$, is given as in Fig.~\ref{fig:feat1vsfeat2}. 
 
 \begin{figure}
@@ -95,7 +97,7 @@ The fault considered in this study is the loss of effectiveness of the control s
 SVM being a supervised classification algorithm has two main phases as shown in Fig.~\ref{fig:supervisedLearning}. 
 In the training phase, the model is learned as a fit to the labeled data that is fed to the SVM algorithm. 
 This phase is usually followed with a tuning phase where some of the parameters of SVM is changed and results are compared to have the best fit via cross validation to avoid overfitting. 
-The last phase is the prediction, where for a new instance the classifier predicts if it corresponds to a faulty or nominal condition.
+The last phase is the prediction, where for a new instance, the classifier predicts if it corresponds to a faulty or nominal condition.
 
 Training data is comprised of labeled data where the label can belong to one of two possible cases. 
 This data set is saved in $\bm{X} \in {\rm I\!R^{m \times n}}  $ where $m,n$ correspond to number of instances and features respectively. 
@@ -115,7 +117,7 @@ The data set available is first divided into two portions with a percentage of \
 Further, the training set is divided as cross-validation and training sets. 
 The idea to split data is to avoid overfitting. 
 Overfitting means that the models trained being very accurate fit for the data they are trained to but fail to generalize with new inputs resulting in bad prediction performance for the new data. 
-To improve the performance of the classifier trained with the training data, it is tuned with the cross validation data. 
+To improve the performance of the classifier trained with, the training data, it is tuned with the cross validation data. 
 And finally, ability of the classifier is tested on the test set. 
 This parameter also tuned for the outliers to generalize the distribution of the data rather than resulting in fine fits for each individual data in the training set. 
 With a satisfactory result of the training \& tuning is followed by the prediction where the classifier predicts if the new measurement data belongs to the faulty or nominal class. 
