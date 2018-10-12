@@ -452,7 +452,18 @@ J_{test}({\bm{\theta}})
 
 \end{enumerate}
 
-\subsubsection{Normalization (Scaling)}
+\begin{landscape}
+\begin{figure}
+\begin{center}
+%\includegraphics[width=16cm]{figures/modelSelection}    % The printed column width is 8.4 cm.
+\includegraphics[width=23cm]{figures/modelSelectionNonVisualizableData}    % The printed column width is 8.4 cm.
+\caption{Model selection guide} 
+\label{fig:modelSelection}
+\end{center}
+\end{figure}
+\end{landscape}
+ 
+ \subsubsection{Normalization (Scaling)}
 
 The next step is to normalize the data in order to constrain the values of features change within the same order of magnitude. 
 This helps to improve the convergence rate of the optimization algorithm during the calculation of the model parameters $\bm{\theta}$.  
@@ -463,17 +474,6 @@ Although there are different methods for normalization, a common way is
 \end{equation} 
 
 where the mean $\mu_j$ and range $s_j$ is given as
-
-\begin{landscape}
-\begin{figure}
-\begin{center}
-%\includegraphics[width=16cm]{figures/modelSelection}    % The printed column width is 8.4 cm.
-\includegraphics[width=23cm]{figures/modelSelectionNonVisualizableData}    % The printed column width is 8.4 cm.
-\caption{model selection guide} 
-\label{fig:modelSelection}
-\end{center}
-\end{figure}
-\end{landscape}
 
 \begin{align}
 \label{eqn:meandAndRange}
@@ -544,17 +544,6 @@ Those steps are given in more detail as follows:
 
 Fig.~\ref{fig:trainingAndEvaluation} visualizes and summarizes the procedure explained above.
 
-\begin{landscape}
-\begin{figure}
-\begin{center}
-\includegraphics[width=17cm]{figures/overfittingRealization}    % The printed column width is 8.4 cm.
-\caption{Training and evaluating the classifier} 
-\label{fig:trainingAndEvaluation}
-\end{center}
-\end{figure}
-\end{landscape}
-
-
 \subsubsection{Calculating parameters $\bm{\theta}$}
 
 The cost function is minimized to calculate the best $\bm{\theta}$ with the use of optimization algorithms. To fit the parameters $\bm{\theta}$, we will try to find parameters $\bm{\theta}$ that minimize the cost function $J({\bm{\theta}})$
@@ -589,7 +578,20 @@ J(\theta_1,\theta_2)
 \end{split}
 \end{align}
 
-\clearpage
+
+\begin{landscape}
+\begin{figure}
+\begin{center}
+\includegraphics[width=18cm]{figures/overfittingRealization}    % The printed column width is 8.4 cm.
+\caption{Training and evaluating the classifier} 
+\label{fig:trainingAndEvaluation}
+\end{center}
+\end{figure}
+\end{landscape}
+
+
+
+%\clearpage
 
 The gradient descent algorithm for one feature is given as 
 

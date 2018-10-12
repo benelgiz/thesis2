@@ -1630,6 +1630,7 @@ where $\bm{x}_{N} \in {\rm I\!R^3}  $ is the position of the center of mass of U
 The navigation frame is assumed to be a local inertial frame in which Newton's Laws apply. 
 The notation $\bm{x} ^{\times} $ for a vector $x = [x_1 \quad x_2 \quad x_3]^ {\rm{T}}$ represents the skew-symmetric matrix as given in Equ.~\ref{skew_symmetric}.
 
+\iffalse
 \subsection{Verification with Matlab Simulink 6DOF block}
 
 To validate the written translational and attitude motion dynamics and kinematics, MATLAB Simulink \textit{6DOF} block has been used.
@@ -1645,6 +1646,8 @@ The difference has been found to be negligible indicating the validity of the mo
 \caption{Validation with Simulink 6DOF aircraft model. The scripted equations of motion and numeric integration are validated via Simulink's 6DOF Block. Forces and moments are directly given to the 6DOF block and the calculated states are compared with the ones calculated by the script in Matlab.}
 \label{figure:validationSimulink}
 \end{figure*}
+
+\fi
 
 \subsection{Sensor Models}
 
