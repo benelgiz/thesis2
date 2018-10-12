@@ -17,13 +17,13 @@ According to Arthur Samuel, name father of machine learning, "Machine learning i
 A rather more to the point but complicated definition offered by Tom Mitchell in 1998, quite new compared to Samuel\textquotesingle s in 1959, "A computer program is said to learn from experience E with respect to some task T and some performance measure P, if its performance on T, as measured by P, improves with experience E".
 
 \subsection{Introduction}
-Machine learning methods are mainly handled under two main categories: supervised and unsupervised learning as shown in Fig.~\ref{fig:machineLearningMethods}. 
+Machine learning methods are mainly handled under two main categories: supervised and unsupervised learning as shown in Fig.~\ref{fig:machineLearningMethodsSerious}. 
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{figures/machineLearningMethods}    % The printed column width is 8.4 cm.
+\includegraphics[width=14cm]{figures/machineLearningMethodsSerious}    % The printed column width is 8.4 cm.
 \caption{Common machine learning methodologies} 
-\label{fig:machineLearningMethods}
+\label{fig:machineLearningMethodsSerious}
 \end{center}
 \end{figure}
 
@@ -475,8 +475,6 @@ where the mean $\mu_j$ and range $s_j$ is given as
 \end{figure}
 \end{landscape}
 
-
-
 \begin{align}
 \label{eqn:meandAndRange}
 \begin{split}
@@ -873,17 +871,20 @@ Rather than including this confidence information as an output in terms of proba
 There also exist methods which can be used to calculate the posterior probabilities, which is the probability that the new measurements belongs to its predicted class\cite{platt1999probabilistic}. 
 An example of posterior probabilities showing new measurements' probabilities to belong to faulty class is given Fig.~\ref{fig:post_prob}. 
 
-Training data set includes labeled data where the label can belong to one of two possible cases. This data set is saved in a matrix $\bm{X} \in {\rm I\!R^{m \times n}}  $ where $m,n$ correspond to number of instances and features respectively. The label information corresponding to the measurement instances is also fed to the SVM algorithm during the training phase as output vector $\bm{y} \in \{-1,1\}$. The aim of SVM is to find an optimal hyperplane maximizing the margin by solving the optimization problem for non-linearly separable datasets
+Training data set includes labeled data where the label can belong to one of two possible cases. This data set is saved in a matrix $\bm{X} \in {\rm I\!R^{m \times n}}  $ where $m,n$ correspond to number of instances and features respectively. The label information corresponding to the measurement instances is also fed to the SVM algorithm during the training phase as output vector $\bm{y} \in \{-1,1\}$. 
+
+The aim of SVM is to find an optimal hyperplane maximizing the margin by solving the optimization problem for non-linearly separable datasets
 
 \begin{align}
 min_{\gamma,\omega,b} \quad & \frac{1}{2} \norm{\omega}^2 + C \sum\limits_{i = 1}^m \xi_i \\
-s.t. \quad & y^{i}(\omega^T x^(i) + b) \geq 1 - \xi_i, \ i = 1, \cdots, m\\
+s.t. \quad & y^{i}(\omega^T x^{(i)} + b) \geq 1 - \xi_i, \ i = 1, \cdots, m\\
  & \xi_i \geq 0, \ i = 1, \cdots, m
 % hic bir sey yazmazsan esitlikleri alt alta hizaliyor canim benim&=alo \\
 % $ tek dolar arasi $ inline denklem
 % $$ cift dolar arasi $$ satir atlayarak ortada denklem
 \end{align}
 
+Here, the aim is to calculate the parameters $\omega$ and $b$ of the hypothesis by minimizing the objective function. In SVM, we drop the convention of denoting the hypothesis as $h(x)= \theta^T \, x$ and use $h_{\omega,b}(x)=g(\omega^T \, x + b)$ where $g(z) = 1$ if $z\geq0$ and $g(z)=-1$ otherwise. In order to generalize to the non-linearly separable datasets, $\xi_i$ is introduced in the equation's inequality constraint. Now, in the non-separable case, the functional margins ($y^{i}(\omega^T x^{(i)} + b)$) of the instances (examples) are permitted to have a value less than 1, different than the case of separable cases. In order to ensure that most of the examples still do not violate the boundary, thus have a functional margin of at least 1, the objective function is also increased by $C \xi_i$. $C$ is called the box constraint, and usually needs to be tuned to achieve satisfactory performance.
 
 Introducing the Lagrange duality to obtain the dual form of the optimization problem, use of kernels, to work efficiently in higher dimensional spaces, is eased. 
 The dual form also allows to utilize efficient optimization solvers such as Sequential Minimal Optimization (SMO)  \cite{platt1998sequential} which is the solver used in this work as well. Conventionally, training phase of SVM requires to solve a large quadratic programming (QP) problem. Especially for large training set, computational heaviness of this phase might limit the applicability of SVM to specific problems sets. To overcome this constraint, SMO breaks the QP problem into a series of smaller QP problems which can be solved analytically. 
@@ -912,8 +913,6 @@ In the training phase, the model is learned to fit the labeled data that is fed 
 
 This phase is usually followed with a tuning phase where some of the parameters of SVM are changed. Further, the training set is divided as cross-validation and training sets. The idea to split data is to avoid overfitting. When a model is overfit, it fits very accurately to the data it is trained with, but fails to generalize to new data. This results in a poor prediction performance. To avoid overfitting, which is the main problem of parametric discrimination approaches such as neural networks, parameter $C$ is tuned to result in an optimal fit with the cross validation set. Tuning $C$ also gives the user the ability to change the classifier's sensitivity to outliers, since sometimes finding a hyperplane separating all data perfectly is not the favorable option (might cause overfitting). Then the final performance of the classifier is tested on the test set. 
 
-Results are compared to have the best fit via cross validation to avoid overfitting. The last phase is the prediction, where for a new instance, the classifier predicts if it corresponds to a faulty or nominal condition.
-
 The classifier with the best performance is selected and then used in the prediction phase.  
 For a new data input, the classifier is used to predict which class the new data belongs to.
 
@@ -921,17 +920,14 @@ For a new data input, the classifier is used to predict which class the new data
 
 \subsubsection{Training of the classifier}
 
-The first step is to normalize the features of the data in order to make the values of features change with the same order of magnitude. 
-The reason is due to its benefits to the calculation of parameters of the model via an optimization algorithm and its convergence rate.  
-An important point is to keep that values $\mu_j, s_j$ and may be standard deviation if it is used instead of range $s_j$. 
-During prediction phase, the data first should be scaled with these values attained from learning data.
-If in the model artificial feature  $x_0 = 1$ is added to the features, do not apply scaling to the artificial feature, but this does not apply to SVM classification.
+The first step is to normalize the features of the data as shown in Eq.~\ref{eqn:scalingFeatures} in order to make the values of features change within the same order of magnitude. 
+Normalization offers advantages in optimization algorithm and its convergence rate, during the calculation of model parameters.  
+An important point is to keep the values of mean and range $\mu_j, s_j$ (calculated with Eq.~\ref{eqn:meandAndRange}) and standard deviation (if it is used instead of range $s_j$). 
+During prediction phase, the data first should be scaled with these values attained from training data.
 
 Default settings for SVM binary classification, included in Matlab Statistics and Machine Learning Toolbox, utilizes SMO for optimization if outlier fractions has not been specified during the function call. 
 
-Default settings of Matlab's binary SVM classifier fits a linear model, which results in a linear decision boundary. 
-If the system of interest requires a more complicated decision boundary to effectively classify the training data, mapping the original features might be necessary. 
-
+Default settings of Matlab's binary SVM classifier fits a linear model, which results in a linear decision boundary.  
 In this study, Gaussian Kernel, which corresponds to an infinite dimensional feature mapping, is utilized to map the attributes.
 
 \begin{equation}
@@ -954,10 +950,10 @@ Training phase is usually followed by a tuning phase where some of the parameter
 \end{center}
 \end{figure}
 
-To avoiding overfitting, which is the main problem of parametric discrimination approaches such as neural networks, $C$ (box constraint) and the kernel scale (sigma), are tuned.
+To avoiding overfitting, which is the main problem of parametric discrimination approaches such as neural networks, $C$ (box constraint) and $\sigma$ (kernel scale), are tuned.
 The classifier is trained with the training set and tuned via cross validation set, and then the selected classifier is evaluated with the test set. Cross-validation set selection of Matlab utilizes a random selection over the data set. 
 To compare different methodologies for tuning and also the untuned classifiers, the script has been revised to generate random values from the same seed value to be consistent in comparisons.
-Box constraint (C) and kernel scale (sigma) are tuned considering the presence of the outliers to generalize the distribution of the data rather than resulting in fine fits for each individual data in the training set. 
+Box constraint ($C$) and kernel scale ($\sigma$) are tuned considering the presence of the outliers to generalize the distribution of the data rather than resulting in fine fits for each individual data in the training set. 
 
 Two different ways are utilized to tune the classifier, heuristic and Bayesian optimization. In heuristic optimization, the strategy is to try a geometric sequence of the kernel scale (sigma parameter) scaled at the original kernel scale.  
 Also a geometric sequence of the box constraint parameter, 11 values, from 1e-5 to 1e5 by a factor of 10 have been tried. Increasing box constraint might decrease the number of support vectors, but also might increase training time. 
