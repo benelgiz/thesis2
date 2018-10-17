@@ -212,7 +212,7 @@ A sequence of rotations about three different axes of reference frame A, describ
 \\
 {\bm{C}}_2(\theta_{2}) & :      A^{''} \leftarrow A^{'}   ,
 \\
-{\bm{C}}_1(\theta_{1}) & :      A^{'} \leftarrow A^{''}  .
+{\bm{C}}_1(\theta_{1}) & :      B \leftarrow A^{''}  .
 \end{split}
 \end{align}
 
@@ -228,20 +228,7 @@ denotes a rotation of angle $\theta_{i}$, about the $i^{th}$ axis of the body fr
 
 \begin{align}{\label{eqn:C_B_AmatrixEuler}}
 \begin{split}
-\begin{bmatrix}
-\bm{b_1}\\[0.3em]
-\bm{b_2}\\[0.3em]
-\bm{b_3}\\[0.3em]
-\end{bmatrix}
-& =\,
 \bm{C}^{B/A}
-\,
-\begin{bmatrix}
-\bm{a_1}\\[0.3em]
-\bm{a_2}\\[0.3em]
-\bm{a_3}\\[0.3em]
-\end{bmatrix}
-\\
 & =\,
 \begin{bmatrix}
 1 & 0 & 0\\[0.3em]
@@ -270,6 +257,8 @@ denotes a rotation of angle $\theta_{i}$, about the $i^{th}$ axis of the body fr
 \end{split}
 \end{align}
 
+For aircrafts, the Euler angles ($\theta_1,\theta_2,\theta_3$) are called roll, pitch, yaw respectively and can be seen in Fig.~\ref{fig:eulerAngSequence}.
+
 Rotation sequence can be selected in different ways depending on the needs of the problem. 
 An example would be selecting rotation sequence for a transitioning vehicle. The assumption that the pitch angle is constraint to $0<\theta<90^\circ$ for a conventional drone to avoid singularity, is not really feasible for a transitioning vehicle which encounters $-90<\theta<90$ pitch during whole flight envelope. So for such a problem, selecting the sequence as yaw-roll-pitch rather than the conventional yaw-pitch-roll sequence is useful. 
 
@@ -282,13 +271,25 @@ So for such a reason, if the set of rotations are selected in a different way, s
 \\
 {\bm{C}}_3(\theta_{3}) & :      A^{''} \leftarrow A^{'}   ,
 \\
-{\bm{C}}_1(\theta_{1}) & :      A^{'} \leftarrow A^{''}  .
+{\bm{C}}_1(\theta_{1}) & :      B \leftarrow A^{''}  .
 \end{split}
 \end{align}
 
-then the direction cosine matrix would differ from Eq.~\ref{eqn:C_B_AmatrixEuler}.
+then the direction cosine matrix would differ from Eq.~\ref{eqn:C_B_AmatrixEuler} and given as
 
-For aircrafts, the Euler angles are called pitch, yaw and roll and can be seen in Fig.~\ref{fig:eulerAngSequence}.
+\begin{align}{\label{eqn:C_B_AmatrixEuler_132}}
+\begin{split}
+\bm{C}^{B/A}
+& =\,
+\begin{bmatrix}
+\cos\theta_2 \cos\theta_3 & \sin\theta_2 & -\cos\theta_2 \sin\theta_3 \\[0.3em]
+-\cos\theta_1 \sin\theta_2 \cos\theta_3 + \sin\theta_1 \sin\theta_3 & \cos\theta_1 \cos\theta_2 & \cos\theta_1 \sin\theta_2 \sin\theta_3 + \sin\theta_2 \cos\theta_3\\[0.3em]
+\sin\theta_1 \sin\theta_2 \cos\theta_3 + \cos\theta_1 \sin\theta_3 & -\sin\theta_1 \cos\theta_2 & -\sin\theta_1 \sin\theta_2 \sin\theta_3 + \cos\theta_1 \cos\theta_3\\[0.3em]
+\end{bmatrix}
+\end{split}
+\end{align}
+
+
 
 %\begin{figure}
 %\begin{center}
@@ -679,7 +680,7 @@ But in this study, due to the reasons discussed before, quaternions are selected
 Fourth equation comes from the differentiation of the quaternion norm constraint;
 
 \begin{equation}{\label{eqn:kinematicEquDQM}}
-0 = 2 (- \dot{q}_0 q_0 + \dot{q}_1 q_1 + \dot{q}_2 q_2 - \dot{q}_3 q_3)
+0 = 2 ( \dot{q}_0 q_0 + \dot{q}_1 q_1 + \dot{q}_2 q_2 + \dot{q}_3 q_3)
 \end{equation}
 
 Writing in matrix form;
@@ -694,10 +695,10 @@ Writing in matrix form;
  =\,
  2\,
 \begin{bmatrix}
-q_1 & q_2 & q_3 & q_0 \\[0.2em]
-q_0 & q_3 & -q_2 & -q_1 \\[0.2em]
--q_3 & q_0 & q_1 & -q_2 \\[0.2em]
-q_2 & -q_1 & q_0 & -q_3 \\[0.2em]
+q_0 & q_1 & q_2 & q_3 \\[0.2em]
+-q_1 & q_0 & q_3 & -q_2 \\[0.2em]
+-q_2 & -q_3 & q_0 & q_1 \\[0.2em]
+-q_3 & q_2 & -q_1 & q_0 \\[0.2em]
 \end{bmatrix}
 \,
 \begin{bmatrix}
@@ -722,10 +723,10 @@ As the matrix which is composed of quaternions is an orthonormal matrix, the kin
 \frac{1}{2}
 \,
 \begin{bmatrix}
--q_1 & -q_2 & -q_3 & q_0 \\[0.2em]
-q_4 & -q_3 & q_2 & q_1 \\[0.2em]
-q_3 & q_4 & -q_1 & q_2 \\[0.2em]
--q_2 & -q_1 & q_4 & q_3 \\[0.2em]
+q_0 & -q_1 & -q_2 & -q_3 \\[0.2em]
+q_1 & q_0 & -q_3 & q_2 \\[0.2em]
+q_2 & q_3 & q_0 & -q_1 \\[0.2em]
+q_3 & -q_2 & q_1 & q_0 \\[0.2em]
 \end{bmatrix}
 \,
 \begin{bmatrix}
@@ -738,10 +739,10 @@ q_3 & q_4 & -q_1 & q_2 \\[0.2em]
 \frac{1}{2}
 \,
 \begin{bmatrix}
--\omega_1 & -\omega_2 & -\omega_3 & 0 \\[0.2em]
-0 & \omega_3 & -\omega_2 & \omega_1 \\[0.2em]
--\omega_3 & 0 & \omega_1 & \omega_2 \\[0.2em]
-\omega_2 & -\omega_1 & 0 & \omega_3 \\[0.2em]
+0 & -\omega_1 & -\omega_2 & -\omega_3 \\[0.2em]
+\omega_1 & 0 & \omega_3 & -\omega_2 \\[0.2em]
+\omega_2 & -\omega_3 & 0 & \omega_1 \\[0.2em]
+\omega_3 & \omega_2 & -\omega_1 & 0 \\[0.2em]
 \end{bmatrix}
 \begin{bmatrix}
 q_0\\[0.2em]
@@ -771,9 +772,8 @@ x_3 & 0 & -x_1 \\
  \end{bmatrix}
 \end{equation}
 
-The sequence of the transformation between frames, effects the final transformation matrix so does the attitude kinematic equations. In the course of this study, the sequence is assumed to be yaw - pitch - roll and the corresponding kinematic equations are given as in Equ.~\ref{eqn:kinematicArrangeYPR}.
+And finally the kinematic equations of motion for the aircraft in Eq.~\ref{eqn:kinematicArrange} (first equation row) can be rewritten as in Eq. \ref{eqn:kinematicArrangeYPR}, since first column of the matrix on the right side of the equation (first equation row in Eq.~\ref{eqn:kinematicArrange}) is multiplied by zero: 
 
-And finally the kinematic equations of motion for the aircraft can be written as in Eq. \ref{eqn:kinematicArrangeYPR}
 \begin{equation} \label{eqn:kinematicArrangeYPR}
 \begin{bmatrix}
 \dot{q}_0\\[0.2em]
@@ -997,18 +997,7 @@ w\\[0.2em]
 \end{empheq}
 
 where, $\bm{v}_B = [u \quad v \quad w]^T$ is the inertial velocity of the center of mass of the body expressed in the body frame $B$ and $\dot{\bm{x}}_N = [\dot{x}_n \quad  \dot{x}_e \quad \dot{x}_d]^T$ is the ground speed vector expressed in the navigation frame $N$. $N$ is assumed to be a local inertial frame.
-As mentioned before, the sequence of the transformation between frames effects the final transformation matrix so does the attitude kinematic equations. 
-In the course of the study, the sequence is assumed to be yaw - pitch - roll and the corresponding transformation matrix from the navigation frame to body-fixed frame is given in Eq. ~\ref{eqn:C_NtoB}.
-
-\begin{equation}{\label{eqn:C_NtoB}}
-C_N^B
-= \,
-\begin{bmatrix}
-1 - 2(q_2^2 + q_3^2) & 2(q_1 q_2 + q_0 q_3) & 2(q_1 q_3 - q_0 q_2)  \\[0.2em]
-2(q_1 q_2 - q_0 q_3) & 1 - 2(q_1^2 + q_3^2) & 2(q_2 q_3 + q_0 q_1)\\[0.2em]
-2(q_1 q_3 + q_0 q_2) & 2(q_2 q_3 - q_0 q_1) & 1 - 2(q_1^2 + q_2^2) \\[0.2em]
-\end{bmatrix}
-\end{equation}
+$\bm{C}_B^N$ is the direction cosine matrix which transforms a vector expressed in the body frame to its equivalent expressed in the navigation frame $N$.
 
 
 \subsection{Translational dynamics}
