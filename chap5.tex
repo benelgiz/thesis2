@@ -157,7 +157,7 @@ A variety of techniques implemented to improve the performance such as feature e
 
 \subsection{Injecting faults in flight from Paparazzi GCS}
 
-For the faulty flight data gathering, some modifications to the \emph{Paparazzi} autopilot was necessary in two main parts: Injecting the faults real-time from GCS, and editing the controller onboard so that the sent faulty input values configures the servos as manipulated from the GCS. 
+For the faulty flight data gathering, some modifications to the \emph{Paparazzi} autopilot was necessary in two main parts: Injecting the faults real-time from GCS, and editing the controller onboard so that the sent faulty input values configures the servos as manipulated from the GCS.
 
 \begin{figure}
 \begin{center}
@@ -167,26 +167,26 @@ For the faulty flight data gathering, some modifications to the \emph{Paparazzi}
 \end{center}
 \end{figure}
 
-For the former part, a slider is added to the ground station to set the fault during flight and set it back to normal flight conditions if necessary. 
+In order to inject faults real-time from GCS, a slider is added to the GCS to set the fault during flight and set it back to normal flight conditions if necessary.
 Fig.~\ref{fig:groundStationFaultInj} shows the GCS view with the fault settings open. 
 This pane can be found under  \emph{Settings} $>$  \emph{FAULT} as highlighted in pink in Fig.~\ref{fig:groundStationFaultInj}. 
 The four row configuration represents from top to bottom, the multiplicative error in the right elevon, the multiplicative error in the left elevon, additive error in the right elevon, and finally the additive error in the left elevon. 
 The nominal condition where there is no fault, is given by $[\begin{matrix}right & left & right\_offset &left\_offset\end{matrix}] = [\begin{matrix} 1.0 & 1.0 & 0 & 0\end{matrix}]$. \\
 This configuration lets the user to realize all types of actuator faults, such as control surface inefficiency or stuck. 
 To generate the fault of right elevon stuck at its nominal position, setting the first slider ($right$) to zero is enough. 
-The generate stuck fault at other positions, $right\_offset$ slider should be changed to desired stuck position while keeping the first slider at zero. 
+The generate stuck fault at other positions, $right\_offset$ slider should be changed to desired stuck position while keeping the first slider at zero.
+As soon as \emph{Settings} is changed from the GCS (from nominal to faulty or from faulty to nominal), a message is saved to \emph{Paparazzi Messages} (onboard SD card) with the values set in the GCS as shown in Fig.~\ref{fig:flightDataSettings} (SETTINGS Message). 
+This message includes the time (the moment that the \emph{Settings} have been changed from the GCS), the aircraft number, and the values set from the GCS ($[\begin{matrix}right & left & right\_offset &left\_offset\end{matrix}]$).
 
-\subsection{Modifications to \emph{Paparazzi} autopilot controls to inject faults during flight}
-
-\begin{figure}
+\begin{figure}[h]
 \begin{center}
-%\includegraphics[width=17cm]{figures/paparazziControlModes}    % The printed column width is 8.4 cm.
-\includegraphics[width=0.9\textwidth]{figures/pprzControlModes}    % The printed column width is 8.4 cm.
-\caption{Paparazzi autonomy modes} 
-\label{fig:paparazziControlModes}
+\includegraphics[width=13cm]{figures/flightDataSettings}    % The printed column width is 8.4 cm.
+\caption{\emph{SETTINGS} \emph{Message} saves the multiplicative and additive fault values inserted from the GCS.  [1.0 1.0 0.0 0.0] corresponds a command from the GCS to revert back to nominal phase} 
+\label{fig:flightDataSettings}
 \end{center}
 \end{figure}
 
+\subsection{Modifications to \emph{Paparazzi} autopilot controls to inject faults during flight}
 
 For the second part, which is to modify the servo command from the autopilot to the servos, a look at the \emph{Paparazzi} flight modes is necessary. 
 Most of the times, there are three modes for fixed-wings from control perspective:  \emph{Auto 1},  \emph{Auto 2},  \emph{Manual}. 
@@ -195,18 +195,23 @@ In the  \emph{Auto 2} mode, there is no need for the pilot since the navigation 
 This mode is also given as  \emph{Auto 2} in Fig.~\ref{fig:paparazziControlModes}.
 In  \emph{Manual} mode, the pilot gives the desired elevator and aileron commands and desired servo commands are calculated in the autopilot's control allocation phase. So still there is a very low sense of autonomy in the manual phase. 
 
+\begin{figure}[h]
+\begin{center}
+%\includegraphics[width=17cm]{figures/paparazziControlModes}    % The printed column width is 8.4 cm.
+\includegraphics[width=0.9\textwidth]{figures/pprzControlModes}    % The printed column width is 8.4 cm.
+\caption{Paparazzi autonomy modes} 
+\label{fig:paparazziControlModes}
+\end{center}
+\end{figure}
+
 Flying with faults is a challenge. 
 The risk to crash is increased on purpose, so a back up plan is necessary to recover from faulty situations if the drone seems to be out of control and/or about to crash. 
 For that purpose, the faults are only injected to \emph{Auto} modes and \emph{Manual} mode is always free of faults even a fault is given from the ground station. 
 So, when the pilot sees a safety problem during the faulty operation, s/he can switch to \emph{Manual} mode from the remote controller and have the control of the control surfaces free from faults. 
 Depending on the nature of the fault injected, such as for some severe stuck control surface fault data gatherings, this might be a game changer since the drone would crash unless an action taken.  
 This is shown in Fig. ~\ref{fig:faultInjectionPaparazzi} with a switch initiated by the pilot's remote control. 
-This figure shows that during the control allocation phase, which is the calculation of the desired servo commands from given desired elevator/aileron commands, faults are injected if the mode is \emph{Auto 1} and \emph{Auto 2} when fault multiplicative or fault additive values are changed from the GCS by the operator.  When switched to \emph{Manual} mode, the control allocation do not consider the injected faults. 
 
-The modifications in the control allocation code by adding additive and multiplicative faults as well as extracting  \emph{Manual} mode from those injected faults can be seen in the \emph{Paparazzi} code given below. 
-
-
-\begin{figure}
+\begin{figure}[h]
 \begin{center}
 \includegraphics[width=0.9\textwidth]{figures/faultInjectionPprz}    % The printed column width is 8.4 cm.
 %\includegraphics[width=19cm,angle=90,origin=c]{figures/faultInjectionPaparazzi}    % The printed column width is 8.4 cm.
@@ -214,6 +219,10 @@ The modifications in the control allocation code by adding additive and multipli
 \label{fig:faultInjectionPaparazzi}
 \end{center}
 \end{figure}
+
+This figure shows that during the control allocation phase, which is the calculation of the desired servo commands from given desired elevator/aileron commands, faults are injected if the mode is \emph{Auto 1} and \emph{Auto 2} when fault multiplicative or fault additive values are changed from the GCS by the operator.  When switched to \emph{Manual} mode, the control allocation do not consider the injected faults. 
+
+The modifications in the control allocation code to consider additive and multiplicative faults can be seen in the \emph{Paparazzi} code (in C) given below. In \emph{Manual} mode, the servos are not changed by the injected faults. The desired elevator and aileron commands given by the pilot are changed to servo commands by control allocation as usual. In case of \emph{Auto 1} and \emph{Auto 2} modes, control allocation is modified by adding the additive faults ($vfault\_offset\_left$,$vfault\_offset\_right$) and multiplying by multiplicative faults ($vfault\_left$,\ $vfault\_right$). This changes the calculation of servo commands ($AILEVON\_{LEFT}$ and $AILEVON\_{RIGHT}$) in the line of code ($set \ servo = AILEVON\_{LEFT}$ and $set \ servo = AILEVON\_{RIGHT}$). In case of a nominal flight or setting the drone back into the nominal flight, since the multiplicative faults ($vfault\_left$,\ $vfault\_right$) are set to 1.0 and additive faults ($vfault\_offset\_left$,$vfault\_offset\_right$) are set to 0.0, the allocation of the control commands into the servo commands are not modified. In case of \emph{Manual} mode, the autopilot ignores the fault injection with the same idea (multiplicative faults ($vfault\_left$,\ $vfault\_right$) are set to 1.0 and additive faults ($vfault\_offset\_left$, \\ $vfault\_offset\_right$) are set to 0.0)
 
 
 \lstset{language=C}
@@ -248,7 +257,7 @@ Flight data saved to the SD card onboard should be converted to \emph{.data} for
 \end{center}
 \end{figure}
 
-Run the program under paparazzi/sw/logalize/sd2log and specify the file is to be converted to \emph{.data} file and where to export it as shown in Fig.~\ref{fig:dataManip} ('.' means extract to current folder). 
+Run the program under paparazzi/sw/logalize/sd2log and specify the file is to be converted to \emph{.data} format and where to export it as shown in Fig.~\ref{fig:dataManip} ('.' means extract to current folder). 
 
 An example of a part of the flight data\footnote{17\_07\_06\_\_10\_21\_07\_SD.data} is given in Fig.~\ref{fig:dataSettingsNominalFault} and whole file is available in \emph{Github}\footnote{https://github.com/benelgiz/cureDDrone/tree/master/ \\ data/v4\_multiplicativeAdditive\_MURET\_06\_07\_2017}. 
 The UAV used to realize the faulty flights in order to generate labeled data is given in Fig.~\ref{fig:zagi}. 
@@ -278,20 +287,12 @@ For ineffectiveness of control surface faults, where the controller has still an
 \end{figure}
 
 
-Now that the \emph{.data} file is ready, next is to detect the time stamps at which the faults are injected and then label all the data corresponding to this fault interval as designated with different colors in Fig.~\ref{fig:dataSettingsNominalFault}. 
+After converting the flight data file to \emph{.data} format, the file can be read from Matlab. Next step is to detect the time stamps at which the faults are injected and then label all the data corresponding to this fault interval as designated with different colors in Fig.~\ref{fig:dataSettingsNominalFault}. 
 Since, most of the times, there has been more than one fault type generated during flights, another step in data manipulation is to choose the faults to investigate. 
 
 The fault injection or change from fault condition to nominal mode is done via the GCS and there is a corresponding message saved to SD card onboard in \emph{Paparazzi} \emph{Messages} indicated via \emph{Settings}. 
 \emph{Settings} gives multiplicative fault and additive fault values and only appears in the flight data when one of the control surface effectiveness values is changed. 
 The value of the \emph{Settings} for nominal phase is [1.0 1.0 0.0 0.0] and a corresponding example line in the data corresponding to a command to revert to nominal condition can be seen in Fig.~\ref{fig:flightDataSettings}. 
-
-\begin{figure}[h]
-\begin{center}
-\includegraphics[width=13cm]{figures/flightDataSettings}    % The printed column width is 8.4 cm.
-\caption{\emph{SETTINGS} \emph{Message} saves the multiplicative and additive fault values inserted from the GCS.  [1.0 1.0 0.0 0.0] corresponds a command from the GCS to revert back to nominal phase} 
-\label{fig:flightDataSettings}
-\end{center}
-\end{figure}
 
 It means to multiply the value given by the controller by 1 and add 0, so does not change the values given by the autopilot. 
 As soon as any of control surface effectiveness values is changed in the GCS, a new \emph{Settings} value is saved to the file (Shown with arrows in Fig.~\ref{fig:dataSettingsNominalFault}). 
