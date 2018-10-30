@@ -69,7 +69,7 @@ The measurements are labeled, and an example plot showing simulated measurements
 %\end{figure}
 
 It is always important to visualize the features to have a grasp of data structure before applying machine learning algorithms. 
-For that reason, available observations forms the 6-dimensional pattern space,  $\vec{\bm{y}} = \begin{bmatrix} {a_x} & {a_y} & {a_z} & {\omega_x} & {\omega_y} & {\omega_z}  \end{bmatrix}^T$ can be visualized in pairs such as Fig.~\ref{fig:feat1vsfeat2}. 
+For that reason, available observations forms the 6-dimensional pattern space,  $\vec{\bm{x}} = \begin{bmatrix} {a_x} & {a_y} & {a_z} & {\omega_x} & {\omega_y} & {\omega_z}  \end{bmatrix}$ can be visualized in pairs such as Fig.~\ref{fig:feat1vsfeat2}. 
 There are further methods to visualize multidimensional data such as \emph{Tours}\cite{asimov1985grand,cook1997manual,cook1995grand} and \emph{GGobi} data visualization system \cite{cook2007interactive}. In this work, dimensionality reduction technique, Principle Component Analysis (PCA), is utilized for visualization. If very briefly explained, the feature vector $\bm{x}\in{\rm I\!R}^{n}$ is mapped to a lower dimensional space where the 
 new feature set will be represented by $\bm{z}\in{\rm I\!R}^{k}$. The final two dimensional feature set can be plotted to give an idea about faulty and nominal measurements' distribution in feature space as shown in Fig.~\ref{fig:z1_vs_z2}.
 
@@ -100,7 +100,16 @@ This phase is usually followed with a tuning phase where some of the parameters 
 The last phase is the prediction, where for a new instance, the classifier predicts if it corresponds to a faulty or nominal condition.
 
 Training data is comprised of labeled data where the label can belong to one of two possible cases. 
-This data set is saved in $\bm{X} \in {\rm I\!R^{m \times n}}  $ where $m,n$ correspond to number of instances and features respectively. 
+This data set is saved in $\bm{X} \in {\rm I\!R^{m \times n}}  $ where $m,n$ correspond to number of instances and features respectively (shown in Fig.~\ref{fig:featureMatrix}). 
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=13cm]{figures/featureMatrix}    % The printed column width is 8.4 cm.
+\caption{Feature matrix $\bm{X} \in {\rm I\!R^{m \times 6}}  $  is comprised of accelerometer and gyro data of $m$ instances} 
+\label{fig:featureMatrix}
+\end{center}
+\end{figure}
+
 The label information corresponding to the measurement instances is also fed to the SVM algorithm during the training phase as output vector $\bm{y} \in \{-1,1\}$. 
 The aim of SVM is to find an optimal hyperplane maximizing the margin by solving the optimization problem for non-linearly separable datasets. For further details on SVM and machine learning in general, the reader could refer to the methodology chapter of this thesis.
 
@@ -247,7 +256,7 @@ The modifications in the control allocation code to consider additive and multip
 \subsection{Reading \& labeling flight data}
 
 
-Flight data saved to the SD card onboard should be converted to \emph{.data} format by using the \textit{sd2log} program of \emph{Paparazzi}. For that purpose, from the terminal, browse into the folder including  the .LOG file, which is the file format for the onboard data saved in Paparazzi. 
+Flight data saved to the SD card onboard should be converted to \emph{data} format by using the \textit{sd2log} program of \emph{Paparazzi}. For that purpose, from the terminal, browse into the folder including the log file in \emph{LOG} format, which is the file format for the onboard data saved in Paparazzi. 
 
 \begin{figure}[h]
 \begin{center}
@@ -280,8 +289,8 @@ For ineffectiveness of control surface faults, where the controller has still an
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=11.9cm]{figures/dataSettingsNominalFault}    % The printed column width is 8.4 cm.
-\caption{A small part of the flight data corresponding to nominal and two different fault phases of the flight. \emph{Settings} message exists only if there is a change in the multiplicative and additive fault parameters via GCS} 
+\includegraphics[width=10.1cm]{figures/dataSettingsNominalFault}    % The printed column width is 8.4 cm.
+\caption{A piece of the flight data corresponding to nominal and two different fault phases of the flight. \emph{SETTINGS} message exists only if there is a change in the multiplicative and additive fault parameters via GCS. The first data in each row corresponds to the time stamp. Second data in each row is the aircraft number which is 52 for this flight. Third data in each data line corresponds to the label of information in that line. As an example, on the last line, the label is $IMU\_ACCEL$. This means that this line gives accelerometer readings. Last three data in this line are accelerometer x-axis (-1.187500), accelerometer y-axis (-0.916992) and accelerometer z-axis (-1.717773) readings.} 
 \label{fig:dataSettingsNominalFault}
 \end{center}
 \end{figure}
@@ -361,7 +370,7 @@ SVM classifier has been trained and tuned with the flight data, generated by fol
 The simulations have been developed under Matlab coding environment. 
 Some tools, such as calculation of \emph{f1Score}, were written as Matlab scripts rather than changing some arguments of toolbox functions, since they were not found available in the toolbox either it does not exist or was difficult to obtain.
  
- The simulations have been executed on HP Z820 Workstation with 3.1 GHz, 32 cores. 
+The simulations have been executed on HP Z820 Workstation with 3.1 GHz, 32 cores. 
  
 This work investigates only binary classification, not multi-class classification considering multiple different faults.  
 But different faulty cases have been studied to further attack the problem of multi-class classification in the future studies. 
@@ -428,7 +437,14 @@ It can be interpreted from the Fig.~\ref{fig:acc_x} that the fault injected show
 To investigate further, measurements have been plotted during a larger time scale involving $\sim$70 seconds of measurements as shown in Fig.~\ref{fig:acc_x_evenLongerNominal}. 
 Here, it is seen that the accelerometer measurements corresponding to faulty phase could be observed during the nominal flight phase as well, thus it might be necessary to check the time change of translational acceleration to catch a difference in behavior. 
 
-\begin{figure}
+Fig.~\ref{fig:acc_z} and Fig.~\ref{fig:gyro_x} show the accelerometer measurements along z-direction and angular velocities along x-direction during a short time interval. 
+Here, although an average of faulty measurements would result in an obvious difference, individual measures might correspond to nominal phase of the flight as well.
+
+The measurements are also plotted in feature spaces $a_x$-$a_z$ and $a_x$-$a_y$ as shown in Fig.~\ref{fig:feat1vsfeat3FaultStuck} and Fig.~\ref{fig:feat1vsfeat2FaultStuck}. 
+It shows $a_x$-$a_z$ space gives a distribution that would be easier to classify the faulty and nominal phases while in $a_x$-$a_y$ feature space, the measures are quite similar and difficult to classify.
+
+
+\begin{figure}[H]
 \begin{center}
 \includegraphics[width=0.66\textwidth]{figures/acc_z}    % The printed column width is 8.4 cm.
 \caption{Accelerometer measurements along z direction $a_z$ for faulty and nominal flight data} 
@@ -436,7 +452,7 @@ Here, it is seen that the accelerometer measurements corresponding to faulty pha
 \end{center}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
 \begin{center}
 \includegraphics[width=0.65\textwidth]{figures/gyro_x}    % The printed column width is 8.4 cm.
 \caption{Angular velocity $w_x$  for faulty nominal flight data} 
@@ -444,10 +460,8 @@ Here, it is seen that the accelerometer measurements corresponding to faulty pha
 \end{center}
 \end{figure}
 
-Fig.~\ref{fig:acc_z} and Fig.~\ref{fig:gyro_x} show the accelerometer measurements along z-direction and angular velocities along x-direction during a short time interval. 
-Here, although an average of faulty measurements would result in an obvious difference, individual measures might correspond to nominal phase of the flight as well.
 
-\begin{figure}
+\begin{figure}[H]
 \begin{center}
 \includegraphics[width=0.65\textwidth]{figures/feat1vsfeat3FaultStuck}    % The printed column width is 8.4 cm.
 \caption{$a_x$ vs $a_z$ feature space for faulty nominal flight data} 
@@ -455,7 +469,7 @@ Here, although an average of faulty measurements would result in an obvious diff
 \end{center}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
 \begin{center}
 \includegraphics[width=0.65\textwidth]{figures/feat1vsfeat2FaultStuck}    % The printed column width is 8.4 cm.
 \caption{$a_x$ vs $a_y$ feature space for faulty nominal flight data} 
@@ -471,8 +485,6 @@ Here, although an average of faulty measurements would result in an obvious diff
 %\end{center}
 %\end{figure}
 
-The measurements are also plotted in feature spaces $a_x$-$a_z$ and $a_x$-$a_y$ as shown in Fig.~\ref{fig:feat1vsfeat3FaultStuck} and Fig.~\ref{fig:feat1vsfeat2FaultStuck}. 
-It shows $a_x$-$a_z$ space gives a distribution that would be easier to classify the faulty and nominal phases while in $a_x$-$a_y$ feature space, the measures are quite similar and difficult to classify.
 
 \begin{table}[!ht]
 	\centering
@@ -542,8 +554,32 @@ Table~\ref{tab:stuck} shows the results of SVM classification for untuned linear
 Although a variety of variables used in the evaluation of classifiers have been presented to the reader for completeness, f1Score will be the main variable of concern for this study for the reasons explained before. 
 The classifier with a \emph{box constraint} $= 2.11$ and a \emph{kernel scale} $ = 1$ have been found to give the highest \emph{f1Score} (\emph{f1Score} $= 0.9545$). 
 
-Due to previous observations on data, feature set have been widened via additions of data from past measurements for each attribute. 
-The idea is to introduce the time change behavior of data to be represented in each instance. 
+To introduce the time change behavior of the system, feature set have been widened via additions of data from past measurements for each feature. 
+Let's consider one of the features (shown in Fig.~\ref{fig:featureVectorNormal}), accelerometer data in x-axis, corresponding to one of six columns (one of six features) in the feature matrix given in Fig.~\ref{fig:featureMatrix}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=0.22\textwidth]{figures/featureVectorNormal}    % The printed column width is 8.4 cm.
+\caption{One of the features (accelerometer x-axis) of the original feature matrix (given in Fig.~\ref{fig:featureMatrix}) before adding extra features} 
+\label{fig:featureVectorNormal}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=0.63\textwidth]{figures/addingFeatures}    % The printed column width is 8.4 cm.
+\caption{Addition of features to involve $N-1$ previous measurements} 
+\label{fig:addingFeatures}
+\end{center}
+\end{figure}
+
+Finally, this feature addition is applied to all features of the original feature matrix, resulting in $\bm{X'} \in {\rm I\!R^{m \times 6N}}$ :
+
+\begin{equation}
+\bm{X^{'}}= \begin{bmatrix} \bm{A}_x^{'}\ \bm{A}_y^{'} \ \bm{A}_z^{'} \ \bm{G}_x^{'} \ \bm{G}_y^{'} \ \bm{G}_z^{'}  \end{bmatrix}^{\rm T}
+\end{equation}
+
+where $\bm{A}_y^{'}$, $\bm{A}_z^{'}$, $\bm{G}_x^{'}$, $\bm{G}_y^{'}$, $\bm{G}_z^{'}$ is constructed in the same way as  $\bm{A}_x^{'}$ detailed in Fig.~\ref{fig:addingFeatures}.
 The number of features have been increased to 24 in Table~\ref{tab:contSurfStuckAddedFeat}, which means only 3 previous measures for each different attribute have been added to the feature set ((3 past + 1 instant) * 6 axis).
 This addition to the feature set, in general, deteriorated the performance of the classifier, especially the classifier with an untuned Gaussian kernel (\emph{f1Score}= $0.4167$) ($\Delta f1Score = -0.5135$). 
 For the classifiers with tuned Gaussian kernels, \emph{f1Score} decreases by a small amount for the classifier tuned with heuristic method (\emph{f1Score} $= 0.9444$) and increases by an even smaller amount(\emph{f1Score} $= 0.9143$) hence the effect is not really obvious. 
@@ -749,7 +785,15 @@ Adding more features the classifier still not able to classify when untuned but 
 
 
 \subsection{Use of spinors as attributes}
-In this study, until now, use of feature engineering to ameliorate the classification performance has been performed mainly utilizing the addition of new features to include previous measurements in all instances. The idea was to include the time evolution of the signal as well as the instantaneous measurements in the instances. Here another idea has been applied as feature engineering: to replace angular velocity measurements from gyros with spinors. For that, the kinematics equation, presented here again as a reminder, has to be solved numerically to attain quaternions from angular velocities.
+In this thesis, until now, use of feature engineering to ameliorate the classification performance has been performed mainly utilizing the addition of new features to include previous measurements in all instances. The idea was to include the time evolution of the signal as well as the instantaneous measurements in the instances. Here another idea has been applied as feature engineering: to replace angular velocity measurements from gyros with spinors such that feature matrix is given as in Fig.~\ref{fig:featureMatrixSpinors}. For that, the kinematics equation, presented here again as a reminder, has to be solved numerically to attain quaternions from angular velocities.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=13cm]{figures/featureMatrixSpinors}    % The printed column width is 8.4 cm.
+\caption{New feature matrix when spinors are used as features rather than gyro measurement} 
+\label{fig:featureMatrixSpinors}
+\end{center}
+\end{figure}
 
 For that, kinematics equations Eq. \ref{eqn:angVelocityKinematics} have been solved numerically.
 
