@@ -309,7 +309,7 @@ As soon as any of control surface effectiveness values is changed in the GCS, a 
 To find the indexes where the nominal and faulty data starts and ends, the values of the  \emph{Settings} message is investigated. 
 So when there is a  \emph{Settings} message in the flight, it should be either a fault generation or going back to nominal condition after a fault. 
 If the message contains the  \emph{Settings} message equal to [1.0 1.0 0.0 0.0], this data index is selected as the nominal condition start index and a previous index before next  \emph{Settings} message is the last index of this nominal phase. 
-The matrix holding the start and end index for the nominal phases are saved as \textit{nominal\_start\_stop} shown in Table~\ref{arm:tableNominalindexes} where the first row corresponds to start index of each nominal set and second row corresponds to the last index of the corresponding as nominal phase. 
+The matrix holding the start and end index for the nominal phases are saved as \textit{nominal\_start\_stop} shown in Table~\ref{arm:tableNominalindexes} where the first row corresponds to start index of each nominal set and second row corresponds to the last index of the corresponding as nominal phase. As an example, let's check second nominal phase of the flight. The first nominal phase is the flight before any fault is injected starting from the take off to the first fault injection. After the fault injected for the first time, we wait a while and then set the \emph{Settings} back to normal (1.0 1.0 0 0) from the GCS. This corresponds to the 516919th data line entry (which is \emph{SETTINGS 1.0 1.0 0 0}) in the whole data set (See nominal\_start\_stop(1,1) in Table~\ref{arm:tableNominalindexes}). Then another fault is injected at the time corresponding to the 521966th line in the data file, thus until this index (See nominal\_start\_stop(2,1) in Table~\ref{arm:tableNominalindexes}) the data corresponds to the 2nd nominal phase.    
 
 \newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
 
@@ -354,11 +354,11 @@ An example is Fault \#23 in Fig.~\ref{fig:settingsStuckFault} and its correspond
 Next step is to choose the phases of the flight to work with. 
 As an example, a phase of the flight where there is enough nominal data and followed with an extreme fault injection is selected. 
 This corresponds to the 4th nominal phase of the flight followed by the 23th fault is selected. Fault \#23 corresponds to right control surface stuck and can be seen in  Fig.~\ref{fig:dataSettingsNominalFault}. 
-The next is to select the measurement corresponding the these selected time intervals and this is done by AND ing the indexes of interest, such as the indexes of fault and gyro data measurements as shown in Fig.~\ref{fig:labelingGyroAccel}. 
+The next is to select the measurement corresponding the these selected time intervals and this is done by logically \emph{AND}ing the indexes of interest, such as the indexes of fault and gyro data measurements as shown in Fig.~\ref{fig:labelingGyroAccel}. 
 The script for labeling the nominal and faulty measurements is the \emph{selectDataToInvest.m} file given in Appendix B.2. 
 The output of this file is the accelerometer and gyro measurements corresponding to selected phases of the flight.
 
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[width=15.1cm]{figures/labelingGyroAccel}    % The printed column width is 8.4 cm.
 \caption{Indexing SETTINGS, to find fault and nominal flight intervals, indexing GYRO measurements to AND with FAULT indexes to find the indexes of faulty gyro measurements} 
@@ -555,7 +555,7 @@ Although a variety of variables used in the evaluation of classifiers have been 
 The classifier with a \emph{box constraint} $= 2.11$ and a \emph{kernel scale} $ = 1$ have been found to give the highest \emph{f1Score} (\emph{f1Score} $= 0.9545$). 
 
 To introduce the time change behavior of the system, feature set have been widened via additions of data from past measurements for each feature. 
-Let's consider one of the features (shown in Fig.~\ref{fig:featureVectorNormal}), accelerometer data in x-axis, corresponding to one of six columns (one of six features) in the feature matrix given in Fig.~\ref{fig:featureMatrix}
+Let's consider one of the features (shown in Fig.~\ref{fig:featureVectorNormal}), accelerometer data in x-axis, corresponding to one of six columns (one of six features) in the feature matrix given in Fig.~\ref{fig:featureMatrix}.
 
 \begin{figure}[H]
 \begin{center}
@@ -579,8 +579,8 @@ Finally, this feature addition is applied to all features of the original featur
 \bm{X^{'}}= \begin{bmatrix} \bm{A}_x^{'}\ \bm{A}_y^{'} \ \bm{A}_z^{'} \ \bm{G}_x^{'} \ \bm{G}_y^{'} \ \bm{G}_z^{'}  \end{bmatrix}^{\rm T}
 \end{equation}
 
-where $\bm{A}_y^{'}$, $\bm{A}_z^{'}$, $\bm{G}_x^{'}$, $\bm{G}_y^{'}$, $\bm{G}_z^{'}$ is constructed in the same way as  $\bm{A}_x^{'}$ detailed in Fig.~\ref{fig:addingFeatures}.
-The number of features have been increased to 24 in Table~\ref{tab:contSurfStuckAddedFeat}, which means only 3 previous measures for each different attribute have been added to the feature set ((3 past + 1 instant) * 6 axis).
+where $\bm{A}_y^{'}$, $\bm{A}_z^{'}$, $\bm{G}_x^{'}$, $\bm{G}_y^{'}$, $\bm{G}_z^{'}$ are constructed in the same way as  $\bm{A}_x^{'}$ detailed in Fig.~\ref{fig:addingFeatures}.
+For N = 4, the number of features have been increased to 24 in Table~\ref{tab:contSurfStuckAddedFeat}, which means only 3 previous measures for each different attribute have been added to the feature set ((3 past + 1 instant) * 6 axis).
 This addition to the feature set, in general, deteriorated the performance of the classifier, especially the classifier with an untuned Gaussian kernel (\emph{f1Score}= $0.4167$) ($\Delta f1Score = -0.5135$). 
 For the classifiers with tuned Gaussian kernels, \emph{f1Score} decreases by a small amount for the classifier tuned with heuristic method (\emph{f1Score} $= 0.9444$) and increases by an even smaller amount(\emph{f1Score} $= 0.9143$) hence the effect is not really obvious. 
 
@@ -785,7 +785,7 @@ Adding more features the classifier still not able to classify when untuned but 
 
 
 \subsection{Use of spinors as attributes}
-In this thesis, until now, use of feature engineering to ameliorate the classification performance has been performed mainly utilizing the addition of new features to include previous measurements in all instances. The idea was to include the time evolution of the signal as well as the instantaneous measurements in the instances. Here another idea has been applied as feature engineering: to replace angular velocity measurements from gyros with spinors such that feature matrix is given as in Fig.~\ref{fig:featureMatrixSpinors}. For that, the kinematics equation, presented here again as a reminder, has to be solved numerically to attain quaternions from angular velocities.
+In this thesis, until now, use of feature engineering to ameliorate the classification performance has been performed mainly utilizing the addition of new features to include previous measurements in all instances. The idea was to include the time evolution of the signal as well as the instantaneous measurements in the instances. Here another idea has been applied as feature engineering: to replace angular velocity measurements from gyros with spinors such that feature matrix is given as in Fig.~\ref{fig:featureMatrixSpinors}. 
 
 \begin{figure}[h]
 \begin{center}
@@ -795,7 +795,8 @@ In this thesis, until now, use of feature engineering to ameliorate the classifi
 \end{center}
 \end{figure}
 
-For that, kinematics equations Eq. \ref{eqn:angVelocityKinematics} have been solved numerically.
+To calculate the spinors, the kinematic equations given in Eq. \ref{eqn:angVelocityKinematics} are solved numerically to attain quaternions from angular velocities.
+
 
 \begin{align}{\label{eqn:angVelocityKinematics}}
 \begin{split}
@@ -804,13 +805,15 @@ For that, kinematics equations Eq. \ref{eqn:angVelocityKinematics} have been sol
 \end{split}
 \end{align}
 
+Given the quaternion definition in  Eq. \ref{quaternionDefinition},
+
 \begin{equation}{\label{quaternionDefinition}}
 \bm{q} = \begin{bmatrix} 
 cos\Big(\frac{\theta}{2}\Big) & sin(\frac{\theta}{2}) \bm{e} \\
 \end{bmatrix}
 \end{equation}
 
-Given the quaternion definition in  Eq. \ref{quaternionDefinition} 
+spinor is calculated via taking the logarithm of quaternion described as in Eq. \ref{spinorDefinition}:
 
 \begin{equation}{\label{spinorDefinition}}
 log(\bm{q}) = \begin{bmatrix} 
@@ -818,7 +821,7 @@ log(\bm{q}) = \begin{bmatrix}
 \end{bmatrix}
 \end{equation}
 
-spinor are calculated with taking the logarithm of quaternion described as in Eq. \ref{spinorDefinition}.
+Result given in Table~\ref{tab:spinorsGaussian} shows an improvement in classification with \emph{f1Score} reaching up to 0.9915.
 
 \begin{table}[hbt!]
 \caption{\label{tab:spinorsGaussian} Results for untuned, tuned SVM classifiers with spinors as attributes}
@@ -837,8 +840,6 @@ compTime & 5.17s& 5.47s &11470.03s& 11373.91\\
 \hline
 \end{tabular}
 \end{table}
-
-Result given in Table~\ref{tab:spinorsGaussian} shows an apparent increase in classification with \emph{f1Score} reaching up to 0.9915.
 
 \subsubsection{Untuned classification superiority}
 
