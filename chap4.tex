@@ -7,14 +7,14 @@
 \chapter{Methodology}
 
 In this chapter, an introduction to machine learning methods is presented. 
-Machine learning methods have been discusses with a focus on applications rather then the theory.
+Machine learning methods is discussed with a focus on applications.
 Finally, a supervised learning method, Support Vector Machines (SVM) is explained since it is the method used for classification in this thesis.
 
 \section{Machine Learning}
 
 The aim of machine learning methods is to train a model with a given data set in order to predict the output values corresponding to a new input. 
 According to Arthur Samuel, name father of machine learning, "Machine learning is the field of study that gives computers the ability to learn without being explicitly programmed". 
-A rather more to the point but complicated definition offered by Tom Mitchell in 1998, quite new compared to Samuel\textquotesingle s in 1959, "A computer program is said to learn from experience E with respect to some task T and some performance measure P, if its performance on T, as measured by P, improves with experience E".
+Another definition offered by Tom Mitchell in 1998, quite new compared to to the one by Samuel in 1959, "A computer program is said to learn from experience E with respect to some task T and some performance measure P, if its performance on T, as measured by P, improves with experience E".
 
 \subsection{Introduction}
 Machine learning methods are mainly handled under two main categories: supervised and unsupervised learning as shown in Fig.~\ref{fig:machineLearningMethodsSerious}. 
@@ -87,7 +87,7 @@ Table~\ref{arm:exampHousingPrices} uses a supervised learning regression example
 The aim of the problem in this example is to predict price of houses for given surface area. 
 For that, known examples of houses with surface area and corresponding price have been given. 
 Since the aim of the problem is to predict the price of a house given the surface area, price of house is the output of the problem. 
-And to predict the price, the available information that is known to effect the price of a house is the surface area of the house, making it the input variable. 
+To predict the price, the available information that is known to effect the price of a house is the surface area of the house, making it the input variable. 
 So, in Table~\ref{arm:exampHousingPrices} each row corresponds to a different house, second column (surface area of house) constitute the input vector and the last row (price in 1000s) corresponds to the output vector. 
 
 \begin{table}
@@ -107,9 +107,9 @@ m & $x^{(m)}$   & $y^{(m)}$ \\\hline
 \end{table}
 
 In this problem, there is an assumption that the price of a house is only dependent on the surface area which would not hold in the real case. 
-In real problems, it is more common that the output would depend not only one variable but more, or many. 
+In real problems, it is more common that the output would depend not only on one variable but more. 
 For that reason, the input vector in a realistic example would rather be an input matrix having different features in its columns as given in Table~\ref{arm:exampleMultiFeatures}. 
-Here in this example, the output is still the price of house, but now the features which corresponds to each column of an input matrix (or sometimes called the feature matrix) are surface area, number of bedrooms, and can be enlarged until n features. 
+Here, in this example, the output is still the price of the house, but now the features which correspond to each column of an input matrix (or sometimes called the feature matrix) are the surface area, the number of bedrooms, and can be enlarged until n features. 
 It should be kept in mind that the selection of features that would lead to a better prediction of the output is a challenging problem and usually requires experience on the system of interest. 
 
 \begin{table}
@@ -137,13 +137,13 @@ m & $\textbf{x}_1^{(m)}$  & $\textbf{x}_2^{(m)}$  & $\textbf{x}_2j^{(m)}$   & $\
 
 \subsubsection{Visualizing the data}
 
-Having a preliminary glance at data might give the designer an idea about the ways to tackle the problem since it is the designer to select the features, the model, and the type of cost function. 
+Having a preliminary glance at data, might give the designer an idea about the ways to tackle the problem since it is the designer who selects the features, the model, and the type of cost function. 
 It is true that the algorithms are optimizing some parameters of the model and the cost function but still the structure itself is usually supplied by a human. 
-Although there are tricks to select those in a better sense, machines still have a way to go towards Skynet\footnote{From movie Terminator: ``Skynet is a fictional neural net-based conscious group mind and artificial general intelligence (see also superintelligence) system that features centrally in the Terminator franchise and serves as the franchise's true main antagonist.''}.
+%Although there are tricks to select those in a better sense, machines still have a way to go towards Skynet\footnote{From movie Terminator: ``Skynet is a fictional neural net-based conscious group mind and artificial general intelligence (see also superintelligence) system that features centrally in the Terminator franchise and serves as the franchise's true main antagonist.''}.
 
 Fig.~\ref{fig:housingPrices} shows the housing price depending on the surface area corresponding to the data given in Table~\ref{arm:exampHousingPrices}.
 In this example, price of the houses are the output (target) variable given in y-axis and size (surface area in $feet^2$) is the feature (input) variable given in x-axis. 
-Since output y is price which is a continuous value (thus not a label representing a class) this problem is called a regression problem. Plotting the data given shows that the problem could to be modeled by a linear model (a linear line to fit the data given). Then linear regression can be applied.
+Since output y is the price which is a continuous value (thus not a label representing a class), this problem is called a regression problem. Plotting the given data, shows that the problem could to be modeled by a linear model (a linear line to fit the data given). Then, linear regression can be applied.
 
 \begin{figure}
 \begin{center}
@@ -162,21 +162,21 @@ Since output y is price which is a continuous value (thus not a label representi
 \end{figure}
 
 Since an example for regression problem has been given, now a preliminary look at classification problem will be presented. 
-Fig.~\ref{fig:classificationEx2} is a classification problem since the aim is to distinguish the class that a new input instance will belong to. 
-Here the vertical dimension is not the output as in the previous example of linear regression but is another feature ($x_2$ in this example). 
+Fig.~\ref{fig:classificationEx2} presents a classification problem since the aim is to distinguish the class that a new input instance will belong to. 
+Here, the vertical dimension is not the output as in the previous example of linear regression but is another feature ($x_2$ in this example). 
 
-And the information about the output is represented with the colors of the samples in the feature space.
+The information about the output is represented with the colors of the samples in the feature space.
 Fig.~\ref{fig:classificationEx1} shows the output vs. inputs of a classification problem. 
 This is just to show the difference between regression and classification problem figures. 
 Usually in regression problems the y-axis represents the output. 
-Here, there is a direct analogy by representing a classification problem just as a regression problem, x-axis representing the input whereas y-axis representing the output. 
-But usually in classification problems, value of y (which class it corresponds to) is represented with different colors as in Fig.~\ref{fig:classificationEx2} or with different signs such as O and X.
+Here, there is a direct analogy by representing a classification problem as a regression problem, x-axis representing the input whereas y-axis representing the output. 
+But usually in classification problems, the value of y (which class it corresponds to) is represented with discrete values representing the different classes as shown in Fig.~\ref{fig:classificationEx2}.
 
 By just plotting the samples, in this example, it seems that logistic regression could yield satisfactory results since the data seems to be separated by a linear decision boundary. 
 A decision boundary is a curve which separates the training data examples which belongs to different classes. 
 
-It is possible to choose the model structure that would represent the problem satisfactorily via visualizing the data set when the number of features are not large.
-With an increasing number of feature set, determining the degree of the polynomial via visualizing the data to represent the input output relationship could be more complicated. 
+It is possible to choose the model structure that would represent the problem satisfactorily via visualizing the data set when the number of features is not large.
+With an increasing number of features, determining the degree of the polynomial via visualizing the data to represent the input output relationship could be more complicated. 
 In that case, the user should refer to model selection techniques rather than the insights gained by data visualization. 
 
 
@@ -188,12 +188,11 @@ In that case, the user should refer to model selection techniques rather than th
 \end{center}
 \end{figure}
 
-In case the number of feature set is small but yet the visualization gives that the model for regression or classification problem can not be represented by a linear model (or linear decision boundary), feature mapping could be applied. 
-Then linear regression or logistic regression (can only fit linear models unless features are mapped) could be applied to nonlinear systems with mapped features.  
+In case the number of features is small but yet the visualization gives that the model for regression or classification problem can not be represented by a linear model (or linear decision boundary), feature mapping could be applied. 
+Then linear regression (for regression) or logistic regression (for classification) could be applied to nonlinear systems with mapped features.  
 
 \subsubsection{Feature Mapping}
 
-This section applies to problems with smaller feature sets and to fit a nonlinear model with linear or logistic regression.
 Depending on the results from visualizing data, it might be necessary to map the features since a straightforward implementation of linear / logistic regression might result in linear model, linear decision boundary respectively. 
 So for the cases that a linear model will not be satisfactory enough to describe the training data, feature mapping should be applied.
 
