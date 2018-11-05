@@ -179,7 +179,6 @@ It is possible to choose the model structure that would represent the problem sa
 With an increasing number of features, determining the degree of the polynomial via visualizing the data to represent the input output relationship could be more complicated. 
 In that case, the user should refer to model selection techniques rather than the insights gained by data visualization. 
 
-
 \begin{figure}
 \begin{center}
 \includegraphics[width=7cm]{figures/classificationEx1}    % The printed column width is 8.4 cm.
@@ -188,8 +187,6 @@ In that case, the user should refer to model selection techniques rather than th
 \end{center}
 \end{figure}
 
-In case the number of features is small but yet the visualization gives that the model for regression or classification problem can not be represented by a linear model (or linear decision boundary), feature mapping could be applied. 
-Then linear regression (for regression) or logistic regression (for classification) could be applied to nonlinear systems with mapped features.  
 
 \subsubsection{Feature Mapping}
 
@@ -232,9 +229,9 @@ x_3 & = size^3
 
 By changing the model via adding features, now it is possible to fit a nonlinear curve to the training data as given in Fig.~\ref{fig:underOverFit}.
 
-Another example that requires a nonlinear model to fit the data set is microchip assessment problem.
+Another example that requires a nonlinear model to fit the data set is the microchip assessment problem.
 This example is also taken from the lecture notes of machine learning course by Andrew Ng \cite{andrewNgMachLearning}. 
-This is a two class classification problem, where one class of microchips is faulty while the other class is functional.
+This is a two-class classification problem, where one class of microchips is faulty while the other class is functional.
 It is seen from the Fig.~\ref{fig:classificationEx3} that a linear decision boundary will not serve appropriately to classify the data. 
 So, in order to apply logistic regression for this problem, feature mapping is necessary. 
 An example of a mapped feature vector that could give a satisfactory decision boundary to classify the two classes could be given as
@@ -313,8 +310,8 @@ A scheme to help select the strategy for mapping is given in  Fig.~\ref{fig:ml_f
 
 \subsubsection{Vectorized form of the problem}
 
-The model can be written in a vectorized form to accommodate larger feature sets in a more compact form.
-To write in the compact form, and an extra feature $\bm{x}_0 = 1$ is added to the feature vector such as
+The model can be written in a vectorized form to accommodate larger number of features in a more compact form.
+To write in the compact form, an extra feature $\bm{x}_0 = 1$ is added to the feature vector such as
 
 \begin{equation}{\label{eqn:featureVector}}
 \bm{x}
@@ -346,7 +343,7 @@ Also parameters of the model is given in vectorial form such as
 ^T
 \end{equation} 
 
-So for the linear regression problem with a single feature, the model is given as
+So, for the linear regression problem with a single feature, the model is given as
 
 \begin{equation}{\label{eqn:costFuncOneFeature}}
 h_{{\bm{\theta}}}(x) = \theta_0 + \theta_1 x_1
@@ -358,7 +355,7 @@ and the model for $n$ features
 h_{{\bm{\theta}}}(x) = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \cdots+ \theta_n x_n
 \end{equation}
 
-Introducing the vectorial forms of $\bm{x}$ and $\bm{\theta}$ enables the model to be written in compact generic form such as 
+Introducing the vectorial forms of $\bm{x}$ and $\bm{\theta}$ enables the model to be written in a compact generic form such as 
 
 \begin{equation}{\label{eqn:costFuncMltplFeature}}
 h_{{\bm{\theta}}}(x) = {\bm{\theta}}^\intercal \bm{x}
@@ -389,12 +386,12 @@ J({\bm{\theta}})
 
 \subsubsection{Selecting the model}
 
-With a larger set of features, it might be difficult to have a sense of which model would be a better fit to the problem via visualizing the data. 
+With a larger set of features, it might be difficult to have a sense of which model would be a better fit to the problem. 
 In this cases, model selection techniques could be applied to decide which model will yield to a better accuracy.
 
 To explain the procedure, first assume a model structure is already selected or given. 
 In such a problem, during training, training data is used to calculate the best model parameter vector $\bm{\theta}$ that would minimize the objective function, $J_{tranining}(\bm{\theta)}$.
-Then trained model is assesses with a new data set $J_{test}$, since the evaluation would be biased in favor of the training data that the model is trained for. 
+Then, trained model is assesses with a new data set $J_{test}$, since the evaluation would be biased in favor of the training data that the model is trained for. 
 That could lead to an optimistic view of the abilities of the learning algorithm. 
 
 In model selection technique, each model is given a number $d$ to represent the model as shown below.
@@ -414,14 +411,14 @@ d &= k, \quad h_{{\bm{\theta}}}(x) \ && = \theta_0 + \theta_1 x_1 + \cdots+ \the
 
 In the previous problem of a given model structure, only model parameter vector $\bm{\theta}$ is calculated to minimize cost function $J_{training}(\bm{\theta)}$.
 Now, since the best model is not known, it is also necessary to find the best $d$ to minimize the cost function. 
-Since now the parameters to fit for is two, $\bm{\theta}$ and $d$, three different sets of data is necessary to evaluate, in order to avoid overfitting.
-As for the case of training and evaluating with the same data in the previous paragraph for a given model, using only two data sets and calculating the test set error with the same data that is used for selecting the model, might lead to selecting a model biased towards the data that is used selecting the model.
- 
+Since now the parameters to fit for is two, $\bm{\theta}$ and $d$, three different sets of data are necessary to train, tune and evaluate.
+Similar to the case of training and evaluating the model with the same data (for a given model) might lead to a biased evaluation, with an added necessity to also select (or tune) the model requires an extra set of data. Those three separate sets of data are called training, cross-validation and test sets.
+
 So, the idea is to have different subsets of data to train the model (calculating ${\bm{\theta}}$), to select the model structure and to evaluate the selected model structure and its corresponding parameter set. 
 In order to do that, 3 distinct data sets are needed as shown in Fig.~\ref{fig:modelSelection}, to train parameters ${\bm{\theta}}$, to select the model structure $d$, and associate an error value to the chosen model. 
-Then, the model structure coined by number $d$ which makes $J_{cv}({\bm{\theta}}^{(d)})$ minimum is selected and its generalization is error is calculated with the test set $J_{test}({\bm{\theta}}^{(d)})$.
+Then, the model structure $d$ which makes $J_{cv}({\bm{\theta}}^{(d)})$ minimum is selected and its generalization is error is calculated with the test set $J_{test}({\bm{\theta}}^{(d)})$.
 
-Fig.~\ref{fig:modelSelection} summarizes the steps to be followed which are explained in more detail as
+Fig.~\ref{fig:modelSelection} summarizes the steps to be followed which are explained in more detail as:
 
 \begin{enumerate}
   \item Train the model for each model structure (d = 1,2,3 .. k) by using the training set (60\% of whole data, randomly selected) which will output the parameters ${\bm{\theta}}^{(d)}$ for the corresponding model $(d)$.
@@ -433,7 +430,7 @@ J_{training}({\bm{\theta}})
 \frac{1}{2m_{training}} \sum\limits_{i=1}^{m_{training}} \Big(h_{\bm{\theta}}(x_{training}^{(i)}) - (y_{training}^{(i)})\Big)^2  
 \end{equation}   
   
-  \item Then by using the cross validation data set (20\% of whole data, randomly selected) calculate cross validation error for each model and select the model with the smallest cross validation error.
+  \item Then, by using the cross validation data set (20\% of whole data, randomly selected) calculate cross validation error for each model and select the model with the smallest cross validation error.
 
 \begin{equation}{\label{eqn:costFuncCrossVal}}
 J_{cv}({\bm{\theta}})
@@ -441,7 +438,7 @@ J_{cv}({\bm{\theta}})
 \frac{1}{2m_{cv}} \sum\limits_{i=1}^{m_{cv}} \Big(h_{\bm{\theta}}(x_{cv}^{(i)}) - (y_{cv}^{(i)})\Big)^2  
 \end{equation} 
 
-  \item Then by using the test set (20\% of whole data, randomly selected) estimate generalization error for the selected model.
+  \item Then, by using the test set (20\% of whole data, randomly selected) estimate generalization error for the selected model.
   
 \begin{equation}{\label{eqn:costFuncTest}}
 J_{test}({\bm{\theta}})
@@ -466,13 +463,13 @@ J_{test}({\bm{\theta}})
 
 The next step is to normalize the data in order to constrain the values of features change within the same order of magnitude. 
 This helps to improve the convergence rate of the optimization algorithm during the calculation of the model parameters $\bm{\theta}$.  
-Although there are different methods for normalization, a common way is
+Although there are different methods for normalization, a common way is to use  the formula:
 
 \begin{equation}{\label{eqn:scalingFeatures}}
 \bar{x}_j = \frac{x_j - \mu_j}{s_j} 
 \end{equation} 
 
-where the mean $\mu_j$ and range $s_j$ is given as
+where the mean $\mu_j$ and range $s_j$ are given by
 
 \begin{align}
 \label{eqn:meandAndRange}
@@ -483,30 +480,30 @@ s_j & = max(x_j) - min(x_j)
 \end{split}
 \end{align}
 
-An important point is to keep that values $\mu_j$ and $s_j$ (or standard deviation in cases it is preferred instead of range $s_j$). 
+An important point is to keep that values $\mu_j$ and $s_j$ (or standard deviation in cases it is preferred instead of range $s_j$) which are calculated during training. 
 Those values are saved since they will also be used to scale the new inputs during the prediction phase.
 
 
 \subsubsection{Training and Evaluating of the classifier}
 
-Here, it is assumed that we have selected one model and train the parameters of only this model selected. 
+Here, it is assumed that we have selected one model and train the parameters of only this selected model. 
 If multiple models are going to be evaluated, this training phase will be applied to all different models. 
 Then, the selection of the best model should be done as already explained under \emph{Selecting the model} section.  
 
 Before the training phase, the data should be split into two parts: training and test sets.
 Then, the parameters $\bm{\theta}$ is learnt using the training data. 
-Finally, the classifier trained is evaluated calculating the test set error using the test set.
+Finally, the classifier trained is evaluated by calculating the test set error using the test set.
 Those steps are given in more detail as follows:
  
  \begin{enumerate}
  
   \item Split the data set to two parts (30\% for the test set - 70\% for the training set). 
-  Note that if the data set is randomly ordered, than the first 70\% can be used for training and the rest for test, but if the data is not randomly ordered (data set is dependent on time or any kind of pattern in between the data set) 70\% - 30\% should be selected randomly.
+  Note that if the data set is randomly ordered, then the first 70\% can be used for training and the rest for test, but if the data is not randomly ordered (data set is dependent on time or any kind of pattern in between the data set) 70\% - 30\% should be selected randomly.
   
   \item Learn parameters $\bm{\theta}$ from the new training set (70\% of the whole data set). This step is further explained under \emph{Calculating parameters ${\bm{\theta}}$} section.
 
-  \item Calculate the test set error by using test set (30\% of whole data) with the parameters learnt by utilizing training set (70\% of the whole data).\\
-  For linear regression the test set error is the cost function evaluated by the test set $(x_{test}(i), y_{test}(i))$ pairs and the parameters trained by utilizing the training set $(x_{train}(i), y_{train}(i))$ and can be given as
+  \item Calculate the test set error by using test set (30\% of whole data) with the parameters learnt by using the training set (70\% of the whole data).\\
+  For linear regression, the test set error is the cost function evaluated by the test set $(x_{test}(i), y_{test}(i))$ pairs and the parameters trained by using the training set $(x_{train}(i), y_{train}(i))$ and can be given as
 	
 	\begin{equation}{\label{eqn:costFuncTest}}
 	J_{test}({\bm{\theta}})
@@ -551,20 +548,21 @@ The cost function is minimized to calculate the best $\bm{\theta}$ with the use 
 \underaccent{{\displaystyle \bm{\theta}}}{min} \ J(\bm{\theta})
 \end{equation} 
 
-For the case of a simplified one feature example, the minimization problem can be written as
+For the case of a simplified example with one feature, the minimization problem can be written as
 
 \begin{equation}{\label{eqn:optimizationGoalSimplified}}
 \underaccent{{\displaystyle \theta_0, \theta_1}}{min} \ J(\theta_0,\theta_1)
 \end{equation} 
 
 To achieve this minimization problem, there are a variety of algorithms available. 
-One of the most common is gradient descent method which is selected to be mentioned here due to its simplicity.  
-Others include but not limited to conjugate gradient, BFGS (Broyden-Fletcher-Goldfarb-Shannon) algorithm, and L-BFGS (Limited-memory BFGS). 
-They usually require the cost function and its gradient in order to calculate the best $\bm{\theta}$ values.
+A classical approach is the gradient descent method.  
+Others include but not limited to, conjugate gradient, BFGS (Broyden-Fletcher-Goldfarb-Shannon) algorithm, and L-BFGS (Limited-memory BFGS). 
+They usually require the cost function, its gradient and Hessian approximation in order to calculate the best $\bm{\theta}$ values.
 
 \textbf{Gradient Descent}
 
-The gradient descent will be presented for one feature problem due to its simplicity. Here a linear regression problem is considered, where its hypothesis (model) and cost function is given in Equ.~\ref{eqn:linearRegressionTwoFeaturesSummary}
+The gradient descent will be presented for one feature problem due to its simplicity. 
+Here, a linear regression problem is considered, where its hypothesis (model) and cost function is given in Equ.~\ref{eqn:linearRegressionTwoFeaturesSummary}
 
 \begin{align}
 \label{eqn:linearRegressionTwoFeaturesSummary}
@@ -620,9 +618,9 @@ The gradient descent algorithm for one feature is given as
 \end{algorithmic}
 \end{algorithm}
  
-A conventional approach to assign initial value to ${\bm{\theta}}$ is initialization by zero ($\theta_{init} = 0$).
+A conventional approach to assign an initial value to ${\bm{\theta}}$ is to set $\theta_{init} = 0$.
 It is important to know that for different initial values, ${\bm{\theta}}$ might converge to different values (local minima but not the global one) as in Fig.~\ref{fig:localOrGlobalMinimaGD}. 
-But for linear regression, it is shown that the cost function shown above is convex, meaning that it has no local minima but only one global minima. An example for cost function converging to different solutions depending on initialization is given in Fig.\ref{fig:localOrGlobalMinimaGD} (slightly different choice of $\theta_{init}$ might converge to the local minima, which is $J(\bm{\theta})$ smaller compared to surrounding regions, but does not converge to the smallest $J(\bm{\theta})$.
+But for linear regression, it is shown that the cost function shown above is convex, meaning that it has no local minima but only one global minima. An example for cost function converging to different solutions depending on initialization is given in Fig.\ref{fig:localOrGlobalMinimaGD} (slightly different choice of $\theta_{init}$ might converge to the local minima, which is smaller compared to surrounding regions, but does not converge to the smallest $J(\bm{\theta})$.
 
 \begin{figure}
 \begin{center}
@@ -634,15 +632,17 @@ But for linear regression, it is shown that the cost function shown above is con
  
 Learning rate,  $\alpha$, gives the gradient descent its step size, so a bigger value means a faster convergence. 
 But keep in mind for a bigger alpha, solution might not converge or even diverge while too small values might lead the optimization to converge very slowly.
-A set of $\alpha$ should be tried and evaluated by their performances. A usual set to choose from would be $\alpha = [0.001, 0.01, 0.1, 0.003, 0.03, 0.3]$.
-  
-Number of iterations, $num\_iter$ is also a parameter to be chosen. 
-As a start, conventionally it can be selected as $num\_iter = 1000$ and then, convergence of the cost function should be checked. 
-If it has not yet converged but decreasing, a larger value for $num\_iter$ should be selected.
+A set of $\alpha$ should be tried and evaluated by their performances. 
+%A usual set to choose from would be $\alpha = [0.001, 0.01, 0.1, 0.003, 0.03, 0.3]$.
+ Armigo-Goldstein rule can be used to set $\alpha$. 
+%Number of iterations, $num\_iter$ is also a parameter to be chosen. 
+%As a start, conventionally it can be selected as $num\_iter = 1000$ and then, convergence of the cost function should be checked. 
+%If it has not yet converged but decreasing, a larger value for $num\_iter$ should be selected.
 
 An important point in the algorithm is to update the $\bm{\theta}$ simultaneously. 
-So during one iteration, the same $\bm{\theta}$ values should be substituted into $h_\theta(x)$, in order to calculate next values of $\theta_0, \theta_1$.
+So during one iteration, the same $\bm{\theta}$ values should be substituted into $h_\theta(x)$, in order to calculate the next values of $\theta_0, \theta_1$.
  
+\iffalse
 Convergence of gradient descent can be debugged by plotting the cost function as a function of iterations of the optimization.
 In the preferred case, the cost function should decrease in each iteration, never increase, and should converge to a steady value at the end of the optimization algorithm. 
 Fig.~\ref{fig:visualizeCostFunc} shows two poor and one successful optimization by plotting the cost function versus iteration. 
@@ -686,6 +686,8 @@ And finally, generic gradient descent algorithm for multiple features can be giv
 \end{algorithmic}
 \end{algorithm}
 
+\fi
+
 \subsubsection{Overfitting}
 
 Overfitting is common for complicated models or decision boundaries with high order polynomial terms as
@@ -702,15 +704,15 @@ Overfitting is common for complicated models or decision boundaries with high or
 If the model is suffering from overfitting, the learnt model might end up fitting very well to the training set, but fail to generalize to the new data during the prediction phase. 
 This means that the training set error is not a good predictor for how well the model would predict on new examples.
 
-\begin{figure}
+\begin{figure}[H]
 \begin{center}
 \includegraphics[width=16cm]{figures/underOverFit}    % The printed column width is 8.4 cm.
-\caption{Underfitting, just right or overfitting examples - left to right} 
+\caption{Underfitting, satisfactory or overfitting model examples (left to right)} 
 \label{fig:underOverFit}
 \end{center}
 \end{figure}
 
-Fig.~\ref{fig:underOverFit} show three models where it is easy to realize that the model is underfit, just right or overfit by visualizing the hypothesis. 
+Fig.~\ref{fig:underOverFit} shows three model examples plotted with the data that they are trained with. From left to write, those three regression problem models are underfit, satisfactory or overfit. 
 But for problems with more features it might not be that obvious. Sometimes it might not even be possible to plot the model to realize if it is overfit or not.
 For such cases, methods to detect overfitting should be used. 
 To avoid overfitting, regularization parameter is used as explained in the next section.
@@ -718,7 +720,7 @@ To avoid overfitting, regularization parameter is used as explained in the next 
 \textbf{Regularization}
 
 Regularization is practiced to avoid overfitting.
-In regularization, a term is added to the cost function in order to penalize parameters $\vec{\bm{\theta}}$ for being large (i.e to make $\vec{\bm{\theta}}$ as small as possible), except ${\theta}_0$ (is not penalized by convention). Cost function for linear regression with the added term for regularization is given as
+In regularization, a term is added to the cost function in order to penalize parameters $\vec{\bm{\theta}}$ for being too large (i.e to make $\vec{\bm{\theta}}$ as small as possible), except ${\theta}_0$ (is not penalized by convention). Cost function for linear regression with the added term for regularization is given as
 
 \begin{equation}{\label{eqn:costFuncRegularized}}
 J(\theta)
@@ -734,8 +736,8 @@ J(\theta)
 \frac{1}{m} \sum\limits_{i=1}^{m} \Big[-y^{(i)}log(h_\theta(x^{(i)})) - (1-(y^{(i)}))log(1-h_\theta(x^{(i)}))\Big] +\frac{\lambda}{2m} \sum\limits_{j=1}^{n} \theta_j^2
 \end{equation} 
 
-Here, the challenge is to find the appropriate value for $\lambda$ which serves like a weight between the original part of the cost function and the second part, which penalizes $\bm{\theta}$ for being large. 
-So it tends to decrease the values of $\theta$. But if this lambda is too big than it then the model converges to  
+Here, the challenge is to find the appropriate value for $\lambda$ which serves like a weight between the original part of the cost function and the second part, which penalizes $\bm{\theta}$ for being too large. 
+So it tends to decrease the values of $\theta$. But if this lambda is too big, then the model converges to  
 
 \begin{equation}{\label{eqn:costFuncRegularizedTooMuch}}
 h_\theta(x)
@@ -751,15 +753,18 @@ h_\theta(x)
 \theta_0 + \xcancel{\theta_1 x}  + \xcancel{\theta_2 x^2}  + \xcancel{\theta_2 x^3}  + \cdots + \xcancel{\theta_n x^n}
 \end{equation} 
 
-Thus the model becomes underfit for large values of $\lambda$, thus should be tuned to acquire the optimal value.
+Thus, the model becomes underfit for large values of $\lambda$, and it should be tuned to acquire the optimal value.
 
 
 \subsubsection{Visualizing error to diagnose over-fit/under-fit problems}
 
 To further debug the model, a guide is given in Fig.~\ref{fig:debuggingHypothesis}. 
 Here, the errors for training and cross validation sets have to be calculated for a variety of polynomial degree or regularization parameter. 
-When training and cross-validation errors are plotted as a function of polynomial degree (or complexity of model), a larger training and cross-validation error point toward a under-fit (high bias) model while a large cross-validation and low training error point an over-fit model (high variance) where training and cross validation errors are calculated as in Equ.~\ref{eqn:costFuncTraining} and Equ.~\ref{eqn:costFuncCrossVal}. 
-Here, it is assumed that there is no regularization term in the cost function. The training and cross validation errors are calculated in the same way as the cost function since cost function itself is a measure of error.
+When training and cross-validation errors are plotted as a function of polynomial degree (or complexity of model), a larger training and cross-validation error shows that the model is likely to be an under-fit (high bias) model. 
+A large cross-validation and low training error shows that the model is likely to be an over-fit model (high variance). 
+Training and cross validation errors are calculated as in Equ.~\ref{eqn:costFuncTraining} and Equ.~\ref{eqn:costFuncCrossVal}. 
+Here, it is assumed that there is no regularization term in the cost function. 
+The training and cross validation errors are calculated in the same way as the cost function since cost function itself is a measure of error.
 
 
 \iffalse
@@ -784,8 +789,6 @@ Although normally the training set size is constant, here we artificially reduce
 For that, the model parameters $\bm{\theta}$ are fit to this reduced training set and then the training and cross validation errors are also calculated over this reduced training data set. 
 For the cases where the resulting curves give a low training error and a high cross validation error for smaller training set sizes and also high training and cross validation errors for larger training sizes, the problem is most likely to be suffering from under-fit (high bias). 
 Another signature of an under-fit problem is that the training and cross validation errors are similar in magnitude. 
-If the learning curves give a low training error and a high cross validation error for the smaller training set size and also training error is increasing with training set size while cross validation error decreasing without leveling off, the problem is more likely to be suffering from overfitting (high variance). 
-Another important signature of an over-fit model is that the training error will be less then the cross validation error and the difference in between would remain significant. 
 
 \begin{landscape}
 \begin{figure}
@@ -798,11 +801,15 @@ Another important signature of an over-fit model is that the training error will
 \end{figure}
 \end{landscape}
 
+If the learning curves give a low training error and a high cross validation error for the smaller training set size, and also training error is increasing with training set size while cross validation error decreasing without leveling off, the problem is more likely to be suffering from overfitting (high variance). 
+Another important signature of an over-fit model is that the training error will be less then the cross validation error and the difference in between would remain significant. 
+
+
 \subsubsection{Best practices}
 
-After diagnosing the problem is an over-fit or under-fit, those practices is helpful to know. 
+After diagnosing the problem is an over-fit or under-fit, those practices are helpful to know. 
 
-To fix a under-fit model, it would help to try 
+To fix an under-fit model, it would help to try 
 
 \begin{itemize}
 
@@ -812,7 +819,7 @@ To fix a under-fit model, it would help to try
 
 \end{itemize}
 
-To fix a over-fit model, it would help to try 
+To fix an over-fit model, it would help to try 
 
 \begin{itemize}
 
@@ -824,9 +831,9 @@ To fix a over-fit model, it would help to try
 
 \subsubsection{Prediction}
 
-Finally, for a new set of input data, now output can be predicted using the model/classifier trained. 
+Finally, for a new set of input data, the output can be predicted using the model/classifier trained. 
 One point to remember is that if scaling applied to training set, new data should be scaled as well before being fed to the model/classifier using the same mean and standard deviation values previously calculated from the training set. 
-After that, $h(\theta)$ could be evaluated utilizing optimized $\theta$ and scaled new data set $x\_new\_scaled$. 
+After that, $h(\theta)$ could be evaluated using optimized $\theta$ and scaled new data set $x\_new\_scaled$. 
 So $h_\theta(x\_new\_scaled)$ gives
 
 \begin{equation}{\label{eqn:prediction}
@@ -837,7 +844,7 @@ P\Big(y=1 \, | \, x; \, \theta \Big)
 
 
 which is the probability that $y = 1$ given $x\_new\_scaled$ parametrized by $\bm{\theta}$. 
-But still it is important to keep in mind, some other learning methods, the output of the problem could differ, such as the output of an SVM (Support Vector Method) classifier would be directly the class label.
+%But still it is important to keep in mind, some other learning methods, the output of the problem could differ, such as the output of an SVM (Support Vector Method) classifier would be directly the class label.
 
 
 \section{Support Vector Machines}
@@ -853,7 +860,7 @@ But still it is important to keep in mind, some other learning methods, the outp
 SVM is a relatively new approach for classification, offering promising generalization properties thanks to its foundations on the structural risk minimization principle while other classifiers (such as logistic regression) usually only minimizes the empirical risk \cite{gunn1998support,yin2014study}. 
 This advances the capacity of generalization even with a small number of instances by reducing the risk of overfitting with properly tuned parameters. 
 It can be applied to nonlinear systems and problems offering a vast number of features. 
-Since the problem is represented as a convex optimization problem, SVM avoids local minimas, to which Neural Networks(NN) are inherently prone to.
+Since the problem is represented as a convex optimization problem, SVM avoids local minima, to which Neural Networks(NN) are inherently prone to.
 
 The aim of SVM is to find an optimal hyperplane maximizing the margin, which is the distance in between the boundaries, by extending them until hitting the first data point as in Fig.~\ref{fig:svmHyperplane}. These data points that are closest to the hyperplane (decision boundary) are called the support vectors and are the representatives of the data sets to be used for the decision process. This helps to abruptly decrease the data to handle, enhancing the ability to cope with the curse of dimensionality and reducing the computational complexity.
 
@@ -870,7 +877,7 @@ Some other classification methods, such as logistic regression, output the proba
 On the other hand, SVM does only output if the new instance's probability of belonging to a particular class, so do not give its confidence on this decision explicitly. 
 Rather than including this confidence information as an output in terms of probabilities, this information is introduced with the functional and geometric margins. 
 There also exist methods which can be used to calculate the posterior probabilities, which is the probability that the new measurements belongs to its predicted class\cite{platt1999probabilistic}. 
-An example of posterior probabilities showing new measurements' probabilities to belong to faulty class is given Fig.~\ref{fig:post_prob}. 
+%An example of posterior probabilities showing new measurements' probabilities to belong to faulty class is given Fig.~\ref{fig:post_prob}. 
 
 Training data set includes labeled data where the label can belong to one of two possible cases. This data set is saved in a matrix $\bm{X} \in {\rm I\!R^{m \times n}}  $ where $m,n$ correspond to number of instances and features respectively. The label information corresponding to the measurement instances is also fed to the SVM algorithm during the training phase as output vector $\bm{y} \in \{-1,1\}$. 
 
@@ -907,12 +914,12 @@ Cleverly selected, SVM classifiers can learn in high dimensional spaces represen
 
 
 A binary classifier is used in this work to classify two classes, faulty and nominal. 
-SVM being a supervised classification algorithm has two main phases as shown in Fig.~\ref{fig:supervisedLearning}: training and prediction. 
+SVM being a supervised classification algorithm has two main phases as shown in Fig.~\ref{fig:supervisedLearningBasics}: training and prediction. 
 
 
 In the training phase, the model is learned to fit the labeled data that is fed to the SVM algorithm. The labeled data set is first divided to two portions with a percentage of 20\%, 80\% where the bigger chunk is the training set and the remaining is the test set. 
 
-This phase is usually followed with a tuning phase where some of the parameters of SVM are changed. Further, the training set is divided as cross-validation and training sets. The idea to split data is to avoid overfitting. When a model is overfit, it fits very accurately to the data it is trained with, but fails to generalize to new data. This results in a poor prediction performance. To avoid overfitting, which is the main problem of parametric discrimination approaches such as neural networks, parameter $C$ is tuned to result in an optimal fit with the cross validation set. Tuning $C$ also gives the user the ability to change the classifier's sensitivity to outliers, since sometimes finding a hyperplane separating all data perfectly is not the favorable option (might cause overfitting). Then the final performance of the classifier is tested on the test set. 
+This phase is usually followed with a tuning phase where some of the parameters of SVM are changed. Further, the training set is divided as cross-validation and training sets. The idea to split data is to avoid overfitting. When a model is overfit, it fits very accurately to the data it is trained with, but fails to generalize to new data. This results in a poor prediction performance. To avoid overfitting, which is the main problem of parametric discrimination approaches such as neural networks, parameter $C$ is tuned to result in an optimal fit with the cross validation set. Tuning $C$ also gives the user the ability to change the classifier's sensitivity to outliers, since sometimes finding a hyperplane separating all data perfectly is not the favorable option (might cause overfitting). Then, the final performance of the classifier is tested on the test set. 
 
 The classifier with the best performance is selected and then used in the prediction phase.  
 For a new data input, the classifier is used to predict which class the new data belongs to.
@@ -929,7 +936,7 @@ During prediction phase, the data first should be scaled with these values attai
 Default settings for SVM binary classification, included in Matlab Statistics and Machine Learning Toolbox, utilizes SMO for optimization if outlier fractions has not been specified during the function call. 
 
 Default settings of Matlab's binary SVM classifier fits a linear model, which results in a linear decision boundary.  
-In this study, Gaussian Kernel, which corresponds to an infinite dimensional feature mapping, is utilized to map the attributes.
+In this study, Gaussian Kernel, which corresponds to an infinite dimensional feature mapping, is used to map the attributes.
 
 \begin{equation}
 K (x,z) = exp \bigg(-\frac{\Vert x - z \Vert ^ 2}{2 \sigma^2} \bigg)
@@ -952,12 +959,12 @@ Training phase is usually followed by a tuning phase where some of the parameter
 \end{figure}
 
 To avoiding overfitting, which is the main problem of parametric discrimination approaches such as neural networks, $C$ (box constraint) and $\sigma$ (kernel scale), are tuned.
-The classifier is trained with the training set and tuned via cross validation set, and then the selected classifier is evaluated with the test set. Cross-validation set selection of Matlab utilizes a random selection over the data set. 
+The classifier is trained with the training set and tuned via cross validation set, and then the selected classifier is evaluated with the test set. Cross-validation set selection of Matlab uses a random selection over the data set. 
 To compare different methodologies for tuning and also the untuned classifiers, the script has been revised to generate random values from the same seed value to be consistent in comparisons.
 Box constraint ($C$) and kernel scale ($\sigma$) are tuned considering the presence of the outliers to generalize the distribution of the data rather than resulting in fine fits for each individual data in the training set. 
 
-Two different ways are utilized to tune the classifier, heuristic and Bayesian optimization. In heuristic optimization, the strategy is to try a geometric sequence of the kernel scale (sigma parameter) scaled at the original kernel scale.  
-Also a geometric sequence of the box constraint parameter, 11 values, from 1e-5 to 1e5 by a factor of 10 have been tried. Increasing box constraint might decrease the number of support vectors, but also might increase training time. 
+Two different ways are used to tune the classifier, heuristic and Bayesian optimization. In heuristic optimization, the strategy is to try a geometric sequence of the kernel scale (sigma parameter) scaled at the original kernel scale.  
+Also a geometric sequence of the box constraint parameter have been tried (11 values, from 1e-5 to 1e5 by a factor of 10). Increasing box constraint might decrease the number of support vectors, but also might increase training time. 
 Usually, increasing box constraint too much induces overfitting (high variance). 
 
 \begin{figure}
@@ -970,16 +977,16 @@ Usually, increasing box constraint too much induces overfitting (high variance).
 
 
 Bayesian optimization tool from Matlab can be used in conjunction with the classification tool to optimize box constraint and the kernel scale. 
-This tool outputs minimum objective value as a function of number of function evaluations (max. number of function evaluations can be changed by passing arguments to the function) as shown in Fig. ~\ref{fig:objectiveFuncEval}. 
+During the optimization, the objective function is printedwoth respect to function evaluations by the optimization tool as shown in Fig. ~\ref{fig:objectiveFuncEval}. Here, the objective is successfully converges to its minimum value after 21 function evaluations.
 Fig. ~\ref{fig:objFuncModel} shows the objective function values for a variety of box constraint and kernel scale values. 
 The optimized values for box constraint and kernel scale in each iteration are also presented as a table as given in Fig. ~\ref{fig:optBayesianSteps}. 
 Also a summary of Bayesian optimization showing the calculated and estimated best values for sigma and box constraint is given at the end of optimization such as Fig. ~\ref{fig:optimBayesianResults}.
-With a satisfactory result of the training \& tuning is followed by the prediction where the classifier predicts if the new measurement data belongs to the faulty or nominal class. 
+%After the training \& tuning is successfully completed, this model is used to predict the class of a new measurement. 
 
 \begin{figure}
 \begin{center}
 \includegraphics[width=1.13\textwidth]{figures/optimizationSummaryStuckFault}    % The printed column width is 8.4 cm.
-\caption{The optimized values for box constraint and kernel scale in each iteration and corresponding value of objective function} 
+\caption{Box constraint $C$, kernel scale $\sigma$ and objective function $J(\theta)$ values after each iteration during Bayesian Optimization. Minimum objective ($0.00096366$) can be seen at iteration number 28, and corresponding $C = 911.28$ (given as \emph{box}) and $\sigma = 2.7047$ (given as \emph{sigma}) are selected as the best values in this tuning.} 
 \label{fig:optBayesianSteps}
 \end{center}
 \end{figure}
@@ -995,11 +1002,11 @@ With a satisfactory result of the training \& tuning is followed by the predicti
 \subsubsection{Evaluating the classifier}
 \label{evalClassifier}
 
-The performance of the classifier is first quantified by \emph{loss of classification} as indicated with \emph{kFoldLoss} in this work. 
-The training data set is  separated to 10 folds. For each fold, the \emph{loss of classification} computed for in-fold observations with a model trained on out-of-fold observations. 
-Finally the \emph{loss of classification} is calculated as the \emph{classification error} averaged over all folds.
+The performance of the classifier is first quantified by \emph{loss of classification} (represented as \emph{kFoldLoss} in results) in this work. 
+The training data set is separated to 10 folds. For each fold, the \emph{loss of classification} is computed for in-fold observations with a model trained on out-of-fold observations. 
+Finally, taking an average of \emph{loss of classification} of 10 folds, final classification error is calculated.
 The idea to split and evaluate the performance of classifiers on different data sets is to avoid overfitting since the fitted classifier would give better results on the data set that it learnt from, but might not generalize well to new data. 
-For that reason, both for evaluating the classifiers during tuning phase and finally evaluating the final classifier possessing the tuned parameters, were realized with different data sets.
+%For that reason, both for evaluating the classifiers during tuning phase and finally evaluating the final classifier possessing the tuned parameters, were realized with different data sets.
 
 Another means to evaluate performance of a classifier, available under Matlab Statistics and Machine Learning Toolbox, is via observing the \emph{classification edge}. 
 The \emph{edge} is the weighted mean of the \emph{classification margins}. 
