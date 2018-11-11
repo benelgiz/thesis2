@@ -77,7 +77,7 @@ $\textbf{J}({\bm{\theta}})$ &cost function  \\\hline
 \end{center}
 \end{table}
 
-Many of the machine learning tools, such as \emph{MATLAB Statistics and Machine Learning Toolbox} or \emph{Tensorflow}, have default settings and are easy to used for beginners. 
+Many of the machine learning tools, such as \emph{MATLAB Statistics and Machine Learning Toolbox} or \emph{Tensorflow}, have default settings and are easy to use for beginners. 
 Although they would most probably not achieve optimized results, which would be the case in the hands of an experienced user, a beginner can easily start using those tools by sending input and output vectors as arguments to the machine learning functions. 
 
 The configurations of input and output vectors to feed the learning algorithms might change from one to the other, but there is still a common convention that would be compatible with many. 
@@ -899,7 +899,7 @@ s.t. \quad & y^{i}(\omega^T x^{(i)} + b) \geq 1 - \xi_i, \ i = 1, \cdots, m\\
 
 Here, the aim is to calculate the parameters $\omega$ and $b$ of the hypothesis by minimizing the objective function. In SVM, we drop the convention of denoting the hypothesis as $h(x)= \theta^T \, x$ and use $h_{\omega,b}(x)=g(\omega^T \, x + b)$ where $g(z) = 1$ if $z\geq0$ and $g(z)=-1$ otherwise. In order to generalize to the non-linearly separable datasets, $\xi_i$ is introduced in the equation's inequality constraint. Now, in the non-separable case, the functional margins ($y^{i}(\omega^T x^{(i)} + b)$) of the instances (examples) are permitted to have a value less than 1, different from when the case is separable. In order to ensure that most of the examples still do not violate the boundary, thus have a functional margin of at least 1, the objective function is also increased by $C \xi_i$. $C$ is called the box constraint, and usually needs to be tuned to achieve satisfactory performance.
 
-Introducing the Lagrange duality to obtain the dual form of the optimization problem, use of kernels, to work efficiently in higher dimensional spaces, is eased. %I don't understand what you're trying to say in this sentence
+Introducing the dual form of the optimization problem, use of kernels (which allows to work efficiently in higher dimensional spaces) is eased.
 The dual form also allows the use of efficient optimization solvers such as Sequential Minimal Optimization (SMO)  \cite{platt1998sequential}, which is the solver used in this work as well. Conventionally, the training phase of SVM requires the solution of a large quadratic programming (QP) problem. Especially for large training sets, computational heaviness of this phase might limit the applicability of SVM to specific problems sets. To overcome this constraint, SMO breaks the QP problem into a series of smaller QP problems which can be solved analytically. 
 
 %Tolerance for the gradient difference between upper and lower violators obtained by Sequential Minimal Optimization (SMO) or Iterative Single Data Algorithm (ISDA), specified as the comma-separated pair consisting of 'DeltaGradientTolerance' and a nonnegative scalar.
