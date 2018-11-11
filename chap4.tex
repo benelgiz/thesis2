@@ -569,18 +569,6 @@ They usually require the cost function, its gradient and the Hessian approximati
 Gradient descent will be presented for one feature problem due to its simplicity. 
 Here, a linear regression problem is considered, where its hypothesis (model) and cost function is given in Equ.~\ref{eqn:linearRegressionTwoFeaturesSummary}
 
-\begin{align}
-\label{eqn:linearRegressionTwoFeaturesSummary}
-\begin{split}
-h_{{\bm{\theta}}}(x) & = \theta_0 + \theta_1 x_1 
-\\
-J(\theta_1,\theta_2)
- & =\,
-\frac{1}{2m} \sum\limits_{i=1}^{m} \Big(h_{\bm{\theta}}(x^{(i)}) - (y^{(i)})\Big)^2  
-\end{split}
-\end{align}
-
-
 \begin{landscape}
 \begin{figure}
 \begin{center}
@@ -591,6 +579,16 @@ J(\theta_1,\theta_2)
 \end{figure}
 \end{landscape}
 
+\begin{align}
+\label{eqn:linearRegressionTwoFeaturesSummary}
+\begin{split}
+h_{{\bm{\theta}}}(x) & = \theta_0 + \theta_1 x_1 
+\\
+J(\theta_1,\theta_2)
+ & =\,
+\frac{1}{2m} \sum\limits_{i=1}^{m} \Big(h_{\bm{\theta}}(x^{(i)}) - (y^{(i)})\Big)^2  
+\end{split}
+\end{align}
 
 
 %\clearpage
@@ -788,13 +786,6 @@ J_{cv}(\theta)
 
 In the case that the cost function is regularized as given in Equ.~\ref{eqn:costFuncRegularized}, the training and cross validation errors are calculated ignoring the regularization term so they are defined exactly the same as given in Eq. \ref{eqn:costFuncTraining} and Eq. \ref{eqn:costFuncCrossVal} respectively.
 
-
-Another way to diagnose learning problems is to plot training and cross validation errors with respect to training set size, also named as the learning curves (2 rightmost curves in Fig.~\ref{fig:debuggingHypothesis}). 
-Although the training set size is normally constant, here we artificially reduce the number of training examples and calculate the training and cross validation errors. 
-For that, the model parameters $\bm{\theta}$ are fit to this reduced training set and then the training and cross validation errors are also calculated over this reduced training data set. 
-For the cases where the resulting curves give a low training error and a high cross validation error for smaller training set sizes and also high training and cross validation errors for larger training sizes, the problem is most likely to be suffering from under-fit (high bias). 
-Another signature of an under-fit problem is that the training and cross validation errors are similar in magnitude. 
-
 \begin{landscape}
 \begin{figure}
 \begin{center}
@@ -805,6 +796,12 @@ Another signature of an under-fit problem is that the training and cross validat
 \end{center}
 \end{figure}
 \end{landscape}
+
+Another way to diagnose learning problems is to plot training and cross validation errors with respect to training set size, also named as the learning curves (2 rightmost curves in Fig.~\ref{fig:debuggingHypothesis}). 
+Although the training set size is normally constant, here we artificially reduce the number of training examples and calculate the training and cross validation errors. 
+For that, the model parameters $\bm{\theta}$ are fit to this reduced training set and then the training and cross validation errors are also calculated over this reduced training data set. 
+For the cases where the resulting curves give a low training error and a high cross validation error for smaller training set sizes and also high training and cross validation errors for larger training sizes, the problem is most likely to be suffering from under-fit (high bias). 
+Another signature of an under-fit problem is that the training and cross validation errors are similar in magnitude. 
 
 If the learning curves give a low training error and a high cross validation error for the smaller training set size, and also training error is increasing with training set size while cross validation error decreasing without leveling off, the problem is more likely to be suffering from overfitting (high variance). 
 Another important signature of an over-fit model is that the training error will be less than the cross validation error and the difference in between would remain significant. 

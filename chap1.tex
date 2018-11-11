@@ -7,10 +7,10 @@
 
 \chapter{Introduction}
 
-Lately, the popularity and reachability of UAS have risen steeply thanks to the advancements in electronic components and yet the decrease in their cost. 
+The popularity and reachability of UAS have risen steeply thanks to the advancements in electronic components and the decrease in their cost. 
 This accelerating trend towards small but capable flying vehicles is pushing the limits of both hardware and software potentials of industry and academia. 
-This called the regulators to duty due to the concerns from the manned aviation community after incidences of drones flying close to civil aircraft and airports. 
-Increasing usage of these vehicles for a variety of missions pushes a further liability to secure the flight.
+Increasing usage of drones for various missions pushes a further liability to secure the flight.
+The regulators are called to duty due to the concerns from the manned aviation community after incidences of drones flying close to civil aircraft and airports. 
 With the advent of the new era of UAS, different institutions all over the world, specifically National Aeronautics and Space Administration (NASA) 
 \cite{kopardekarunmanned} and Federal Aviation Administration (FAA) \cite{FAA_UASintegration} in US, European Aviation Safety Agency (EASA) \cite{A_NPA_EASA2015} in Europe and international bases such as International Civil Aviation Organization (ICAO) \cite{ICAO_Circular} are addressing safe integration of UAS into airspace \cite{baskaya2016flexible}.
 The U-Space concept in Europe (UTM in the US, which aims at enabling safe integration into airspace), gives the insight by showing in their roadmaps that level of drone automatization and level of drone connectivity (drone to drone and drone to infrastructure) will guide the pace of the U-Space services (U1 to U4) \cite{undertaking2017u}. 
@@ -23,7 +23,7 @@ For the cases that a recovery is not possible, safe ditching might be needed to 
 
 \section{Motivation}
 
-Improvement of the reliability of the flight is considered to be one of the main goals for integrating UAVs into civil airspace according to Unmanned systems roadmap by US Office of the Secretary of Defense, DoD \cite{UnmannedSystemsRoadmapDoD}. 
+Improvement of the flight reliability is considered to be one of the main goals for integrating UAVs into civil airspace according to Unmanned systems roadmap by US Office of the Secretary of Defense, DoD \cite{UnmannedSystemsRoadmapDoD}. 
 To achieve a safe flight is not an easy task considering the unknowns of the system hardware, environment, and possible system faults/failures to emerge. 
 The expectation that UAVs should be less expensive than their manned counterparts might have a hit on reliability of the system. Cost saving measures other than the need to support a pilot/crew onboard or decrement in size would probably lead to decrease in system reliability.
 
@@ -32,16 +32,16 @@ Other safety features such as validation and verification of flight critical int
 
 Systems are often susceptible to faults of different nature. Existing irregularities in sensors, actuators, or controller could be amplified due to the control system design and lead to failures. A fault could be hidden thanks to the control action \cite{ducard2009fault}.
 
-The widely used method to increase reliability is to use more reliable components and/or hardware redundancy. Both requires an increase in the cost of the UAS, conflicting one of the main reasons of UAS' popularity\cite{angelov2012sense}. To offer solutions for all different foreseen categories of airspace, a variety of approaches should be considered. While hardware redundancy could cope with the failure situations of UAVs in the certified airspace, it may not be suitable for UAVs in open or some subsets of specific categories due to budget constraints. Analytical redundancy is another solution, may be not as effective and simple as hardware redundancy, but relies on the design of intelligent methods to utilize every bit of information on board aircraft wisely to deal with the instances.  
+The widely used method to increase reliability is to use more reliable components and/or hardware redundancy. Both requires an increase in the cost of the UAS, conflicting one of the main reasons of UAS' popularity\cite{angelov2012sense}. To offer solutions for all different foreseen categories of airspace (introduced by EASA), a variety of approaches should be considered. While hardware redundancy could cope with the failure situations of UAVs in the certified airspace, it may not be suitable for UAVs in open or some subsets of specific categories due to budget constraints. Analytical redundancy is another solution, may be not as effective and simple as hardware redundancy, but relies on the design of intelligent methods to utilize every bit of information on board aircraft wisely to deal with the instances.  
 
 \section{Contribution}
 
 Integration of drones into airspace needs the introduction of indigenous designs that will serve safe solutions for drones. This necessitates intelligent approaches to address the emergency situations. One of the aspects of the problem is to assure a safe flight by designing fault detection and diagnosis with cheaper avionics common in a vast number of drones.
 The hardware limitations for these small vehicles point the utilization of \emph{analytical redundancy} rather than the usual practice of hardware redundancy in manned aviation. 
 For that purpose, we introduce an end-to-end design to achieve data-driven fault diagnosis for control surface faults on drones.
-In the course of this study, machine learning practices are implemented to diagnose faults on a small fixed-wing UAV to avoid the burden of accurate modeling needed in model-based fault diagnosis. 
-This work aims to design a classifier via SVM to solve FDD for drones with actuator faults.
-All data and the code are available in code sharing and versioning system \emph{Github}. 
+In the course of this thesis, machine learning practices are implemented to diagnose faults on a small fixed-wing UAV to avoid the burden of accurate modeling needed in model-based fault diagnosis. 
+We aim to design a classifier via SVM to solve FDD as a classification problem for drones with actuator faults.
+All data and code are available in code sharing and versioning system \emph{Github}. 
 
 In this thesis, fault classification simulations are investigated under two main sections: classification of faults based on simulated flight measurements and classification of faults based on real flight data. 
 
@@ -61,7 +61,7 @@ Classification performs poorly for loss of efficiency faults especially for smal
 For the loss of efficiency fault, some feature engineering, involving the addition of past measurements is needed to attain the same classification performance.
 
 A very promising result is discovered when \emph{spinors} are used as features instead of angular velocities. 
-Result show that by using spinors for classification, there is a big improvement in the classification accuracy especially when the classifiers are untuned. Using spinors and a Gaussian Kernel, untuned classifier gives f1Score of 0.9555 which is 0.2712 when gyro measurements are used as features.
+Result show that by using spinors for classification, there is a big improvement in the classification accuracy especially when the classifiers are untuned. Using spinors and a Gaussian Kernel, untuned classifier gives F1 score of 0.9555 which is 0.2712 when gyro measurements are used as features.
 
 In general, this work shows that SVM gives satisfactory performance for classification of faults on control surfaces of a drone using flight data.
 

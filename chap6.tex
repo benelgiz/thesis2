@@ -27,4 +27,15 @@ For that purpose, kinematics equations have been solved to calculate the \emph{q
 
 In general, this work shows that SVM gives satisfactory performance for classification of faults on control surfaces of a drone using flight data.
 
-Future work is necessary to deal with the controller-diagnosis interaction and classification of multiple faults. Also discussion of SVM for online training might be addressed since SVM is in need for labeled data which requires generating the labeled data during flight. 
+\section{Future Work}
+
+This thesis focuses on only two class classification problem. 
+The data used to train the classifier is comprised of a selected faulty and a selected nominal phase of the flight. 
+Future work should consider multi-class classification since it will lead to a more realistic application on fault diagnosis for drones. 
+If all possible faults are to be issued, the problem could be very complicated due to the vast number of possible faults. 
+For such a problem, methods such as deep learning could be selected instead of SVM, since deep learning offers appealing performance on classification problems with a large number classes. 
+Another possible workaround could be to label the faults as severe, moderate and mild. 
+Then, rather than determining the exact fault, a situation awareness about the severity of the fault could be gained. 
+This knowledge could be used to plan mitigation measures such as recovery or ditching to reduce the harm on the ground.
+
+Fault detection\&diagnosis should also be complemented by a recovery. The abilities of a drone after a fault should be assesses and a control action should be taken to mitigate the faulty situation. If recovery is not a viable option, a ditching maneuver could be proceed to reduce the harm.
