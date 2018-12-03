@@ -7,32 +7,31 @@
 
 \chapter{Introduction}
 
-The popularity and reachability of UAS have risen steeply thanks to the advancements in electronic components and the decrease in their cost. 
-This accelerating trend towards small but capable flying vehicles is pushing the limits of both hardware and software potentials of industry and academia. 
-Increasing usage of drones for various missions pushes a further liability to secure the flight.
-The regulators are called to duty due to the concerns from the manned aviation community after incidences of drones flying close to civil aircraft and airports. 
-With the advent of the new era of UAS, different institutions all over the world, specifically National Aeronautics and Space Administration (NASA) 
-\cite{kopardekarunmanned} and Federal Aviation Administration (FAA) \cite{FAA_UASintegration} in US, European Aviation Safety Agency (EASA) \cite{A_NPA_EASA2015} in Europe and international bases such as International Civil Aviation Organization (ICAO) \cite{ICAO_Circular} are addressing safe integration of UAS into airspace \cite{baskaya2016flexible}.
-The U-Space concept in Europe (UTM in the US, which aims at enabling safe integration into airspace), gives the insight by showing in their roadmaps that level of drone automatization and level of drone connectivity (drone to drone and drone to infrastructure) will guide the pace of the U-Space services (U1 to U4) \cite{undertaking2017u}. 
-These enablers will allow intelligent agents to share information and automate complex situations such as emergencies. 
-Thus, future aviation will inevitably go towards automatization. 
-Here we propose a concept that will contribute to the automatization of drones, that will make them more intelligent and thus contribute to a safer integration of drones into airspace. 
-These awareness abilities allow to mitigate risks in accordance with the risk assessment procedures offered by JARUS (SORA) \cite{SORA} defined by \cite{EASAopinion2018}. 
-The abilities of a drone after an emergency should be assessed and depending on the availability of the environment, a recovery procedure might be initiated. 
-For the cases that a recovery is not possible, safe ditching might be needed to reduce the harm in the air or on the ground. 
+Lately, the popularity and reachability of Unmanned Aircraft System (UAS) have risen steeply thanks to the advancements in electronic components and their decrease in cost. 
+This accelerating trend towards small but capable flying vehicles is extending the limits of hardware and software potential in industry and academia.
+Regulators from the aviation community have become increasingly concerned by the number of incidences of drones flying close to civil aircraft and airports. 
+With the advent of the new era of UAS, different institutions around the world are addressing safe integration of UAS into airspace \cite{baskaya2016flexible}, specifically the National Aeronautics and Space Administration (NASA) 
+\cite{kopardekarunmanned} and the Federal Aviation Administration (FAA) \cite{FAA_UASintegration} in the US, European Aviation Safety Agency (EASA) \cite{A_NPA_EASA2015} in Europe and international bases such as International Civil Aviation Organization (ICAO) \cite{ICAO_Circular}.
+The U-Space concept in Europe (UTM in the US, which aims at enabling safe integration into airspace), provides the insight by showing in their roadmaps that the level of drone automatization and the level of drone connectivity (drone to drone and drone to infrastructure) will guide the pace of the U-Space services (U1 to U4) \cite{undertaking2017u}. 
+These enablers will allow intelligent agents to share information and automate complex procedures in case of emergencies. 
+Thus, future aviation will inevitably move towards automatization. 
+Here we propose a concept that will contribute to the automatization of drones, to make them more intelligent and thus contribute to their safer integration into the airspace. 
+These awareness abilities allow the mitigation of risks in accordance with the risk assessment procedures offered by JARUS (SORA) \cite{SORA} defined by \cite{EASAopinion2018}. 
+The functioning abilities of a drone following an emergency should be assessed and, depending on the availability of the environment, a recovery procedure may be initiated. 
+For cases in which recovery is not possible, safe ditching may be required in order to reduce the potential harm in the air or on the ground. 
 
 \section{Motivation}
 
-Improvement of the flight reliability is considered to be one of the main goals for integrating UAVs into civil airspace according to Unmanned systems roadmap by US Office of the Secretary of Defense, DoD \cite{UnmannedSystemsRoadmapDoD}. 
-To achieve a safe flight is not an easy task considering the unknowns of the system hardware, environment, and possible system faults/failures to emerge. 
-The expectation that UAVs should be less expensive than their manned counterparts might have a hit on reliability of the system. Cost saving measures other than the need to support a pilot/crew onboard or decrement in size would probably lead to decrease in system reliability.
+Improving the flight reliability is considered to be one of the main concerns for integrating UAVs into civil airspace, according to the Unmanned Systems Roadmap by the US Office of the Secretary of Defense, DoD \cite{UnmannedSystemsRoadmapDoD}. 
+Achieving safe flight is not a straightforward task, considering the multiplexity of unknowns in the system hardware, environment, and possible system faults/failures yet to emerge. 
+The expectation that UAVs should be less expensive than their manned counterparts effects their reliability. Cost saving measures --- other than the need to support a pilot/crew onboard or a reduction in size --- may lead to a decrease in system reliability.
 
-Under the research and development programs and initiatives identified by DoD in order to develop technologies and capabilities for UAS, the biggest chunk in control technologies is the health management and adaptive control with a budget of 74.3 M dollars. 
-Other safety features such as validation and verification of flight critical intelligent software is the second with 57.8 M dollars \cite{UnmannedSystemsRoadmapDoD}. 
+Under the research and development programs and initiatives identified by the DoD to develop technologies and capabilities for UAS, the greatest area of control technologies is health management and adaptive control, with a budget of 74.3 m dollars. 
+Other safety features such as the validation and verification of flight critical intelligent software are the second area, with 57.8 m dollars \cite{UnmannedSystemsRoadmapDoD}. 
 
-Systems are often susceptible to faults of different nature. Existing irregularities in sensors, actuators, or controller could be amplified due to the control system design and lead to failures. A fault could be hidden thanks to the control action \cite{ducard2009fault}.
+Systems are often susceptible to faults of differing nature. Existing irregularities in sensors, actuators or controller may be intensified due to the control system design and lead to failures. A fault may be hidden due to the control action \cite{ducard2009fault}.
 
-The widely used method to increase reliability is to use more reliable components and/or hardware redundancy. Both requires an increase in the cost of the UAS, conflicting one of the main reasons of UAS' popularity\cite{angelov2012sense}. To offer solutions for all different foreseen categories of airspace (introduced by EASA), a variety of approaches should be considered. While hardware redundancy could cope with the failure situations of UAVs in the certified airspace, it may not be suitable for UAVs in open or some subsets of specific categories due to budget constraints. Analytical redundancy is another solution, may be not as effective and simple as hardware redundancy, but relies on the design of intelligent methods to utilize every bit of information on board aircraft wisely to deal with the instances.  
+The most widely-used method to increase reliability is to increase the use of more reliable components and/or hardware redundancy. Both require an increase in the cost of the UAS, conflicting with one of the main reasons of UAS' popularity \cite{angelov2012sense}. In order to provide solutions for the different foreseen categories within the airspace, a variety of approaches should be considered. While hardware redundancy may cope with failure situations of UAVs in certified operations, it may not be suitable for UAVs in open category operations or some operations in specific category, due to budget constraints. Analytical redundancy is another solution. This may be not as effective and straightforward as hardware redundancy, but relies on the design of intelligent methods in order to utilize the information on board the aircraft to deal with all potential circumstances.  
 
 \section{Contribution}
 
