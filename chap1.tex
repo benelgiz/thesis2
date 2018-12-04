@@ -35,45 +35,45 @@ The most widely-used method to increase reliability is to increase the use of mo
 
 \section{Contribution}
 
-Integration of drones into airspace needs the introduction of indigenous designs that will serve safe solutions for drones. This necessitates intelligent approaches to address the emergency situations. One of the aspects of the problem is to assure a safe flight by designing fault detection and diagnosis with cheaper avionics common in a vast number of drones.
-The hardware limitations for these small vehicles point the utilization of \emph{analytical redundancy} rather than the usual practice of hardware redundancy in manned aviation. 
+The integration of drones into the airspace requires the introduction of ingenious design to ensure safe solutions for drones. This necessitates intelligent approaches to address all potential emergency situations. One of these aspects is to ensure safe flight by designing fault detection and diagnosis systems using less expensive avionics, common in a vast number of drones.
+The hardware limitations for these small vehicles point to the utilization of \emph{analytical redundancy} rather than the usual practice of hardware redundancy in manned aviation. 
 For that purpose, we introduce an end-to-end design to achieve data-driven fault diagnosis for control surface faults on drones.
-In the course of this thesis, machine learning practices are implemented to diagnose faults on a small fixed-wing UAV to avoid the burden of accurate modeling needed in model-based fault diagnosis. 
-We aim to design a classifier via SVM to solve FDD as a classification problem for drones with actuator faults.
-All data and code are available in code sharing and versioning system \emph{Github}. 
+In the course of this thesis, machine learning practices are implemented in order to diagnose faults on a small fixed-wing UAV, and to avoid the burden of accurate modeling required in model-based fault diagnosis. 
+We aim to design a classifier via SVM to solve fault detection and diagnosis (FDD) as a classification problem for drones with actuator faults.
+All data and code are available in the code sharing and versioning system, \emph{Github}. 
 
-In this thesis, fault classification simulations are investigated under two main sections: classification of faults based on simulated flight measurements and classification of faults based on real flight data. 
+In this thesis, fault classification simulations are investigated under two main sections: first, the classification of faults based on simulated flight measurements; and second, the classification of faults based on real flight data. 
 
-For classification on data generated from simulations, model of a MAKO UAV \cite{baskaya2017flight} is simulated.
-Sensor measurements (accelerometer and gyro data) have been calculated using information of drone's motion and the specifications of the sensors. 
-Generated data is usually more structured compared to the real flight data. 
-In this preliminary application of SVM to fault diagnosis, we aimed to start with an easier problem, and used data generated from models.
-The results show that SVM classifier was very accurate and fast in diagnosing the fault on the control surfaces with a classification accuracy of $99.999\%$.
+For the classification on data generated from simulations, a model of a MAKO UAV \cite{baskaya2017flight} is simulated.
+Sensor measurements (accelerometer and gyro data) have been calculated using information on the drone's motion and the specifications of the sensors. 
+Generated data is usually more structured compared to real flight data. 
+In this preliminary application of SVM to fault diagnosis, we started with simpler problem and used data generated from models.
+Results show that the SVM classifier was accurate and fast in diagnosing faults on the control surfaces, with a classification accuracy of $99.999\%$.
 
-Accurate results on classification of faults with generated data encouraged us to go further and investigate fault detection with real flight data. 
-Since SVM is a supervised classification method, labeled data is necessary to train the algorithm. For that reason, real flights have been arranged to generate faulty flight data by manipulating the open source autopilot \emph{Paparazzi}.  
-The training is held offline due to the need for labeled data and computational burden of the tuning phase of the classifiers. 
-Two types of faults have been mainly investigated, the control surface stuck and loss of effectiveness of the elevon. Results indicate that the control surface stuck can be detected relatively easily with 3 gyros and 3 accelerometers data compared to loss of effectiveness (efficiency). 
-The results show that over the flight data, SVM yields an F1 score of 0.98 for classification of control surface stuck fault. 
-Addition of features to accommodate previous measurements improve classification performance for tuned classifiers while the untuned classification performance deteriorates. 
-Classification performs poorly for loss of efficiency faults especially for smaller ineffectiveness values. 
-For the loss of efficiency fault, some feature engineering, involving the addition of past measurements is needed to attain the same classification performance.
+Accurate results on the classification of faults with generated data have thus encouraged us to further investigate fault detection with real flight data. 
+Since SVM is a supervised classification method, labeled data is necessary to train the algorithm. Real flights have therefore been arranged in order to generate faulty flight data by manipulating the open source autopilot, \emph{Paparazzi}.  
+Training is held offline due to the need for labeled data and the computational burden of the tuning phase of the classifiers. 
+Two main types of faults have been investigated; the control surface stuck fault and the loss of effectiveness of the elevon. Results indicate that the control surface stuck fault can be detected relatively easily with the data from three gyros and three accelerometers, compared to the loss of effectiveness (efficiency). 
+The results show that over the flight data, SVM yields an F1 score of 0.98 for the classification of the control surface stuck fault. 
+The addition of features to accommodate previous measurements improve the classification performance for tuned classifiers while the performance for untuned classification deteriorates. 
+Classification performs poorly for the loss of efficiency faults, especially for the smaller ineffectiveness values. 
+For the loss of efficiency fault, some feature engineering --- involving the addition of past measurements --- is needed in order to attain the same classification performance.
 
 A very promising result is discovered when \emph{spinors} are used as features instead of angular velocities. 
-Result show that by using spinors for classification, there is a big improvement in the classification accuracy especially when the classifiers are untuned. Using spinors and a Gaussian Kernel, untuned classifier gives F1 score of 0.9555 which is 0.2712 when gyro measurements are used as features.
+Result show that by using spinors for classification, there is a significant improvement in classification accuracy, especially when the classifiers are untuned. Using spinors and a Gaussian Kernel, the untuned classifier gives an F1 score of 0.9555, which is 0.2712 when the gyro measurements are used as features.
 
-In general, this work shows that SVM gives satisfactory performance for classification of faults on control surfaces of a drone using flight data.
+In general, this work shows that SVM gives a satisfactory performance for the classification of faults on the control surfaces of a drone using flight data.
 
 \section{Thesis Outline}
 
 \textbf{Chapter 2} presents the state of the art on the following topics: 
 \begin{itemize}
-\item{Integration of drones into airspace}
-\item{Paparazzi Autopilot}
-\item{Fault Tolerant Control Systems with a focus on Fault Detection and Diagnosis}
-\item{Machine Learning and Artificial Intelligence in general}
+\item{the integration of drones into the airspace;}
+\item{\emph{Paparazzi} autopilot;}
+\item{fault tolerant control systems with a focus on fault detection and diagnosis;}
+\item{machine learning and artificial intelligence in general.}
 \end{itemize}
-Integration for drones into the airspace constitutes the motivation of this thesis. To ensure a safe integration of drones into the airspace, design of vehicle health management systems is crucial. Fault detection and diagnosis plays an important role in vehicle health management, thus literature review of that topic is also presented in this chapter. In this thesis, the method selected to detect and diagnose faults is Support Vector Machines, which is a machine learning method. Thus, state of the art for machine learning is also given. \emph{Paparazzi} autopilot has been used to realize flights to generate faulty data, thus it is also introduced in this chapter.\\
+The safe integration of drones into the airspace is the motivation for this thesis. To ensure this safe integration, the design of vehicle health management systems is crucial. Fault detection and diagnosis plays an important role in vehicle health management, and we provide a literature review of this topic. In this thesis, the method selected to detect and diagnose faults is Support Vector Machines (SVM), which is a machine learning method. Thus, the current state of the art for machine learning is also provided. \emph{Paparazzi} autopilot has been used to realize flights to generate faulty data. This is also introduced  in here.\\
 \textbf{Chapter 3} focuses on equations of motion of an aircraft. In this chapter, equations for translational and rotational motion are discussed separately in detail. After the equations are derived for a generic aircraft, calculation of forces and moments which are specific to an individual drone is presented. Then, modeling accelerometer and gyro data is explained. Modeling faults in the control surfaces of an aircraft is also discussed in this chapter.\\
 \textbf{Chapter 4} is dedicated to machine learning algorithms with a focus on their implementations. After the general practices of machine learning applications are presented, Support Vector Machines (SVM) is discussed in more detail.\\
 \textbf{Chapter 5} focuses on the results of fault classification results under two main sections: classification of faults based on simulated  flight measurements and classification of faults based on real flight data. In the first part, flight data is simulated using the mathematical equations explained in Chapter 3. SVM algorithm is trained with the simulated data to classify the faulty and nominal phases of the simulated flight. The second part starts with explanations on faulty flight experiments realized. \emph{Paparazzi} Autopilot has been modified to introduce faults to control surfaces during the flight. Then, classification of control surface stuck and loss of effectiveness faults have been investigated separately.\\
