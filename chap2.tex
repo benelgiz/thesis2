@@ -22,35 +22,35 @@
 
 \chapter{State of the Art}
 
-This chapter includes the current state of the art of a variety of topics.
-Integration of unmanned systems into airspace is the first topic addressed in this chapter since it constitutes the motivation for this thesis.
+This chapter includes the current state of the art for a variety of topics.
+The integration of unmanned systems into airspace is the first topic addressed as it is the motivation for this thesis.
 The second topic addressed is the \emph{Paparazzi Autopilot System} since it is used to realize the flight campaigns for this thesis. 
-We also mention, how the use of the Paparazzi open source auto-pilot system can ease the integration of UAS in the airspace. 
-Then, to achieve a safe integration of drones into airspace, fault tolerant control systems have been visited with a focus on fault detection and diagnosis.
-The rise of machine learning methods in the last decade is referred finally, since they are utilized to diagnose faults in this study.
+We also discuss how the use of the Paparazzi open source auto-pilot system can assist with the integration of unmanned aircraft system (UAS) into the airspace. 
+Then, to achieve this safe integration, fault tolerant control systems have been examined with a focus on fault detection and diagnosis.
+Finally, the rise of machine learning methods in the last decade is discussed as they are utilized to diagnose faults in this study.
 
 \section{Integration of Drones into Airspace}
 
 Commercial advantages offered by drones are already targeted by big companies worldwide. 
-The airspace regulatory authorities seem to be squeezed in between the companies, demanding a fast as possible access to airspace, and the concerns of the public about potential privacy breaches, 
+The airspace regulatory authorities seem to be caught between the companies (that demand rapid access to airspace), and the concerns of the public about potential privacy breaches, 
 safety and liability issues \cite{droneDisasters,droneImageProblem}. 
-Even with today's strictly regulated airspace, reported occurrences show that there are hurdles to solve before a further integration of \gls{uas} into airspace.
+Even with today's strictly regulated airspace, reported occurrences show that there are a number of hurdles to overcome before the further integration of UAS into the airspace.
 
-With Riga Conference\footnote{The Future of Flying, Conference on remotely piloted aircraft systems, Riga, 6 March 2015} in 2015, Europe has entered a path towards a unified regulatory framework design to allocate airspace with a growing number of drones. 
-Its diversity, innovation, and international structure is offering huge potential for new jobs. 
-EASA (European Aviation Safety Agency) has been assigned by European Commission to develop two main aspects:
+With the Riga Conference\footnote{The Future of Flying, Conference on remotely piloted aircraft systems, Riga, 6 March 2015} in 2015, Europe has started on a path towards a unified regulatory framework design in order to allocate airspace with the growing number of drones. 
+Its diversity, innovation and international structure is offering huge potential for new jobs. 
+EASA (European Aviation Safety Agency) has been assigned by the European Commission to develop two main aspects:
 
 \begin{itemize}
 \item{EU Regulatory Framework for drone operations;}
-\item{Proposals for the regulation of low-risk drone operations, key elements of the future Implementation Rules (IRs).}
+\item{proposals for the regulation of low-risk drone operations, key elements of the future Implementation Rules (IRs).}
 \end{itemize}
 
 
-With a starting point in Riga Declaration \cite{rigaDeclaration}, and building up on Regulations (EC) No 216/2008 (Basic Regulation) \cite{basicRegulation}, A-NPA (Advance Notice of Proposed Amendment) \cite{A_NPA_EASA2015} introduces three main categories of operations and asks for a public consultation. 
+With a starting point of the Riga Declaration \cite{rigaDeclaration}, and building on Regulation (EC) No 216/2008 (Basic Regulation) \cite{basicRegulation}, the A-NPA (Advance Notice of Proposed Amendment) \cite{A_NPA_EASA2015} introduces three main categories of operations and asks for public consultation. 
 %This consultation period is already over, but to see how these reviews are accounted for in the Technical Opinion \cite{technicalOpinion}, the Explanatory Note of the opinion can be referred.
 In the report, drones are grouped under two main categories; remotely piloted and autonomous. 
-An autonomous drone is defined by ICAO (International Civil Aviation Organization) \cite{ICAO_RPASmanuel} as: A drone that does not allow pilot intervention in the management of the flight. 
-Aside sounding like science fiction, one of the reasons that EASA has switched to using the term drone and categorize it (remotely piloted or autonomous) rather than using UAS or RPAS to point the system, is to ensure a fast growing development of autonomy of drones.
+An autonomous drone is defined by the ICAO (International Civil Aviation Organization) \cite{ICAO_RPASmanuel} as: \emph{A drone that does not allow pilot intervention in the management of the flight.} 
+Aside from sounding like science fiction, one of the key reasons that EASA has switched to using the term `drone' and categorizing as remotely piloted or autonomous --- rather than using UAS or RPAS --- is to ensure the fast growing development of autonomous drones.
 
 \begin{figure}
 \begin{center}
@@ -62,37 +62,37 @@ Aside sounding like science fiction, one of the reasons that EASA has switched t
 \end{figure}
 
 
-While mentioning the efforts by different organizations to accommodate drones in airspace, let's have a look at the present regulatory context from european and international perspectives.
-ICAO is a United Nations Organization working with 191 Member States of Chicago Convention (Convention on International Civil Aviation) and global aviation organizations. 
-For now, international circulation of drones are not allowed by Article 8 of Chicago Convention \cite{chicagoConvention}. 
-Starting from 2003, ICAO starts to study on Standards and Recommended Practices (SARPs) for drones, to which member states will refer when developing their legally enforceable national civil aviation regulations. 
+While mentioning the efforts by different organizations to accommodate drones in airspace, we examine the present regulatory context from European and international perspectives.
+The ICAO is a United Nations Organization working with 191 Member States of the Chicago Convention (Convention on International Civil Aviation) and global aviation organizations. 
+At the present time, the international circulation of drones is not allowed by Article 8 of the Chicago Convention \cite{chicagoConvention}. 
+Starting in 2003, the ICAO began a study on the Standards and Recommended Practices (SARPs) for drones, to which member states refer when developing their legally enforceable national civil aviation regulations. 
 2018 is the proposed year for draft SARPs with a focus on international drone operations. 
-Until then, the work of ICAO can be traced by studies of UAS Study Group (set up by ICAO in 2007), which developed Circular 328 AN/190 on Unmanned Aircraft Systems \cite{ICAO_Circular}, an amendment to Annex 2 (Rules of the Air) \cite{amendment43toAnnex2} and to Annex 7 (Aircraft Nationality and Registration Marks) \cite{amendment6toAnnex6}.
-From European perspective, Basic Regulation (Regulation EC No.216/2008) \cite{basicRegulation} is the one that holds right now. 
-Its Article 2 and Annex II limit the regulation to apply to only drones with a maximum take off mass above 150 kg and/or except operations on military, customs, police, firefighting, search and rescue, and experimental work. 
-Those that are not covered by Basic Regulation are handled by national aviation legislations, which are not really harmonized and mostly designed with an assumption that small drones are operating locally.
-EASA is working on different aspects of drone integration into airspace. 
-Last year, EASA published the `Prototype' Commission Regulation on Unmanned Aircraft Operations \cite{prototypeRegulation}, after public consultancy with A-NPA 2015-10 (Advance Notice of Proposed Amendment) \cite{A_NPA_EASA2015} and its resulting Opinion \cite{technicalOpinion} with an Explanatory Note of Opinion. 
-Another work from EASA aims to authorize general principles for the type certification for fixed wing and helicopter drones separately using a policy adopted by agency in 2009 (E.Y013-01) \cite{EY013_01policyStatementAirworthinessCertification}.
+Until then, the work of the ICAO can be traced by studies of the UAS Study Group (set up by ICAO in 2007), which developed the Circular 328 AN/190 on Unmanned Aircraft Systems \cite{ICAO_Circular}, an amendment to Annex 2 (Rules of the Air) \cite{amendment43toAnnex2} and Annex 7 (Aircraft Nationality and Registration Marks) \cite{amendment6toAnnex6}.
+From a European perspective, Basic Regulation (Regulation EC No.216/2008) \cite{basicRegulation} is that which holds at present. 
+Article 2 and Annex II limit the regulation to apply only to drones with a maximum take off mass above 150 kg and/or except operations on military, customs, police, firefighting, search and rescue, and experimental work. 
+Those that are not covered by Basic Regulation are handled by national aviation legislation, which are not yet harmonized and mostly designed with an assumption that small drones are operating locally.
+EASA is working on different aspects of drone integration into the airspace. 
+Last year, EASA published the `Prototype' Commission Regulation on Unmanned Aircraft Operations \cite{prototypeRegulation}, after public consultancy with A-NPA 2015-10 (Advance Notice of Proposed Amendment) \cite{A_NPA_EASA2015}, and its resulting Opinion \cite{technicalOpinion} with an Explanatory Note of Opinion. 
+Another work from EASA aims to authorize general principles for the \emph{type certification} for fixed wing and helicopter drones separately, using a policy adopted by the agency in 2009 (E.Y013-01) \cite{EY013_01policyStatementAirworthinessCertification}.
 
 In the proposed regulation by EASA, an operation and risk centric categorization has been followed. 
-\emph{Open}, \emph{specific}, and \emph{certified} are the three categories proposed, corresponding to different risk levels they possess.
+\emph{Open}, \emph{specific}, and \emph{certified} are the three categories proposed, corresponding to the different risk levels that they entail.
 
 \begin{itemize}
-\item{\textbf{Open Category} encompasses low risk operations, like most of leisure flights and some professional activities. 
-Operations falling in this category do not require an explicit authorization from civil aviation authorities. 
-But, they are subject to strict operational limitations (e.g., no proximity to people, traffic, infrastructures; no dangerous items; one pilot per UAS; no item dropping). 
+\item{\textbf{Open Category} encompasses low-risk operations, such as most leisure flights and some professional activities. 
+Operations falling in this category do not require explicit authorization from civil aviation authorities. 
+However, they are subject to strict operational limitations (e.g., no proximity to people, traffic, infrastructures; no dangerous items; one pilot per UAS; no item dropping). 
 These operational limitations are sufficient to mitigate the low risk. 
-Though some professional activities fit in this category, the main goal is to regulate leisure types of operations \cite{manfredi2018unmanned}.}
-\item{\textbf{Specific Category} regroups medium risk operations, such as operation beyond visual line of sight (i.e., no visual contact between pilot and UAV during flight). 
-To facilitate the regulation process, a set of scenarii with specific operational limitations are designed. 
+Though some professional activities fit into this category, the main goal is to regulate leisure types of operation \cite{manfredi2018unmanned}.}
+\item{\textbf{Specific Category} regroups medium-risk operations, such as operation beyond visual line of sight (i.e., no visual contact between pilot and UAV during flight). 
+To facilitate the regulation process, several scenarios with specific operational limitations are designed. 
 To operate within a scenario, the UAS needs to comply with a list of requirements.
-For operations outside the scope of the scenarii, a risk analysis must be carried out to show that the existing risks are properly mitigated. 
-To facilitate this risk analysis process, JARUS developed a framework called the Specific Operations Risk Assessment (SORA). 
-SORA considers threats, which contribute to the risk, and barriers, which mitigate the risk, to evaluate the actual risk of an operation and decide if the resulting mitigated risk is low enough to allow the operation as illustrated in Fig.~\ref{fig:sora_barriersReduced}.
-The risk analysis needs to be validated by the authorities in order to authorize an operation not included in the standard scenarii \cite{manfredi2018unmanned}.}
+For operations outside the scope of those scenarios, a risk analysis must be carried out to show that the existing risks are properly mitigated. 
+To facilitate this risk analysis process, JARUS has developed a framework called the Specific Operations Risk Assessment (SORA). 
+SORA considers threats --- which contribute to the risk --- and barriers --- which mitigate the risk --- in order to evaluate the actual risk of an operation, and decide if the resulting mitigated risk is low enough to allow the operation, as illustrated in Fig.~\ref{fig:sora_barriersReduced}.
+The risk analysis needs to be validated by the authorities in order to authorize an operation not included in the standard scenarios \cite{manfredi2018unmanned}.}
 \item{\textbf{Certified Category}  Operations with risk that cannot be mitigated in \emph{Specific Category} are evaluated in \emph{Certified Category}. 
-These represent high risk operations, for example large cargo delivery in urban areas. 
+These represent high-risk operations, such as a large cargo delivery in urban area. 
 These are likely to be operations with a risk close to current manned aviation. 
 As such, the aircraft, avionics, pilot/crew and operator will need to be certified in order to fly these operations. 
 The fact that a certification process is involved increases the complexity of the introduction of UAS in these types of operations. 
@@ -108,9 +108,9 @@ Indeed,
 \end{landscape}
 
 before being able to certify a piece of equipment, a standard must be developed for this equipment. 
-Standardization can be understood as the process of defining details and minimum requirements for safe and uniform operations across a diverse range of implementations. 
-However, as of today, not all the parts required to fly a UAS have corresponding standards, e.g., Detect And Avoid (DAA) systems, C2 links, pilot training. 
-So, enabling this category of operation requires extra effort and time for the industry to agree on standards. 
+Standardization can be best understood as the process of defining details and minimum requirements for safe and uniform operations across a diverse range of implementations. 
+However, at present, not all of the parts required to fly a UAS have the corresponding standards, e.g., Detect And Avoid (DAA) systems, C2 links, pilot training. 
+Thus, enabling this category of operation requires extra effort and time for the industry so as to agree on standards. 
 For \emph{Certified Category}, harmonization at the ICAO is planned to allow international operations \cite{manfredi2018unmanned}.}
 \end{itemize}
 
@@ -122,13 +122,12 @@ For \emph{Certified Category}, harmonization at the ICAO is planned to allow int
 \end{center}
 \end{figure}
 
-Latest efforts for the integration of drones into airspace, welcomed a relatively new concept called the `U-Space'. 
-This approach has been injected to immediate plans at European level, to accommodate drones in urban areas. 
-While EASA is searching for solutions for the integration of drones in a variety of presumed airspaces, commissioner Violeta Bulc mentions other pillars in a high level conference\footnote{Drones as a leverage for jobs and new business opportunities \cite{warsawDeclaration}} in Warsaw. 
-She offers that in parallel to the efforts of EASA, two other pillars has to be tackled, UTM (UAS Traffic Management) and the U-Space.
-U-Space covers the usage of drones especially in U-rban areas and equal share of airspace, in which case `\emph{U}' stands for `\emph{you}'.
-To point out its availability to everyone, the services available through a portable phone is illustrated as in Fig.~\ref{fig:USpacePortable}.
-The sympathetic name riddles seem to be the search of public acceptance for drones in urban areas.
+Latest efforts for the integration of drones into airspace have welcomed a relatively new concept, called the `U-Space'. 
+This approach has been adopted for immediate plans at the European level, to accommodate drones in urban areas. 
+While EASA continues to search for solutions for the integration of drones in a variety of presumed airspaces, Commissioner Violeta Bulc has mentioned other pillars at a high level conference\footnote{Drones as a leverage for jobs and new business opportunities \cite{warsawDeclaration}} in Warsaw. 
+She offers that in parallel to the efforts of EASA, there are two other pillars that need to be tackled; UTM (UAS Traffic Management) and the U-Space.
+U-Space covers the usage of drones especially in `U-rban' areas with an equal share of airspace, in which case `\emph{U}' stands for `\emph{you}'.
+To illustrate its availability to everyone, the services will be available through a mobile phone, as shown in Fig.~\ref{fig:USpacePortable}.
 The goals are highly challenging \cite{UTMairspace}:
 
 \begin{itemize}
@@ -147,17 +146,16 @@ The goals are highly challenging \cite{UTMairspace}:
 \end{figure}
 
 EASA regulations already cover the airspace issued in U-Space, either under specific or certified categories (depending on the risk of the operation). 
-By pointing the U-Space, a faster integration is prospected in urban areas.
-It seems we are not far from the images of flying vehicles populating the sky as such as in fictions. 
-Even better then imagined, this time, without drivers and more automated. 
+Using U-Space, a faster integration is expected in urban areas.
+We do not appear to be far from the images of flying vehicles populating the sky, as in science fiction --- but even more advanced --- without drivers, and more automated. 
 
-In US, to tackle the safety challenges and help the regulation development, NASA is currently carrying out a four years research program (up to 2019) to enable Unmanned aircraft traffic management solutions which are structured and flexible when needed. 
+In the US, in order to tackle the safety challenges and help the development of regulation, NASA is currently carrying out a four-year research program (up to 2019) to enable unmanned aircraft traffic management solutions which are structured and flexible when needed. 
 To ensure safety, this integration needs to be achieved through airspace management and UAS reliability.
-Also, preliminary airspace designs, like the one proposed by Amazon shown in Fig.~\ref{fig:amazonDroneOperations}, identify different zones depending on the UAS capabilities, population density and altitude. 
+In addition, preliminary airspace designs, such as that proposed by Amazon shown in Fig.~\ref{fig:amazonDroneOperations}, identify different zones depending on the UAS capabilities, population density and altitude. 
 
-United Arab Emirates (UAE) accelerates the safe integration of drones into urban airspace, by settling and agreement for UAS Traffic Management (UTM) with Nokia as part of its `Next generation network for mission-critical and smart city services' \cite{nokiaDubai}.
-Aiming at tracking/managing all drones in the airspace, Nokia is offering solutions for automated flight permissions, no-fly zone regulation, beyond visual line of sight (BVLOS) safety operations utilizing LTE protocols for low latency, reliable and resilient communication. 
-For compatibility with this system, drones will be equipped with LTE dongles, and access modules for telemetry data access.
+United Arab Emirates (UAE) has accelerated the safe integration of drones into urban airspace, by settling an agreement for UAS Traffic Management (UTM) with Nokia, as part of its `Next generation network for mission-critical and smart city services' \cite{nokiaDubai}.
+Aiming at tracking and managing all drones in the airspace, Nokia is offering solutions for automated flight permissions, no-fly zone regulation, beyond visual line of sight (BVLOS) safety operations utilizing LTE protocols for low latency, reliable and resilient communication. 
+For compatibility with this system, drones will be equipped with LTE dongles and access modules for telemetry data access.
 
 
 
@@ -200,11 +198,13 @@ http://www.theverge.com/2016/1/16/10777144/delivery-drones-regulations-safety-fa
 \fi
 
 \section{Paparazzi Autopilot System}
-An open-source autopilot, \emph{Paparazzi} \cite{brisset2006paparazzi}, have been adapted to generate faulty control inputs during the flight. 
-In this section, an introduction to \emph{Paparazzi} open-source autopilot system is given. Then, we discuss the properties of open-source systems that would serve for the integration of drones into the airspace. To highlight the advantages of this autopilot, the best practices that are offered by EASA in its A-NPA \cite{A_NPA_EASA2015} are referred and properties of \emph{Paparazzi} that will contribute to achieve those are discussed.
+An open-source autopilot, \emph{Paparazzi} \cite{brisset2006paparazzi}, has been adapted to generate faulty control inputs during the flight. 
+In this section, an introduction to \emph{Paparazzi} open-source autopilot system is given.
+Next, we discuss the properties of open-source systems that would best serve the integration of drones into the airspace. 
+To highlight the advantages of \emph{Paparazzi}, the best practices that are offered by EASA in its A-NPA \cite{A_NPA_EASA2015} are referred to, and the properties of \emph{Paparazzi} to achieve this are discussed.
 
 \subsection{Open-source Autopilots for UAS}
-With the new era of \gls{fpv} flights \cite{whatIsFPV}, especially for multi-rotor \gls{uav}s, there has been an exponential increment on the hardware and software of the open-source autopilots. A brief comparison of the popular current open-source and commercial autopilots is available in Table \ref{tab:autopilot_comparison}. Usually, the trend is to make the hardware as cheap as possible for recreational consumers. This reality is damaging the reputation of open-source autopilots as being not reliable or robust, just because they are being used without attention. There exists a difference on the quality of sensors used on the open-source autopilot systems compared to commercial autopilots for sure, and this is confirmed by the price of the units. This makes a difference on the flight quality of the vehicles, however, with the new on-board processing power, more complex estimation algorithms and filters are being used in order to overcome this problem \cite{baskaya2016flexible}.
+With the new era of \gls{fpv} flights \cite{whatIsFPV}, especially for multi-rotor \gls{uav}s, there has been an exponential increase in the hardware and software of the open-source autopilots. A brief comparison of the popular current open-source and commercial autopilots is available in Table \ref{tab:autopilot_comparison}. Usually, the trend is to make the hardware as inexpensive as possible for recreational consumers. This reality is damaging to the reputation of open-source autopilots as they are considered as not reliable or robust, because they are being used without experience. Indeed, there exists a difference in the quality of sensors used in the open-source autopilot systems compared to commercial autopilots, and this is confirmed by the price of the units. This in turn makes a difference to the flight quality of the vehicles, however, with new on-board processing power, more complex estimation algorithms and filters are being used in order to overcome this problem \cite{baskaya2016flexible}.
 
 \subsection{Introduction to \emph{Paparazzi Autopilot System}}
 
