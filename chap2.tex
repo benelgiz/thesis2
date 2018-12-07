@@ -211,15 +211,15 @@ With the new era of \gls{fpv} flights \cite{whatIsFPV}, especially for multi-rot
 The \emph{Paparazzi} Autopilot System provides a software and hardware solution for low-cost mini and micro unmanned air vehicles. 
 A fleet of \emph{Paparazzi} equipped drones can be seen in Fig.~\ref{fig:ENACdroneFleet}.
 
-It is started as a personal project in 2003 by Pascal Brisset and Antoine Drouin, and afterwards supported by ENAC in 2005. 
-Being one of the first (if not the first) open-source autopilot system in the world, \emph{Paparazzi} has attracted attention and led the others to start new branches and systems. % This phrase may need some proof actually, but it is hard to find anything officially...
-The software is originally packaged for Debian/Ubuntu but can be manually installed on any GNU/Linux operating system even including MacOS-X. 
-However, it is not compatible with Windows which automatically eliminates $90\,\%$ of the possible user community and therefore it is not as popular as other existing autopilot systems on the user market.
+This began as a personal project in 2003 by Pascal Brisset and Antoine Drouin, and afterwards gained the support of ENAC in 2005. 
+Being one of the first (if not \emph{the} first) open-source autopilot system in the world, \emph{Paparazzi} has attracted much attention, and has led others to start new branches and systems. % This phrase may need some proof actually, but it is hard to find anything officially...
+The software is originally packaged for Debian/Ubuntu but can be manually installed on any GNU/Linux operating system, even including MacOS-X. 
+However, it is not compatible with Windows which automatically eliminates $90\,\%$ of the possible user community, and therefore it is not as popular as other existing autopilot systems currently on the user market.
 
 
 \begin{landscape}
 \begin{table*}[t]
-	\caption{Comparison of popular Open-Source and commercial autopilots \cite{baskaya2016flexible}.}
+	\caption{Comparison of popular open-source and commercial autopilots \cite{baskaya2016flexible}.}
 	\centering
 	\begin{tabular}{lcc >{\centering}m{1.2cm} >{\centering}m{1.8cm} cc >{\centering}m{1.3cm} >{\centering}m{1.1cm}}
 		\hline
@@ -254,7 +254,7 @@ However, it is not compatible with Windows which automatically eliminates $90\,\
 \begin{center}
 %\includegraphics[width=11.3cm]{figures/FTCmethods}    % The printed column width is 8.4 cm.
 \includegraphics[width=13.3cm]{figures/ENACdroneFleet}
-\caption{Fleet of \emph{Paparazzi} equipped drones from ENAC UAV laboratory in a flight campaign with \emph{Pyrenees} in the background. Photo by Alexandre Bustico.} 
+\caption{Fleet of \emph{Paparazzi} equipped drones from ENAC UAV laboratory in a flight campaign with the \emph{Pyrenees} in the background. Photo by Alexandre Bustico.} 
 \label{fig:ENACdroneFleet}
 \end{center}
 \end{figure}
@@ -270,12 +270,12 @@ However, it is not compatible with Windows which automatically eliminates $90\,\
 \end{figure}
 
 
-Being one of the first open-source autopilot system in the world, \emph{Paparazzi} deals with all three segments: Ground, Airborne, and the communication link between as shown in Fig.~\ref{fig:Paparazzi_System_overview}. 
+Being one of the first open-source autopilot systems in the world, \emph{Paparazzi} covers all three segments: ground, airborne, and the communication link between them, as shown in Fig.~\ref{fig:Paparazzi_System_overview}. 
 The ground software of \emph{Paparazzi} is mainly written in Ocaml, with some additional parts in Python and C. 
-Thanks to its middle-ware communication bridge called Ivy-Bus, external softwares can be directly connected with publish and subscribe method to the ground segment without needing to modify and code at all.
+Thanks to its middle-ware communication bridge called Ivy-Bus, external software can be directly connected with the publish and subscribe method to the ground segment, without needing to modify on code.
 Airborne software is written in C, however there is an on-going effort to support C++ \cite{baskaya2016flexible}.
 
-One of the distinguishing property of the \emph{Paparazzi} is to support multi-UAV flights (Figure~\ref{fig:pic2}). Several projects have been using \emph{Paparazzi} Autopilot System because of this additional feature. The communication with each vehicle is established by the ground control station, however air to air communication between flying vehicles and internal relay of information to ground control station is being implemented (for a new coming version).
+One of the distinguishing features of \emph{Paparazzi} is to support multi-UAV flights (Figure~\ref{fig:pic2}). Several projects have been using \emph{Paparazzi} Autopilot System because of this additional feature. The communication with each vehicle is established by the ground control station, however air-to-air communication between flying vehicles and the internal relay of information to the ground control station is being implemented (for a future version).
 
 \begin{figure}
 	\centering
@@ -285,31 +285,31 @@ One of the distinguishing property of the \emph{Paparazzi} is to support multi-U
 \end{figure}
 
 \emph{Modules} are the easiest and most flexible way of adding new code into \emph{Paparazzi}. 
-There are over $130$ modules written for \emph{Paparazzi} by several developers and researchers including meteorology, imagery, surveillance, advance navigation, formation flight and collision avoidance, etc. 
-A photo taken during \emph{Paparazzi} mission in a campaign for meteorological studies by \emph{MeteoFrance} is given in Fig.~\ref{fig:snowWhite}. 
-MeteoFrance is French national meteorological service, and uses drones as tools to do research on meteorological studies.
+There are over $130$ modules written for \emph{Paparazzi} by several developers and researchers, including meteorology, imagery, surveillance, advance navigation, formation flight, and collision avoidance, etc. 
+A photo taken during a \emph{Paparazzi} mission in a campaign for meteorological studies by \emph{MeteoFrance} is provided in Fig.~\ref{fig:snowWhite}. 
+MeteoFrance is French national meteorological service, and uses drones as tools to conduct research for meteorological studies.
 
 \begin{figure}
 \begin{center}
 %\includegraphics[width=11.3cm]{figures/FTCmethods}    % The printed column width is 8.4 cm.
 \includegraphics[width=13cm]{figures/snowWhiteJPG}
-\caption{Drone equipped with \emph{Paparazzi} on mission for meteorological studies by \emph{Meteofrance}. Photo taken by Alexandre Bustico.} 
+\caption{Drone equipped with \emph{Paparazzi} on a mission for meteorological studies by \emph{Meteofrance}. Photo taken by Alexandre Bustico.} 
 \label{fig:snowWhite}
 \end{center}
 \end{figure}
 
 
-\emph{Paparazzi} has its own complete flight plan language, where the user can define any possible trajectory by existing commands such as circle, line, hippodrome, figure-eight, survey, etc. 
-Additionally, any function written in C language, can be called from the flight plan and executed. 
-This opens up a lot of application possibilities such as triggering a navigation procedure via a sensor output.
+\emph{Paparazzi} has its own complete flight plan language, where the user can define any possible trajectory using existing commands, such as circle, line, hippodrome, figure-eight, survey, etc. 
+Additionally, any function written in C language can be called from the flight plan and executed. 
+This opens up a lot of application possibilities, such as triggering a navigation procedure via a sensor output.
 
 A real-time operating system based on ChibiOS has been used since 2015. 
 The first implementation was mainly for adding a separate thread in order to make on-board logging at a high frequency. 
 On going work is to divide all autopilot tasks into individual threads and manage everything according to priorities which will increase the safety and reliability.
 %Priorities can be handled over different tasks in order to increase the safety and reliability.
 
-There exists over 20 different autopilot boards capable of running \emph{Paparazzi}. Additionally, several mission based custom sensor boards have been designed under the \emph{Paparazzi} project, such as \emph{Meteo-Stick}\footnote{http://wiki.paparazziuav.org/wiki/MeteoStick\_v1.10}. 
-In this thesis, flights have been realized with an \emph{Apogee}\footnote{https://wiki.paparazziuav.org/wiki/Apogee/v1.00} which is given in Fig.~\ref{fig:apogeePaparazzi}.
+There exists over 20 different autopilot boards capable of running \emph{Paparazzi}. Additionally, several mission-based custom sensor boards have been designed under the \emph{Paparazzi} project, such as \emph{Meteo-Stick}\footnote{http://wiki.paparazziuav.org/wiki/MeteoStick\_v1.10}. 
+In this thesis, flights have been realized with an \emph{Apogee}\footnote{https://wiki.paparazziuav.org/wiki/Apogee/v1.00} which is shown in Fig.~\ref{fig:apogeePaparazzi}.
 
 \begin{figure}
 \begin{center}
@@ -320,22 +320,22 @@ In this thesis, flights have been realized with an \emph{Apogee}\footnote{https:
 \end{center}
 \end{figure}
 
-In this thesis, for the faulty flight data gathering, some modifications to the \emph{Paparazzi} autopilot was necessary in two main parts: Injecting the real-time faults from GCS, and editing the controller onboard so that the sent faulty input values configures the servos when changed from the GCS. 
+For the faulty flight data gathering necessary for this thesis, some modifications to the \emph{Paparazzi} autopilot were necessary: first, injecting the real-time faults from GCS; and  second, editing the controller on board so that the sent faulty input values configure the servos when changed from the GCS. 
 
-The rest of this section highlights \emph{Paparazzi} 's capacity to tackle the issues encountered during integration of \gls{uas}s in the airspace. These issues have been grouped in three categories: modularity, congestion management and reliability. For each category, \emph{Paparazzi} offers a unique set of features to deal with the issues at hand.
+The rest of this section highlights the capacity of \emph{Paparazzi} capacity to tackle issues encountered during the integration of \gls{uas}s into the airspace. These issues have been grouped into three categories: modularity, congestion management and reliability. For each category, \emph{Paparazzi} offers a unique set of features to deal with these issues.
 
-\subsection{Open Source Systems in Relation with the New Regulatory Context}
+\subsection{Open-Source Systems in Relation to the New Regulatory Context}
 
-In this part of this thesis, we present the Paparazzi open source auto-pilot system, and its features, as a tool to ease the safe integration of low altitude UAS into National Air Space (NAS). 
-Paparazzi is favored thanks to its modular design, its support for congestion management and evolving reliability.
-We believe the flexibility required for such solutions calls for open architectures. To ensure safety, this integration needs to be achieved through airspace management and UAS reliability.
-Preliminary airspace designs, e.g. Amazon's, identify different zones depending on the UAS capabilities, population density and altitude. 
-Furthermore, national rules evolution push to cope with a variety of requirements. Open source and modular architectures are keys to adapt to these requirements. 
-From an UTM point of view, Paparazzi provides features to ease congestion management, such as dynamic geofencing, trajectory communication and collision avoidance. 
-Concerning reliability, current regulations focus on flight constraints but might be expected to involve regulations on software and hardware components as well. 
+In this section, we present the \emph{Paparazzi} open-source auto-pilot system and its features, as a tool towards the safe integration of low altitude UAS into the National Air Space (NAS). 
+\emph{Paparazzi} is favored thanks to its modular design, its support for congestion management and evolving reliability.
+We believe that the flexibility required for such solutions calls for open architecture. To ensure safety, this integration needs to be achieved through airspace management and UAS reliability.
+Preliminary airspace designs (for example, Amazon's design) identify different zones depending on the UAS capabilities, population density and altitude. 
+Furthermore, the evolution of national rules increases the push to cope variety of requirements. Open-source and modular architectures are keys to successfully adapting to these requirements. 
+From UTM point of view, \emph{Paparazzi} provides features to ease congestion management, such as dynamic geofencing, trajectory communication and collision avoidance. 
+Concerning reliability, current regulations focus on flight constraints but may be expected to involve regulations on software and hardware components as well. 
 In such a case, the increased cost will be inevitable for the demands of certification. 
-In the Paparazzi software case, parts of the code have been formally proved and stable versions have thousands of flight hours. Such heritage might ease the certification process for smaller companies.
-On top of its flexibility and reliability, Paparazzi offers a unique set of features, as an open source software, to achieve safe integration of low altitude UAS in the airspace.
+In the \emph{Paparazzi} software case, parts of the code have been formally proved and stable versions have thousands of flight hours. Such heritage may ease the certification process for smaller companies.
+In addition to its flexibility and reliability, \emph{Paparazzi} offers a unique set of features as an open-source software, so as to achieve safe integration of low altitude UAS into the airspace.
 
 % More specifically, this paper shows how the use of the Paparazzi open source auto-pilot system can ease the integration of low altitude UAS. 
 
