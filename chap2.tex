@@ -670,40 +670,40 @@ disturbances and faults.
 
 \subsubsection{Data-Driven Methods}
 
-Model-based approaches had various successful applications until now, 
-most of them assuming accurate model are available on-board. With the new 
-era of UAVs, the airspace is expected to be populated by strong increase 
-in the number of UAVs. The variety of UAVs, expense of accurate modeling 
-practices, the difficulty in modeling the behavior of UAV in case of failures, 
+Model-based approaches have various successful applications up until now; 
+most of them assuming an accurate model is available on-board. With the new 
+era of UAVs, the airspace is expected to be populated by a strong increase 
+in the number of UAVs. The variety of UAVs, the expense of accurate modeling 
+practices, the difficulty in modeling the behavior of UAV in case of failures,all 
 call for alternative approaches for the quite challenging problem of FDD. 
 The increased efficiency of on-board sensors, the increase in the computational 
 capabilities of autopilot processors, and the advances in machine learning 
 techniques in the last decade may offer efficient data-driven solutions to FDD.
 
-In data driven methods, a detailed knowledge about the internal dynamics 
+In data-driven methods, a detailed knowledge about the internal dynamics 
 of the system is not necessary. The data available is the source of information 
 with regard to the behavior of the system. Supervised learning, which requires 
-to label the fault cases previously in the training data, is usually used for 
+lab telinghe fault cases previously in the training data, is usually used for 
 data-centric fault detection. In case of an unlabeled fault, the result is 
 expected as a probability distribution of the available normal modes, identified 
 fault labels and a probable unknown fault. What is needed at that point is to 
-first detect and localize the fault and then, to consult domain experts for labeling 
-for further integration of this fault into the diagnosis scheme \cite{dataCentricDiagOffline}.
+first detect and localize the fault, and then to consult domain experts for labeling 
+for the further integration of this fault into the diagnosis scheme \cite{dataCentricDiagOffline}.
 
-\cite{gui2002fault} argues artificial intelligent methods for fault detection of complex 
+\cite{gui2002fault} argues artificial intelligent methods for the fault detection of complex 
 systems. Comparison between Principle Component Analysis (PCA) and model based stochastic parity space 
 approaches is given in \cite{hagenblad2004comparison}.
-In \cite{li2016data}, the authors argues to use dynamic PCA since UAV flight 
-controls is a dynamic system itself and Dynamic Principle Component Analysis (DPCA) can reflect unknown disturbances, 
+In \cite{li2016data}, the authors argue the use of dynamic PCA since UAV flight 
+controls is a dynamic system itself and the Dynamic Principle Component Analysis (DPCA) can reflect unknown disturbances, 
 while model-based approaches can only model typical disturbance.  
 
 \section{Machines on the Rise}
 
-Since machine learning methods are selected to detect and diagnose actuator faults in this thesis, a short introduction to the topic is given in this section. 
+Since machine learning methods are selected to detect and diagnose actuator faults in this thesis, a short introduction to the topic is now provided. 
 
-The mathematical analysis of learning processes goes back to 1960s when F. Rosenblatt \cite{rosenblatt1958perceptron} suggested the \emph{perceptron}: the first learning machine \cite{vapnik2013nature} (see Fig.~\ref{fig:perceptron}). 
-Inspired by a simplified model of a biological neuron, the idea of perceptron was discussed for many years in neurophysiological literature \cite{vapnik2013nature}. The contribution of Rosenblatt were: to describe the perceptron model as a program for computers and to show that the model could be generalized via experiments \cite{vapnik2013nature}.
-The perceptron has first been implemented on a IBM 704 as an algorithm. 
+The mathematical analysis of learning processes goes back to the1960s when F. Rosenblatt \cite{rosenblatt1958perceptron} suggested the \emph{perceptron}: the first learning machine \cite{vapnik2013nature} (see Fig.~\ref{fig:perceptron}). 
+Inspired by a simplified model of a biological neuron, the idea of the perceptron was discussed for many years in the neurophysiological literature \cite{vapnik2013nature}. The contributions of Rosenblatt were to describe the perceptron model as a program for computers, and to show that the model could be generalized via experiments \cite{vapnik2013nature}.
+The perceptron was first implemented on an IBM 704 as an algorithm. 
 Later, a custom-built hardware implementation of the perceptron was delivered (as shown in Fig.~\ref{fig:Mark_I_perceptron}).
 
 \begin{figure}
@@ -714,30 +714,31 @@ Later, a custom-built hardware implementation of the perceptron was delivered (a
 \end{center}
 \end{figure}
 
-The interest in perceptron came to a halt when Minsky and Papert proved that a single layer perceptron can not learn an XOR function \cite{minsky1969perceptron}.
-It led to a wrong assumption that multi-layer networks would not be able produce an XOR function. Although Grossberg published about multi-layer perceptrons capable of producing XOR functions, the declined interest has necessitated some years to pass, until the research on perceptron revived.
+The interest in perceptron came to a halt when Minsky and Papert proved that a single layer perceptron cannot learn an XOR function \cite{minsky1969perceptron}.
+This led to a wrong assumption that multi-layer networks would not be able produce an XOR function. Although Grossberg published that multi-layer perceptrons are capable of producing XOR functions, the declined interest has persisted for some years until the research on perceptron was revived.
 
 
 \begin{figure}
 \begin{center}
 \includegraphics[width=8.3cm]{figures/Mark_I_perceptron}
-\caption{Mark 1 perceptron: the first custom - built hardware implementation of the \emph{perceptron}. It is designed for image recognition with an array of 400 photocells which are connected to the "neurons" randomly.  Potentiometers are used to encode the weights, and electric motors updated the weights during learning \cite{bishop2006pattern}} 
+\caption{Mark 1 perceptron: the first custom-built hardware implementation of the \emph{perceptron}. It is designed for image recognition with an array of 400 photocells connected to the "neurons" randomly.  Potentiometers are used to encode the weights, and electric motors update the weights during learning \cite{bishop2006pattern}.} 
 \label{fig:Mark_I_perceptron}
 \end{center}
 \end{figure}
 
-\emph{Back-propagation method}, proposed by several authors \cite{le1986learning,rumelhart1986learning} independently in 1986, is considered as the second birth of the perceptron. It is originally an older method (1963) \cite{bryson1963optimal} and used in solving control problems \cite{vapnik2013nature}. Application of the method to calculate the weight simultaneously for many neurons changed the history of learning machines \cite{vapnik2013nature}. In 80s, the terminology was also changed due to an application oriented approach in research on learning (with the introduction of powerful computers) \cite{vapnik2013nature} and multi-layer perceptrons were renamed as neural networks.
 
-Although 1974-1980 was not very fruitful for neural networks and known as AI winter, development of statistical learning theory endured.  A novel inductive principle, \emph{Structural Risk Minimization (SRM) inductive principle}, is introduced in 1974 \cite{vapnik1974theory}. 
-In SRM inductive principle, the risk in a given set of functions is minimized by controlling two factors: the value of the empirical risk and the value of the confidence interval \cite{vapnik2013nature}. 
+\emph{Back-propagation method}, proposed by several authors \cite{le1986learning,rumelhart1986learning} independently in 1986, is considered to be the second birth of the perceptron. It is originally an older method (1963) \cite{bryson1963optimal} and was used in solving control problems \cite{vapnik2013nature}. The application of the method to calculate the weight simultaneously for many neurons changed the developmental path of learning machines \cite{vapnik2013nature}. In 1980s, the terminology was also changed due to an application-oriented approach in research on learning (with the introduction of powerful computers) \cite{vapnik2013nature}, and multi-layer perceptrons were renamed as neural networks.
 
-Support Vector Machines \cite{vapnik1974theory,vapnik2006estimation} are introduced as an application of SRM by keeping the value of the empirical risk fixed (say equal to zero) and minimizing the confidence interval \cite{vapnik2013nature} as opposed to keeping the confidence interval fixed (by choosing an appropriate construction of machine) and minimizing the empirical risk (as in Neural Networks). 
-Their applicability expanded thanks to its extension for problems that require nonlinear classifiers \cite{boser1992training} using \emph{kernel trick} \cite{aizerman1964theoretical} and also for problems with non-separable classes \cite{cortes1995support} using \emph{soft margin separating hyperplanes}. 
+Although 1974-1980 was not very fruitful for neural networks, and was known as the AI winter, the development of statistical learning theory endured.  A novel inductive principle, \emph{Structural Risk Minimization (SRM) inductive principle}, was introduced in 1974 \cite{vapnik1974theory}. 
+In the SRM inductive principle, the risk in a given set of functions is minimized by controlling two factors: the value of the empirical risk; and the value of the confidence interval \cite{vapnik2013nature}. 
+
+Support Vector Machines \cite{vapnik1974theory,vapnik2006estimation} are introduced as an application of SRM by keeping the value of the empirical risk fixed (say equal to zero), and minimizing the confidence interval \cite{vapnik2013nature}, as opposed to keeping the confidence interval fixed (by choosing an appropriate construction of machine) and minimizing the empirical risk (as in Neural Networks). 
+Their applicability expanded thanks to its extension to problems that require nonlinear classifiers \cite{boser1992training} using \emph{kernel trick}, \cite{aizerman1964theoretical} and also to problems with non-separable classes \cite{cortes1995support} using \emph{soft margin separating hyperplanes}. 
 
 
-Almost 2 decades after IBM's Deep Blue beating the chess champion Kasparov \cite{deepBlue}, Google DeepMind's Artificial Intelligence(AI) AlphaGo \cite{alphaGoDeepMind,alphaGo} defeating 9-dan Go professional raises the question: what will be the next victory of AI?
-European Parliament published a draft report with recommendations to the European Commission on Civil Law Rules on Robotics \cite{delvaux2017report}, including a list of concerns for a possible rise of the machines. 
-Not only the singularity, artificial super intelligence resulting in deep changes in human civilization, but also more inevitable outcomes are discussed, such as AI's effects on workforce, ethical and legal issues inherent to automatized systems including drones.
+Almost two decades after IBM's Deep Blue beat the chess champion Kasparov \cite{deepBlue}, Google DeepMind's Artificial Intelligence(AI) AlphaGo \cite{alphaGoDeepMind,alphaGo} defeating 9-dan Go professional player raises the question: what will the next victory of AI look like?
+European Parliament published a draft report with recommendations to the European Commission on Civil Law Rules on Robotics \cite{delvaux2017report}, including a list of concerns for a possible rise of the learning machines. 
+Not only the singularity (artificial super intelligence resulting in deep changes in human civilization) but also more inevitable outcomes are discussed, such as AI's effects on the workforce, ethical and legal issues inherent to automatized systems including drones.
 
 \iffalse
 Autonomy's effects on workforce has already been experienced, but what will be the consequences of adding more intelligence to existing automation? 
@@ -759,7 +760,7 @@ Until then, as suggested by European Parliament, we will refer to Asimov's Laws 
 With the last turn in popularity and practicality contest among research topics of the last decade, machine learning and drones seem to be neck to neck. The sides of the race are mostly supported by high tech rather than the public who has concerns in both opponents. Is there a chance that these two can run side by side with cheers? Machine learning guides various aspects of our lives even without noticing it due to its abrupt introduction via the bigger tech companies. Its abilities rise, defeating 9-dan Go professional, their accuracy increase, enabling smooth voice recognition, adding intelligence to our daily lives. Another machine, who wants to enjoy this enabling technology is a drone. Drones, although still very strictly regulated in most countries have been spreading with great passion along their enthusiasts. 
 \fi
 
-The winner of the Go contest, the AI, is based on a method named \emph{Reinforcement Learning} (RL). This method is used in many of the latest exciting applications of AI. In reinforcement learning, the selection of actions results in consequences. Thus, the agent interacts with its environment, by taking actions and observing the consequences via the reward function. The goal of the agent is the calculate actions that will maximize the reward. An example to this functioning can be demonstrated on a robot locomotion problem. Fig.~\ref{fig:deepmindWalking} shows a humanoid model and an ant robot model from \emph{Google DeepMind} \cite{deepmindWebsiteHumonoidWalking,deepmindHumonoidWalkingStanford,deepmindHumonoidWalkingVideo}. The robot models have virtual sensors which give information about their states (angle and position of the joints \cite{deepmindHumonoidWalkingStanford}) and surrounding objects \cite{deepmindHumonoidWalkingVideo}. The objective of the robots are to go from point A to point B. Although the robots are not explicitly programmed to walk or jump, or not given any information about what walking or jumping looks like, they learnt to move very similar to walking and jumping.
+The winner of the Go contest, the AI, is based on a method named \emph{Reinforcement Learning} (RL). This method is used in many of the latest ground-breaking applications of AI. In reinforcement learning, the selection of actions results in consequences. Thus, the agent interacts with its environment, by taking actions and observing the consequences via the reward function. The goal of the agent is to calculate actions that will maximize the reward. An example of this functioning can be demonstrated on a robot locomotion problem. Fig.~\ref{fig:deepmindWalking} shows a humanoid model and an ant robot model from \emph{Google DeepMind} \cite{deepmindWebsiteHumonoidWalking,deepmindHumonoidWalkingStanford,deepmindHumonoidWalkingVideo}. The robot models have virtual sensors which give information about their states (angle and position of the joints \cite{deepmindHumonoidWalkingStanford}) and surrounding objects \cite{deepmindHumonoidWalkingVideo}. The objective for the robots is to move from point A to point B. Although the robots were not explicitly programmed to walk or jump, and were not given any information about what walking or jumping looks like, they learnt to move in a way very similar to walking and jumping.
 
 
 \begin{figure}
@@ -771,7 +772,7 @@ The winner of the Go contest, the AI, is based on a method named \emph{Reinforce
 \end{center}
 \end{figure}
 
-We witness very promising application results in Neural Networks and its varieties lately. Convolutional neural networks (CNN) applied to image processing problems, and sequence models (Recurrent Neural Networks (RNN and Long short term memory (LSTM) ) applied to natural language processing produced incredible results raising the interest in machine learning and AI in various fields. Such an example is Google's \emph{Duplex} AI \cite{googleDuplex}, making phone calls to restaurants or hair dresser's, to book a table or take a rendezvous.  AI talks to the person on the phone and adapts to the responses of the human on the phone, and achieves its task without being exposed that it is actually an AI.
+In recent times, we have witness very promising application results in Neural Networks in its various forms. Convolutional neural networks (CNN) applied to image processing problems, and sequence models (Recurrent Neural Networks (RNN and Long short term memory (LSTM)) applied to natural language processing have produced remarkable results, raising interest in machine learning and AI in various fields. Such an example is Google's \emph{Duplex} AI \cite{googleDuplex}, making phone calls to restaurants or hair salons, to book a table or arrange a meeting.  AI talks to the person on the phone and adapts to the responses of the human on the phone, and achieves its task without being exposed that it is actually an AI.
 
 
 
@@ -784,17 +785,16 @@ We witness very promising application results in Neural Networks and its varieti
 \end{center}
 \end{figure}
 
-An application of RL in aviation is demonstrated on Stanford University's autonomous helicopter \cite{ng2003shaping}. Thanks to RL, the helicopter's autopilot performs acrobatic maneuvers, which is quite difficult to do with a hardcoded controller design. A photo taken during its inverted flight can be seen in Fig.~\ref{fig:invertedHelicopterAndrewNg}.
+An application of RL in aviation is demonstrated with Stanford University's autonomous helicopter \cite{ng2003shaping}. Thanks to RL, the helicopter's autopilot performs acrobatic maneuvers, which is difficult to do with a hardcoded controller design. A photo taken during its inverted flight can be seen in Fig.~\ref{fig:invertedHelicopterAndrewNg}.
 
+Machine learning has already started to take part in aviation. Operational improvements in aviation is one of the preliminary fields in which it has appeared. Recently, in an AGE sponsored competition, data scientists designed a routing algorithm using real flight data, and achieved a 12\% improvement in fuel consumption efficiency. Some other operational problems issued by machine learning are accurate arrival time estimation and calculating optimal parameters for take off, mostly with the aim of reducing airline costs and increasing customer satisfaction. Another application is to deal with the expected shortage of pilots, which may be inevitable in years to come, thanks to the increasing demand for air travel. Therefore, a prospective utilization of machine learning is to assess the competency of pilots with unsupervised learning models in order to reduce the long duration of pilot training, hence contributing to reducing pilot shortage. The use of data-driven approaches for pilot training could be used not only for the assessment of the pilots but also to increase the efficiency of training by offering trainee-focused personal training, and adapting the curriculum to their individual skills and needs. To overcome the pilot shortage, another way to handle the problem may be to reduce the need for one. 
 
-Machine learning has already started to take part in aviation. Operational improvements on aviation is one of the preliminary fields it appeared. Recently, in an AGE sponsored competition, data scientists designed a routing algorithm using real flight data, and achieved 12\% improvement in fuel consumption efficiency. Some other operational problems issued by machine learning are accurate arrival time estimation and calculating optimal parameters for take off, mostly for reducing the airline costs and increasing customer satisfaction. Yet another application is to deal with the expected shortage of pilots, inevitable in the years to come, thanks to the increasing demand for air travel. So, a prospective utilization of machine learning is to assess the competency of pilots with unsupervised learning models in order to reduce the long duration of pilot training, hence contributing to tackle pilot shortage problem. Use of data-driven approaches for pilot training could be used not only for assessment of the pilots but also to increase the efficiency of the training by offering trainee focused personal training, adapting the curriculum to their individual skills and needs. To overcome the pilot shortage, another way to handle the problem might be to reduce the need for one. 
-
-AI has actually already sneaked into the cockpit. Garmin implemented voice recognition features garnished with some other functions such as changing radio channels to aid the pilots with its audio panels GMA 350 and GMA 35, called \emph{Telligence}. 
-One of the goals of the autonomy researchers is to look for ways to implement artificial intelligence to one of the core features of an aircraft: the autopilot. Hence the ability to use them is tricky due to the inherent nature of the methods, non-determinism. EASA A-NPAs offer different categories to enjoy for drones, depending on the risk of the operation of concern. The difficulties waiting the machine learning researches are not really well defined or widely argued in aviation. 
+AI has actually already made its way into the cockpit. Garmin implemented voice recognition features garnished with some other functions, such as changing radio channels, to assist the pilots with its audio panels GMA 350 and GMA 35, called \emph{Telligence}. 
+One of the goals of the autonomy researchers is to look for ways in which to implement artificial intelligence to one of the core features of an aircraft: the autopilot. Hence, the ability to use them remains challenging due to the inherent nature of the methods, that is, non-determinism. EASA A-NPAs offer different categories for drones operations, depending on the risk of the operation of concern. The difficulties waiting for the machine learning research are not currently well defined or widely argued in aviation. 
 
 
 \section{Conclusion}
 
-In this chapter, we have discussed the current status of drone regulations, an introduction to \emph{Paparazzi Autopilot} which is used in this thesis, the advantages of open-source systems to aid drone integration into the airspace. Then, fault tolerant control systems are introduces with a focus on fault detection and diagnosis. Two main methods, model-based and data-driven, are discussed via referring to the literature. Then, general advancements in artificial intelligence (AI) are addressed, since one of its techniques, machine learning, is used as the methodology to detect the faults in this thesis. 
+In this chapter, we discuss the current status of drone regulation, an introduction to \emph{Paparazzi Autopilot} which is used in this thesis and the advantages of open-source systems to aid drone integration into the airspace. Then, fault tolerant control systems are introduced with a focus on fault detection and diagnosis. Two main methods, model-based and data-driven, are discussed via reference to the literature. Then, general advancements in artificial intelligence (AI) are addressed, since one of its techniques --- machine learning --- is used as the methodology to detect the faults in this thesis. 
 
-Next, nonlinear aircraft dynamics will be discussed. The reason here is to give insights about flight motion, and simulate the states of an aircraft. Those states then can be used to simulate sensor measurements onboard a drone. Those measurements are necessary to design data-driven fault detection \& diagnosis algorithms.
+In Section 3, nonlinear aircraft dynamics will be discussed in order to provide insights about flight motion, and to simulate the states of an aircraft. These states can then be used to simulate sensor measurements on board a drone, and are necessary to design data-driven fault detection and diagnosis algorithms.
