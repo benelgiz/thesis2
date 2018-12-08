@@ -468,7 +468,7 @@ To achieve a safe flight is not an easy task considering the unknowns of the sys
 \subsection{Loss of Control in Aviation}
 
 One of the biggest contributors to fatal accidents is considered to be aircraft \emph{loss of control} (LOC). 
-The Joint Safety Analysis Team (JSAT) defines LOC as a``significant, unintended departure of the aircraft from controlled flight, the operational flight envelope, or usual flight attitudes, including ground even''. Here, \emph{significant} refers to events resulting in an incidence or accident \cite{russell2000joint}. 
+The Joint Safety Analysis Team (JSAT) defines LOC as a ``significant, unintended departure of the aircraft from controlled flight, the operational flight envelope, or usual flight attitudes, including ground even''. Here, \emph{significant} refers to events resulting in an incidence or accident \cite{russell2000joint}. 
 Control failures, inappropriate pilot action (inaction) in a healthy aircraft, and vehicle impairment are examples of LOC events \cite{richards2016vehicle}.
 
 LOC-I (loss of control in-flight) is defined as ``an extreme manifestation of a deviation from intended flight path'' and is the most deadly accident type, with 37 fatal accidents per year (for fixed-wings) \cite{easa:LOC}.
@@ -535,47 +535,43 @@ Although fault detection methods are clearer, the difference between the methods
 \subsection{Conventions for a Safe Flight}\label{ch2:conventions}
 
 The most widely-used method to increase reliability is to use more reliable components and/or hardware redundancy. 
-Both requires an increase in the cost of the UAS.
-\cite{angelov2012sense}. To offer solutions for all different foreseen categories of 
-airspace, a variety of approaches should be considered. While hardware redundancy 
-could cope with the failure situations of UAVs in the certified airspace, it may not be 
-suitable for UAVs in open or some subsets of specific categories due to budget 
+Both require an increase in the cost of the UAS \cite{angelov2012sense}. To offer solutions for all different foreseen categories of airspace, a variety of approaches should be considered. 
+While hardware redundancy may cope with the failure situations of UAVs in the certified airspace, it may not be suitable for UAVs in open air or some subsets of specific categories due to budget 
 constraints. Analytical redundancy is another solution, but it may be not as effective and 
 simple as hardware redundancy, and it relies on the design of intelligent methods to 
-utilize every bit of information onboard aircraft wisely to deal with the instances.  
+utilize all information on board an aircraft to wisely deal with all eventualities.  
 
 There are three approaches to achieve safe FTC in standard flight conventions. 
-The first one is the fail operational systems which are made insensitive to any single 
-point component failure. The second approach is the fail safe systems where a 
-controlled shut down to a safe state is practiced whenever a critical fault is pointed 
-out by a sensor. The level of degradation ensures to switch to robust (alternate) or 
+The first is the fail operational systems, which are made insensitive to any single 
+point component failure. The second approach is the fail safe systems, where a 
+controlled shut down to a safe state is practiced whenever a critical fault is noted by a sensor.
+The level of degradation ensures the switch to robust (alternate) or 
 direct (minimal level of stability augmentation independent of the nature of the fault) mode. 
 Switching from nominal mode to the robust and direct modes leads to a decrease 
-in the available GNC functions. This causes a degradation in ease of piloting. Furthermore, some optimality conditions could have been compromised. The third approach 
-is fault tolerant control systems in which redundancy in the plant and the automation 
-system is used to design software that monitors the components and takes in 
-actions whenever needed. The strategy is most probably to try to keep plant availability 
+in the available GNC functions. This causes a degradation in ease of piloting. Furthermore, some optimality conditions may have been compromised. The third approach 
+is the fault tolerant control systems, in which redundancy in the plant and the automation 
+system are used to design software that monitors the components and takes in 
+actions whenever needed. This strategy is the most probable to try to keep plant availability 
 and to accept reduced performance \cite{blanke2000fault}.
 
-RECONFIGURE project of FP7 \cite{goupil2015overview} aims to address at this 
-problem of piloting degradation and optimality compromise by Flight Parameter Estimation (FPE) which is the online estimation of aircraft parameters, FDD and FTC in case of off-nominal events \cite{RECONFIGURE}.
-They utilize a black box nonlinear model of aircraft and the project uses some outputs of a previous FP 7 project ADDSAFE leaded by Deimos Space \cite{ADDSAFE}.
+RECONFIGURE project of FP7 \cite{goupil2015overview} aims to address the problem of piloting degradation and optimality compromise by Flight Parameter Estimation (FPE), which is the online estimation of aircraft parameters, FDD and FTC in case of off-nominal events \cite{RECONFIGURE}.
+They utilize a black box nonlinear model of aircraft, and the project uses some outputs of a previous FP 7 project ADDSAFE leaded by Deimos Space \cite{ADDSAFE}.
 
 \subsection{Methods for Fault Tolerant Control Systems}\label{ch1:methodsFTCS}
 
-Among different categorizations of the fault tolerance, there are options to handle 
+Among the different categorizations of fault tolerance, there are options to handle 
 faults on-line or off-line. Employing fault diagnosis schemes on-line is a way to 
 achieve fault tolerance. In this case, as soon as a fault is detected, a supervisory 
 agent is informed via a discrete event signal. Then, accommodation of the faults 
-are handled either with the selection of a predetermined controller for the specific 
+is handled with either the selection of a predetermined controller for the specific 
 fault case, or by designing the action online with real-time analysis and optimization \cite{blanke2000fault}.
 
 Another common categorization of FTCS is passive and active FTCS. In passive FTCS, 
 the flight controller is designed in such a way to accommodate not only the 
-disturbances but also the faults. Active FTCS first distinguishes the fault via fault detection 
-and diagnosis module and then switch between the designed controllers specific to the 
-fault case or design a new one online \cite{angelov2012sense}. While active FTCS 
-requires more tools to handle faults as seen in Fig.~\ref{fig:FTCS}, for faults 
+disturbances but also the faults. Active FTCS first distinguishes the fault via the fault detection 
+and diagnosis module, and then switches between the designed controllers specific to the 
+fault case or designs a new one online \cite{angelov2012sense}. While active FTCS 
+requires more tools to handle faults, as seen in Fig.~\ref{fig:FTCS}, for faults 
 not predicted and not counted for during the design of the robust controller, this method 
 most probably fails. 
 
@@ -589,24 +585,23 @@ most probably fails.
 \end{figure}
 
 
-Even with a long list of available methods, aerospace industry has not implemented 
+Even with a long list of available methods, the aerospace industry has not implemented 
 FTC widely, except for some space systems, because of the evolving nature of the methods, 
-the tricks coming with the nonlinear nature of the problem, design complexity and high 
-possibility of wrong alarms in case of large disturbances and/or modeling uncertainties. 
-So, the hardware redundancy is now the preferred way because of its ease and maturity being implemented on various critical missions with human lives.
+the nonlinear nature of the problem, design complexity and the high possibility of wrong alarms in case of large disturbances and/or modeling uncertainties. 
+Thus, the hardware redundancy is now the preferred way because of its ease and maturity being implemented on various critical missions with human lives.
 
 \subsection{Fault Detection and Diagnosis}
 
 FDD is handled in two main steps; fault detection and fault diagnosis. Fault diagnosis 
 encapsulates fault isolation and fault identification. FDD should 
-not only be sensitive to faults but also must be robust to the model uncertainties and 
+not only be sensitive to faults but must also be robust to the model uncertainties and 
 external disturbances.
 
 Two distinct options to proceed in analytical redundancy are the model based 
 approaches and data-driven approaches.
 Model based fault diagnosis highlights the components of a system and the connections 
 in-between, and their corresponding fault modes. 
-Data driven fault diagnosis rely on the observational data and it prefers dense, redundant data with a frequency larger than the failure rate. 
+Data-driven fault diagnosis relies on observational data, and it prefers dense, redundant data with a frequency larger than the failure rate. 
 
 % This is an example of how you would use tgrind to include an example
 % of source code; it is commented out in this template since the code
@@ -615,26 +610,25 @@ Data driven fault diagnosis rely on the observational data and it prefers dense,
 %
 %\tagrind[htbp]{code/pmn.s.tex}{Post Multiply Normalization}{opt:pmn}
 
-\subsubsection{Model Based Methods}
+\subsubsection{Model-Based Methods}
 
-In model based approaches, relations between measurements and estimated 
+In model based approaches, relationships between measurements and estimated 
 states are exploited to detect possible dysfunctions. The most common ways to 
-implement a model based approach is to estimate the states, estimate the model 
-parameters, or parity-space. The accuracy of the results depends on the type of 
-faults (additive or multiplicative). Additive faults affects the variables of the process 
-by a summation whereas the multiplicative faults by a multiplication.  When only 
-output signal can be measured, signal model based methods can be used for 
-fault detection such as Bandpass filters, Spectral analysis(FFT) and maximum entropy estimation. 
+implement a model-based approach is to estimate the states, the model 
+parameters. The accuracy of the results depends on the type of 
+faults (additive or multiplicative). Additive faults affect the variables of the process 
+by a summation whereas the multiplicative faults affect the variables by a multiplication.
+When only the output signal can be measured, signal model-based methods can be used for 
+fault detection, such as Bandpass filters, Spectral analysis(FFT) and maximum entropy estimation. 
 For the case where both the input and output signals are available, the methods used 
-for fault detection are called process based methods such as: State and output 
-observers(estimators), Parity equations and Identification and parameter estimation. 
+for fault detection are called process based methods such as: state and output 
+observers(estimators), parity equations, and identification and parameter estimation. 
 They generate residuals for state variables or output variables. 
-The most widely used technique for sensor and actuator faults is the state and output observers (estimators) and for process faults, identification and parameter estimation \cite{isermann1997trends}.
+The most widely-used technique for sensor and actuator faults are the state and output observers (estimators) and for process faults, identification and parameter estimation \cite{isermann1997trends}.
 
-The output of the model based fault detection methods is the stochastic behavior 
+The output of the model-based fault detection methods is the stochastic behavior 
 with mean values and variances. With the use of change detection methods, deviations 
-from the normal behavior can be detected. For that purpose, three available methods 
-considered are, mean and variance estimation, likelihood-ratio-test and Bayes decision, 
+from the normal behavior can be detected. For that purpose, three available methods are considered: mean and variance estimation, likelihood-ratio-test and Bayes decision, 
 run-sum test and two-probe t-test. Fault detection is only supported by simple threshold 
 logic or hypothesis testing in most of the applications \cite{isermann1997trends}.
 
@@ -653,16 +647,15 @@ Another method to detect and isolate actuator/sensor faults is the multiple mode
 \end{center}
 \end{figure}
 
-A drawback of model-based approaches is that they require accurate model of the 
+A drawback of the model-based approaches is that they require an accurate model of the 
 aircraft for successful detection. In a small UAV system, which is susceptible to various 
 uncertainties/disturbances and usually lacks an accurate model, using a model-based approach might fail. 
 Furthermore, a mathematical model of a UAV 
 is built within the flight envelope, and does not necessarily describe the 
-possible dynamics invoked by a failure on-board. 
+possible dynamics invoked by an on-board failure. 
 
-A fairly old study in 1984, investigates the design problem FDI systems robust to 
-uncertainties within the models. One of the two steps of FDI (residual generation and decision-making) is targeted. They offer to handle model 
-uncertainties, by designing a robust residual generation process \cite{chow1984analytical}. 
+A fairly old study from 1984 investigates FDI systems robust to 
+uncertainties. One of the two steps of FDI (residual generation and decision-making) is targeted. They offer the ability to handle model uncertainties, by designing a robust residual generation process \cite{chow1984analytical}. 
 Another study deals with model uncertainties by determining the threshold of the residual 
 in a novel way with an application to detect aileron actuator fault \cite{rotstein2006fault}. 
 \cite{sharma2007fault} uses two cascade sliding mode observers state estimation and 
