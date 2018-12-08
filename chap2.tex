@@ -366,26 +366,26 @@ According to \textit{UAV Factory}, one of the large European \gls{uas} companies
 	In the following, we divide these issues into four topics of interest: 4-D trajectory management; geofencing; safety nets; and complex operations, and show how the \emph{Paparazzi} system addresses them.
 	
 	\subsubsection{4-D Trajectory Management}
-		As noted in \cite{erzberger_4D_2002}, 4-D trajectories will be central in future airspace management methods. The principle of 4-D trajectory management is to have every \gls{uas} broadcasting its trajectory up to some time horizon and receive \gls{utm}'s clearances under the form of trajectories. 
-		The trajectory information contains a path, the series of points through which the \gls{uas} will pass, and times associated to each of these points. 
-		Thanks to this information, the idea is to perform pro-active deconfliction, as explained by Thomas et al. in \cite{thomas_4D_2015}. It implies that \gls{utm} detects future conflicts along the trajectories of all \gls{uas} and deconflicting them as safely and early as possible.
+		As noted in \cite{erzberger_4D_2002}, 4-D trajectories will be central in future airspace management methods. The principle of 4-D trajectory management is to have every \gls{uas} broadcasting its trajectory up to some time horizon, and to receive \gls{utm} clearances in the form of trajectories. 
+		The trajectory information contains a path, a series of points through which the \gls{uas} will pass, and will at times be associated with each of these points. 
+		Thanks to this information, the idea is to perform pro-active deconfliction, as explained by Thomas et al. in \cite{thomas_4D_2015}. It implies that \gls{utm} detects future conflicts along the trajectories of all \gls{uas} and deconflicts them as safely and as quickly as possible.
 		This kind of approach requires the autopilot to represent \gls{uas} motions with trajectories and to be able to transmit them, which is the case in \emph{Paparazzi}.
 		
 		\emph{Paparazzi} originally supports a basic description of trajectories based on circles and straight lines, but recent updates allow it to process advanced trajectories as well. 
-		Indeed, \emph{Paparazzi} can represent trajectories as functions in 2-D (x, y), 3-D (x, y, z) or 4-D (x, y, z, t). The only requirement is for the function to be differentiable at least two times at every point. The function and its derivatives closed forms are computed offline and can then be quickly evaluated online.
-		Moreover, gains can be tuned to adjust the convergence speed from the \gls{uas} starting point to the given trajectory. These gains influence the convergence path to a given trajectory and the resulting trajectory (convergence + commanded) can be computed offline given initial conditions and the commanded trajectory.
+		Indeed, \emph{Paparazzi} can represent trajectories as functions in 2-D (x, y), 3-D (x, y, z) or 4-D (x, y, z, t). The only requirement is for the function to be differentiable at least two times at every point. The function and its closed form derivatives are computed offline and can then be quickly evaluated online.
+		Moreover, gains can be calculated by tuning to adjust the convergence speed from the \gls{uas} starting point to the given trajectory. These gains influence the convergence path to a given trajectory and the resulting trajectory (convergence + commanded) can be computed offline, given initial conditions and the commanded trajectory.
 		This is of particular interest for \gls{utm} as it allows the \gls{uas} to provide not only its trajectory over time but also how it will reach this trajectory from its starting point.	
 
-		It is important to note that \gls{utm} will have to solve conflicts between manned and unmanned aircraft. So, an air traffic controller is needed in the loop with an appropriate display for 4-D trajectories and a communication link with both manned and unmanned aircraft.
+		It is important to note that \gls{utm} will have to solve conflicts between manned and unmanned aircraft. Thus, an air traffic controller is needed as part of the process with an appropriate display for 4-D trajectories and a communication link with both manned and unmanned aircraft.
 		
 	\subsubsection{Safety Nets}
-		Trajectory deconfliction is the first step to manage congestion, however safety nets are also part of the congestion management. Indeed, safety nets such as self-separation and collision avoidance allow \gls{uas} to fly close to each other while preserving an acceptable safety level.
-		Though \emph{Paparazzi} does not include self-separation algorithms, it do contains a light version of the \gls{tcas} II collision avoidance system. It considers intruders one at a time and is capable of coordinated avoidance maneuvers. 
+		Trajectory deconfliction is the first step to manage congestion, however safety nets are also part of congestion management. Indeed, safety nets such as self-separation and collision avoidance allow \gls{uas} to fly close to each other while preserving an acceptable safety level.
+		Though \emph{Paparazzi} does not include self-separation algorithms, it does contain a light version of the \gls{tcas} II collision avoidance system. It considers intruders one at a time and is capable of coordinated avoidance maneuvers. 
 		%There is no strengthen resolution as the resolutions are not speed rates but an objective altitude to reach as fast as possible.
 
-		Values such as distance thresholds have been adapted to suite the performances of small \gls{uas}. 
+		Values such as distance thresholds have been adapted to suit the performance of small \gls{uas}. 
 		%Table~\ref{tab:pprz_tcas_values} shows example values used for fixed-wing \gls{uas}s. 
-		Keep in mind that the \emph{Parapazzi} philosophy is to be configurable, so these parameters can be easily changed from a configuration file.
+		Keeping in mind that the \emph{Parapazzi} philosophy is to be configurable, so these parameters can be easily changed from a configuration file.
 
 \iffalse	
 \begin{table}
@@ -402,30 +402,34 @@ According to \textit{UAV Factory}, one of the large European \gls{uas} companies
 \end{table}
 \fi
 
-	A module has been recently developed to input data from traffic services and display them into \emph{Paparazzi}'s ground control station, thus providing situational awareness to the remote pilot. Preliminary tests have been done using opensky-network to display traffic around a given area, based on these information the remote pilot can effectively perform conflict resolution.
+	A module has been recently developed to input data from traffic services and display them into \emph{Paparazzi}'s ground control station, thus providing situational awareness to the remote pilot. Preliminary tests have been conducted using opensky-network to display traffic around a given area. Based on this information, the remote pilot can effectively perform conflict resolution.
 
 	\subsubsection{Geofencing}
-		Keeping \gls{uas} away from each other is an important point. But keeping them out of forbidden areas is also crucial.	Geofencing allows determining no-fly zones where the \gls{uas} should not enter.
-		To accommodate land owners while managing traffic and limiting congestion, Foina et al. \cite{foina_air_parcelle_2015} proposed a participative dynamical airspace management method: the air-parcel model. It allows land owners to authorize/forbid flights over their lands through a web interface. 
-		However, this type of approach asks from the \gls{uas}s to be able to handle dynamical geofencing. Furthermore, this model considers only cuboid parcels, the need for more precise airspace shapes may emerge making 3-D geofencing a need.
+		Keeping \gls{uas} away from each other is important, but keeping them out of forbidden areas is critical.	Geofencing determines no-fly zones where the \gls{uas} should not enter.
+		To accommodate land owners while managing traffic and limiting congestion, Foina et al. \cite{foina_air_parcelle_2015} have proposed a participative dynamical airspace management method: the air-parcel model. This allows land owners to authorize/forbid flights over their land through a web interface. 
+		However, this type of approach requires the \gls{uas} to be able to handle dynamical geofencing. Furthermore, this model considers only cuboid parcels; the need for more precise airspace shapes may emerge making 3-D geofencing a fundamental need.
 		
-		This type of model can be handled by \emph{Paparazzi} by defining geofenced zones manually or as a function. Zones are defined as a simple geometrical shapes (e.g. a circle, a polygon, etc.) plus altitude limits thus effectively creating a 3-D geofencing. 
+		This type of model can be handled by \emph{Paparazzi} by defining geofenced zones manually or as a function. Zones are defined as a simple geometrical shapes (e.g., a circle, a polygon, etc.), plus altitude limits, thus effectively creating 3-D geofencing. 
 		These zones can be static, activated dynamically from the ground station or from the flight plan with associated conditions.
 	
 	\subsubsection{Complex Operations}
-		Having 4-D trajectory management, safety nets and geofencing are useless if the \gls{uas}s cannot follow the instruction from \gls{utm} regarding these tools.
-		Indeed, new \gls{utm} paradigms imply being able to change flight plans dynamically to answer to \gls{utm} demands. In \cite{wargo_complex_2015} two types of complex operations examples are mentioned: space transition corridors and temporary flight restrictions.
-		Both methods require from the \gls{uas} to be able to modify its flight plan according to the new \gls{utm} instructions.
+		Having 4-D trajectory management, safety nets and geofencing are useless if the \gls{uas} cannot follow instructions from the \gls{utm} regarding these tools.
+		Indeed, new \gls{utm} paradigms suggest being able to change flight plans dynamically to answer to \gls{utm} demands. In \cite{wargo_complex_2015} two types of complex operation examples are mentioned: space transition corridors; and temporary flight restrictions.
+		Both methods require that the \gls{uas} can modify its flight plan according to the new \gls{utm} instructions.
 		
-		Modifying the flight plan dynamically is not possible, and not desirable, in \emph{Paparazzi}. However, appropriate response to these complex operations can be provided through conditional flight plans. This enables the \gls{uas} to follow different courses of action depending on given parameters. These parameters are defined offline by the user and can then be modified online by values coming from sensors or from \gls{utm}. This allows intelligent reaction to exterior instruction, in particular it can be used by the user to give \gls{utm} control on portions of the flight.
+		Modifying the flight plan dynamically is not possible, and not desirable, in \emph{Paparazzi}. 
+		However, an appropriate response to these complex operations can be provided through conditional flight plans. 
+		This enables the \gls{uas} to follow different courses of action depending on given parameters. 
+		These parameters are defined offline by the user and can then be modified online by values coming from sensors or from \gls{utm}. 
+		This allows an intelligent reaction to exterior instructions; in particular, it can be used by the user to give \gls{utm} control on portions of the flight.
 		
 \subsection{Reliability}
 
-Improvement of the reliability of the flight is considered to be one of the main goals for integrating military \gls{uav}s into civil airspace according to Unmanned systems roadmap of US Office of the Secretary of Defense, DoD \cite{UnmannedSystemsRoadmapDoD}. Compared to manned counterparts, civil \gls{uav}s experienced more failures with a frequency of two orders of magnitude compared with military \gls{uav}s.  Although this changed last years, with the technological improvements, making the \gls{uav}s as reliable as early manned military aircraft seems not enough from the DoD perspective. This can be realized by checking the biggest chunk of control technologies budget for research and development, which is health management and adaptive control.
+The improvement of the reliability of the flight is considered to be one of the main goals for integrating military \gls{uav}s into civil airspace according to the unmanned systems roadmap of US Office of the Secretary of Defense, DoD \cite{UnmannedSystemsRoadmapDoD}. Compared to manned counterparts, civil \gls{uav}s experienced more failures with a frequency of two orders of magnitude compared with military \gls{uav}s.  Although this has changed in the last few years with technological improvements, making the \gls{uav}s as reliable as early manned military aircraft does not appear to be sufficient from the DoD perspective. This can be realized by checking the biggest portion of control technologies' budget for research and development, which is health management and adaptive control.
 
-To achieve a safe flight is not an easy task considering the unknowns of the systems hardware, environment and possible system faults and failures to emerge. Also, increasing demand on cost effective systems, resulting in smaller sensors and actuators with less accuracy, impose the software to achieve even more. The expectation that \gls{uav}s should be less expensive than their manned counterparts might have a hit on reliability of the systems. 
+To achieve a safe flight is not an easy task considering the unknowns of the systems hardware, environment and possible system faults and failures yet to emerge. Also, increasing demand on cost-effective systems, resulting in smaller sensors and actuators with less accuracy, impose the need for the software to achieve even more. The expectation that \gls{uav}s should be less expensive than their manned counterparts might have a hit on reliability of the systems. 
 
-\subsubsection{\gls{sme}s and Certification Costs}
+\subsubsection{\gls{sme} and Certification Costs}
 
 Using drones for quicker and cheaper deliveries could be rewarding for \gls{sme}s. Being an early bird might put the \gls{sme}s in an advantageous position, considering the increase in the capabilities of the drones with inevitable acceleration thrusted by research activities and their widened application areas. 
 Nevertheless, the fairly cheap access to drones and their relatively cheap utilization cost does not seem to be enough to put them to air right now due to the heavy cost of certification and regulatory hurdles \cite{UAVreliabilityStudy}. In this concern, capable open source solutions could be a good way to loosen the tie.  Otherwise, \gls{sme}s might not survive. Even worse, they might operate them without relevant permission, scarifying a substantial fine as reported by Civil Aviation Authority (CAA). This will compromise security in the system contradicting the hopes for reliable integration of drones into airspace. As an open source autopilot system, \emph{Paparazzi} is a known platform for computer scientist who want to test the viability of complex software systems. Thus, parts of \emph{Paparazzi} code (\gls{gcs}) have been formally proven \cite{pprz_formal_proof} and stable version have thousands of flight heritage. Furthermore, although Paparazzi is not certified, to be able to have access to the certified airspace, the users can built up their configuration on readily and freely available Paparazzi system, which might reduce the cost to have a certified system to reach specific airspaces.
