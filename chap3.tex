@@ -7,56 +7,58 @@
 \chapter{Nonlinear Aircraft Model}
 
 The movement of any object can be represented by changes in its location (translation) or changes in its attitude (rotation) or a combination of both. 
-Motion of an aircraft usually involves both translation and rotation. 
-Studying aircraft motion is complicated since those two motions are coupled, e.g a rotation might cause a change in aerodynamic forces which affects the translation. 
+The motion of an aircraft usually involves both translation and rotation. 
+Studying aircraft motion is complicated as these two motions are coupled; for example a rotation might cause a change in aerodynamic forces which then affects the translation. 
 Thus, to ease the process, the motion is broken into easier problems utilizing some assumptions. 
-Such an assumption for the aircraft motion is to assume that the aircraft is a point mass, all its mass is collected at its center of gravity, so translates from one point to the other. 
+Such an assumption for the aircraft motion is to assume that the aircraft is a point mass; all of its mass is collected at its center of gravity, so it translates from one point to the other. 
 Then, the aircraft's rotation is investigated by no longer assuming it as a point mass but a rigid body in space. 
 
 In this chapter, modeling both of these motions (translation and rotation motion) is presented in detail.
-Equations of rotation and translation motion are driven for generic aircraft. Then, calculation of forces and moments, which are required to solve those equations, are given for two types drones (Aerodynamic force derivatives and stability derivatives are specific for each drone). 
-Those two examples of drones are a drone by ETH Zurich and MAKO (used in ENAC UAV LAB).
+Equations of rotation and translation motion are driven for generic aircraft. Then, calculation of forces and moments, which are required to solve those equations, are given for two types of drones (the aerodynamic force derivatives and stability derivatives are specific for each drone). 
+These two examples of drones are by ETH Zurich and MAKO (used in ENAC UAV LAB).
  
 In this thesis, drone motion is simulated to generate data.
 The accelerometer and gyro data are generated for MAKO model, considering the specifications of IMU \emph{InvenSense MPU-9250 Nine-axis} used in \emph{Paparazzi Autopilot Apogee} onboard. 
 The models derived here are not used in detection and diagnosis algorithms. 
-The detection and diagnosis algorithms implemented in this thesis use only data. 
+The detection and diagnosis algorithms implemented in this thesis only use data. 
 
-If the reader is not interested in detection and diagnosis via simulated data but interested in detection and diagnosis via real data, s/he can skip this chapter since this chapter explains the models that are used to simulate measurements.
-Even then, having a background information about the physics of the system might help to have a grasp on the features (translational acceleration and angular velocities) used in both model-based and data-driven fault diagnosis.
+If the reader is not interested in detection and diagnosis via simulated data but interested in detection and diagnosis via real data, it is not essential to read this chapter as it explains the models that are used to simulate measurements.
+Nonetheless, having background information on the physics of the system may help to understand the features (translational acceleration and angular velocities) used in both model-based and data-driven fault diagnosis.
 
 %To clarify, machine learning methods also train a model. 
 %But in that case, the model is not the equations of motion of an aircraft but rather a simpler model and may not explicitly describe the physical . 
 %The only exception to not using physical models in this work for diagnosis, is the part that the diagnosis is realized using spinors as features. To calculate the spinors, kinematic equations are numerically. But still, our idea to generalize by having no models holds since only kinematic equations are used. 
+
+% I AM HERE!
   
 \section{Attitude motion modeling}
 
 Rotation is a change in an object's attitude. 
 A change in attitude is modeled using rotations about the center of gravity.  
 This section derives the equations for rotation (attitude motion) in detail. 
-For the reader who would like to skip the derivation of these equations, equations for attitude kinematics and attitude dynamics can be found in Equ.~\ref{eqn:compactKinematics} and Equ.~\ref{eqn:attitudeDynamics} respectively.
+Note that the equations for attitude kinematics and attitude dynamics can be found in Equations~\ref{eqn:compactKinematics} and \ref{eqn:attitudeDynamics}, respectively.
 
-Rotations are directly affected by external torques and moments while translations are directly affected external forces. 
-Also, attitude of an aircraft during translation affects the aerodynamic forces causing changes in translation.
+Rotations are directly affected by external torques and moments while translations are directly affected by external forces. 
+The attitude of an aircraft during translation also affects the aerodynamic forces causing changes in translation.
 
 A force applied at a distance from the center of mass causes a rotation.
 A very common approach in aircraft control is to balance those rotations, by trimming the aircraft, such that the aircraft will not rotate.
 
-In this section, attitude motion is represented with kinematic and dynamics equations. 
+In this section, attitude motion is represented using kinematic and dynamics equations. 
 First different parametrization of attitude, such as Euler angles and quaternions, are discussed. 
 Then, kinematic and dynamic equations of attitude motion are derived for a general rigid body. 
 These equations are later specified for the aircraft as the rigid body of interest. 
 
 \subsection{Attitude representations}
-Let $\bm{b_1}, \bm{b_2}, \bm{b_3}$ be a triplet of unit vectors, representing an orthogonal coordinate system attached to a rigid body such that
+Let $\bm{b_1}, \bm{b_2}, \bm{b_3}$ be a triplet of unit vectors, representing an orthogonal coordinate system attached to a rigid body such that:
 
 \begin{equation}
 \label{eqn:unitVectors}
 \bm{b_1}\times \bm{b_2}= \bm{b_3}
 \end{equation}
 
-The rigid body is composed of points, which do not experience any distance change in between during motion of the body. 
-The problem of representing attitude can simply be thought of specifying the orientation of this triplet with respect to some reference frame A such as in Fig.~\ref{fig:theTwoFrames}.
+The rigid body is composed of points, which do not experience any distance change between themselves during the motion of the body. 
+The problem in representing attitude can simply be thought of specifying the orientation of this triplet with respect to some reference frame A, such as in Fig.~\ref{fig:theTwoFrames}.
 
 \begin{figure}
 \begin{center}
@@ -81,8 +83,8 @@ Expressing the basis vectors $b_1, b_2, b_3$ of B in terms of basis vectors $a_1
 \end{split}
 \end{align}
 
-where $C_{ij} \equiv {\bm{b_i} \cdot \bm{a_j}} $  is called direction cosine as it corresponds to the cosine of the angle between  $\bm{b_i}$ and $\bm{a_j}$. 
-When the previous equation set is written in matrix form, we have :
+where $C_{ij} \equiv {\bm{b_i} \cdot \bm{a_j}} $  is called \emph{direction cosine} as it corresponds to the cosine of the angle between  $\bm{b_i}$ and $\bm{a_j}$. 
+When the previous equation set is written in matrix form, we have:
 
 \begin{equation}{\label{eqn:C_B_Amatrix}}
 \begin{bmatrix}
@@ -112,25 +114,25 @@ C_{11} & C_{12} & C_{13}\\[0.3em]
 \end{bmatrix}
 \end{equation} 
 
-Here $\bm{C}^{B/A}$ is called the \emph{direction cosine matrix}, also known as \emph{rotation matrix} or \emph{coordinate transformation matrix} from A to B\cite{wie2008space}.  
+Here $\bm{C}^{B/A}$ is called the \emph{direction cosine matrix}, also known as the \emph{rotation matrix} or \emph{coordinate transformation matrix} from A to B\cite{wie2008space}.  
 The direction cosines, the elements of the direction cosine matrix, are not all independent  \cite{wertz1978spacecraftAttitude}.
 
-The direction cosine matrix is an orthonormal matrix as the basis vectors of each reference frames are orthogonal, so
+The direction cosine matrix is an orthonormal matrix as the basis vectors of each reference frames are orthogonal, so:
 
 \begin{equation}
 \label{eqn:orthonormality}
 \bm{C}^{-1} = \bm{C}^{\rm T}
 \end{equation}
 
-and
+and:
 
 \begin{equation}
 \label{eqn:orthonormality2}
 \bm{C}\bm{C}^{\rm T} = \bm{C}^{\rm T}\bm{C} = \mathds{1}
 \end{equation}
 
-Where $\mathds{1}$ is the identity matrix.
-When the orientation is preserved, an additional condition occurs
+where $\mathds{1}$ is the identity matrix.
+When the orientation is preserved, an additional condition occurs:
 
 \begin{equation}
 \label{eqn:noRotation}
@@ -141,8 +143,8 @@ C\\[0.01em]
 \mathds{1}
 \end{equation}
 
-Matrices satisfying the last two properties belong to special orthogonal group SO(3). 
-The following relations are valid between $\bm{C}^{B/A}$ - the direction cosine matrix of B relative to A, or the direction cosine matrix from A to B - and $\bm{C}^{A/B}$ - the direction cosine matrix of A relative to B, or the direction cosine matrix from B to A -.
+Matrices satisfying the last two properties belong to the special orthogonal group SO(3). 
+The following relations are valid between $\bm{C}^{B/A}$ --- the direction cosine matrix of B relative to A or the direction cosine matrix from A to B --- and $\bm{C}^{A/B}$ --- the direction cosine matrix of A relative to B, or the direction cosine matrix from B to A --- :
 
 \begin{align}
 \label{eqn:C_B_A_vs_C_A_B}
@@ -165,7 +167,7 @@ Let us write an arbitrary vector $\bm{H}$ in the reference frame A and in the bo
 \end{split}
 \end{align}
 
-Using the direction cosine matrix in the following equation, components of the arbitrary vector $\bm{H}$ is transformed from A to B.
+Using the direction cosine matrix in the following equation, components of the arbitrary vector $\bm{H}$ are transformed from A to B:
 
 \begin{equation}{\label{transformVectorH}}
 \begin{bmatrix}
@@ -197,13 +199,13 @@ H_3\\[0.3em]
 
 \subsubsection{Euler Angles}
 
-One of the approaches to represent the attitude is to use Euler angles. 
-It is a procedure to rotate three times successively about one of the axis of the rotated body fixed reference frame. 
+One of the approaches used to represent the attitude is the use of Euler angles. 
+It is a procedure to rotate three times in succession about one axis of the rotated body fixed reference frame. 
 The first rotation is about any of the fixed body axes. 
-The second one is about any of the other two axis which have not been used in the first rotation. 
-The third one is about one of the axis which have not been used in the second rotation. 
+The second one is about any of the other two axes which have not been used in the first rotation. 
+The third one is about one of the axes which has not been used in the second rotation. 
 The result is a combination of 12 sets of rotation types. 
-A sequence of rotations about three different axes of reference frame A, describing the orientation of the body frame B with respect to reference frame A can be represented as
+A sequence of rotations about three different axes of reference frame A, describing the orientation of the body frame B with respect to reference frame A, can be represented as:
 
 \begin{align}
 \label{eqn:sequence}
@@ -216,7 +218,7 @@ A sequence of rotations about three different axes of reference frame A, describ
 \end{split}
 \end{align}
 
-The direction cosine matrix B relative to A can be given as;
+The direction cosine matrix B relative to A can be given as:
 
 \begin{equation}
 \label{eqn:sequentialOrientation}
@@ -224,7 +226,7 @@ The direction cosine matrix B relative to A can be given as;
 \end{equation}
 
 where $\theta_{1}$, $\theta_{2}$, $\theta_{3}$ are the Euler angles. $\bm{C}_{i}(\theta_{i})$  
-denotes a rotation of angle $\theta_{i}$, about the $i^{th}$ axis of the body frame. The orientation of B with respect to A is given as
+denotes a rotation of angle $\theta_{i}$, about the $i^{th}$ axis of the body frame. The orientation of B with respect to A is given as:
 
 \begin{align}{\label{eqn:C_B_AmatrixEuler}}
 \begin{split}
@@ -257,12 +259,12 @@ denotes a rotation of angle $\theta_{i}$, about the $i^{th}$ axis of the body fr
 \end{split}
 \end{align}
 
-For aircrafts, the Euler angles ($\theta_1,\theta_2,\theta_3$) are called roll, pitch, yaw respectively and can be seen in Fig.~\ref{fig:eulerAngSequence}.
+For aircrafts, the Euler angles ($\theta_1,\theta_2,\theta_3$) are called roll, pitch and yaw, respectively, and can be seen in Fig.~\ref{fig:eulerAngSequence}.
 
-Rotation sequence can be selected in different ways depending on the needs of the problem. 
-An example would be selecting rotation sequence for a transitioning vehicle. The assumption that the pitch angle is constraint to $0<\theta<90^\circ$ for a conventional drone to avoid singularity, is not really feasible for a transitioning vehicle which encounters $-90<\theta<90$ pitch during whole flight envelope. So for such a problem, selecting the sequence as yaw-roll-pitch rather than the conventional yaw-pitch-roll sequence is useful. 
+The rotation sequence can be selected in different ways depending on the needs of the problem. 
+An example would be selecting a rotation sequence for a transitioning vehicle. The assumption that the pitch angle is constrained to $0<\theta<90^\circ$ for a conventional drone to avoid singularity, is not really feasible for a transitioning vehicle which encounters $-90<\theta<90$ pitch during the whole flight envelope. For such a problem, selecting the sequence as yaw-roll-pitch, rather than the conventional yaw-pitch-roll sequence, is useful. 
 
-So for such a reason, if the set of rotations are selected in a different way, such as 
+Thus, if the set of rotations are selected in a different way, such as:
 
 \begin{align}
 \label{eqn:sequence2}
@@ -275,7 +277,7 @@ So for such a reason, if the set of rotations are selected in a different way, s
 \end{split}
 \end{align}
 
-then the direction cosine matrix would differ from Eq.~\ref{eqn:C_B_AmatrixEuler} and given as
+then the direction cosine matrix would differ from Eq.~\ref{eqn:C_B_AmatrixEuler}, and be given as:
 
 \begin{align}{\label{eqn:C_B_AmatrixEuler_132}}
 \begin{split}
@@ -302,14 +304,14 @@ then the direction cosine matrix would differ from Eq.~\ref{eqn:C_B_AmatrixEuler
 \subsubsection{Quaternions}
 
 The idea behind this representation is the Euler's \emph{eigen-axis rotation} theorem. 
-According to Euler, \say{the most general displacement of a rigid body with one point fixed is a rotation about some axis.} In other words, it states that there exists a unit vector $\bm{e}$, with the property
+According to Euler, \say{the most general displacement of a rigid body with one point fixed is a rotation about some axis.} In other words, it states that there exists a unit vector $\bm{e}$, with the property:
 
 \begin{equation}
 \label{eqn:quat1}
 \bm{C}\bm{e}= \bm{e}
 \end{equation}
 
-$\bm{e}$ vector has the same components in body and reference frames :
+The $\bm{e}$ vector has the same components in body and reference frames :
 
 \begin{align}
 \label{eqn:quat2}
@@ -320,8 +322,8 @@ $\bm{e}$ vector has the same components in body and reference frames :
 \end{split}
 \end{align}
  
-Rotating a rigid body about this axis $\bm{e}$, a rotation from any given orientation to any other orientation can be achieved. 
-Such an axis is called  \emph{Euler axis}, after the Swiss mathematician and theoretical physicist Leonard Euler (1707-1783).
+By rotating a rigid body about this axis $\bm{e}$, a rotation from any given orientation to any other orientation can be achieved. 
+Such an axis is called an \emph{Euler axis}, after the Swiss mathematician and theoretical physicist, Leonard Euler (1707-1783).
 
 \begin{landscape}
 \begin{figure}
@@ -355,8 +357,8 @@ e_3 \sin(\phi/2)\\[0.3em]
 \end{bmatrix}
 \end{equation}
  
-Where $\phi$ is the \emph{Euler rotation angle}. 
-Hamilton (1805-1865) is considered to be the first one to mention quaternions. 
+where $\phi$ is the \emph{Euler rotation angle}. 
+Hamilton (1805-1865) is considered to be the first to mention quaternions. 
 For ease of the mathematical representations, we define a vector as :
 
 \begin{equation}
@@ -364,7 +366,7 @@ For ease of the mathematical representations, we define a vector as :
 \bm{q} = \bm{e}\sin{(\phi/2)}
 \end{equation}
 
-Euler symmetric parameters are not independent, and satisfy the constraint
+Euler symmetric parameters are not independent, and satisfy the constraint:
 
 \begin{equation}
 \label{eqn:quatNormConstraint}
@@ -387,7 +389,7 @@ q_0^2 + q_1^2 - q_2^2 - q_3^2 & 2(q_1 q_2 + q_3 q_0) & 2(q_1 q_3 - q_2 q_0)\\[0.
 \end{split}
 \end{align}
  
-where
+where:
 
 \begin{equation}
 \label{eqn:Qmatrix}
@@ -400,7 +402,7 @@ q_3 & 0 & - q_1 \\[0.3em]
 \end{bmatrix}
 \end{equation}
 
-Given the direction cosine matrix, quaternions can be calculated as
+Given the direction cosine matrix, quaternions can be calculated as:
 
 \begin{align}\label{eqn:quat4}
 \begin{split}
@@ -431,19 +433,19 @@ In 1776, Euler showed that SO(3) has three dimensions \cite{stuelpnagel1964param
 Representations with more than three parameters are subject to constraints. 
 Also, \cite{stuelpnagel1964parametrization} states that no parameter set 
 can be both global and nonsingular. 
-So, we are faced with choosing the representation parameters either singular or redundant. 
-Euler angle representation has its advantages like having a clear physical interpretation and minimum parameter set achieving no redundancy. 
-But due to their important disadvantage, the possibility of having singularities when describing motion, Euler angles are not selected to represent attitude in this study.
-Another attitude parametrization, the Gibbs vector, is not very often used, and can be thought that it is an interval step on the way of quaternion parametrization. 
-There are other representation types, which are not very often preferred, such as the axis-azimuth representation, which will not be mentioned in this thesis \cite{bak1999spacecraft}. 
-Quaternion (Euler symmetric parameters) representation will be used in this study due to their advantageous in simulations, and having no singularities.
-Another advantage of quaternions is that, the kinematic equations are linear in terms of quaternions. 
-Also, quaternion multiplication offers a useful way of expressing composite rotations. 
-With all these preferable properties, quaternions are the choice for attitude representations for many attitude control missions. Table~\ref{arm:attRepSelection} shows a brief comparison of attitude representations \cite{bak1999spacecraft}.\\
-In the previous sections, a variety of parameters to represent rotations are identified and inherent properties of each technique have been examined. 
-Now it is time to find out how to represent attitude depending on time, namely the equations of motion. 
+So, we are faced with choosing the representation parameters as either singular or redundant. 
+Euler angle representation has its advantages, such as having a clear physical interpretation and minimum parameter set achieving no redundancy. 
+However, due to their important disadvantage, that is, the possibility of having singularities when describing motion, Euler angles are not selected to represent attitude in this study.
+Another attitude parametrization, the Gibbs vector, is not often used, and can be thought of as an interval step on the way to quaternion parametrization. 
+There are other representation types, which are not often preferred, such as the axis-azimuth representation, which will not be discussed in this thesis \cite{bak1999spacecraft}. 
+Quaternion (Euler symmetric parameters) representation will be used in this study due to its advantageous nature in simulations, and having no singularities.
+Another advantage of quaternions is that the kinematic equations are linear in terms of quaternions. 
+Also, quaternion multiplication offers a useful way to express composite rotations. 
+With all of these preferable properties, quaternions are the choice for attitude representations for many attitude control missions. Table~\ref{arm:attRepSelection} shows a brief comparison of attitude representations \cite{bak1999spacecraft}.\\
+In the previous sections, a variety of parameters to represent rotations are identified and the inherent properties of each technique have been examined. 
+Now we examine how to represent attitude depending on time; namely the equations of motion. 
 Equations of motion are generally presented in two sections: the kinematic equations and dynamic equations. 
-The kinematic equations provide the relations between the time derivative of the attitude representation and the angular velocity, while the dynamics (or kinetics) equations describe the development of angular velocities under influence of external moments.
+The kinematic equations provide the relationships between the time derivative of the attitude representation and the angular velocity, while the dynamic (or kinetic) equations describe the development of angular velocities under the influence of external moments.
 
 \begin{table}
 \caption{Attitude parametrizations of the rotation group SO(3) \cite{bak1999spacecraft}}
@@ -506,7 +508,7 @@ Gibbs vector   & 4 & Clear composition rule\\
 \subsection{Attitude kinematics}
 
 The time evolution of attitude is identified by a set of first order differential equations called the kinematic equations. 
-The angular velocity of a reference frame B with respect to a reference frame A, given in the B frame can be written as follows
+The angular velocity of a reference frame B with respect to a reference frame A given in the B frame, can be written as follows:
 
 \begin{equation}\label{eqn:quaternion1}
 \bm{\omega}_B^{B/A}
@@ -514,7 +516,7 @@ The angular velocity of a reference frame B with respect to a reference frame A,
 \omega_1 \bm{b_1} + \omega_2 \bm{b_2} + \omega_3 \bm{b_3}
 \end{equation}
 
-Recalling Eq. ~\ref{eqn:C_B_Amatrix} and orthonomality property in Eq. ~\ref{eqn:orthonormality}
+Recalling Eq. ~\ref{eqn:C_B_Amatrix} and orthonomality property in Eq. ~\ref{eqn:orthonormality}:
 
 \begin{equation}{\label{eqn:kinematicsDerivation1}}
 \begin{bmatrix}
@@ -540,7 +542,7 @@ Recalling Eq. ~\ref{eqn:C_B_Amatrix} and orthonomality property in Eq. ~\ref{eqn
 \end{bmatrix}
 \end{equation} 
 
-Taking the time derivative with respect to frame A
+Taking the time derivative with respect to frame A:
 
 \begin{align}{\label{eqn:C_B_Amatrix_timeDerivative}}
 \begin{split}
@@ -609,7 +611,7 @@ Taking the time derivative with respect to frame A
 \end{split}
 \end{align}
 
-If the skew-symmetric matrix can be represented as $\bm{\Omega}$
+If the skew-symmetric matrix can be represented as $\bm{\Omega}$:
 
 \begin{equation}\label{eqn:Qmatrix}
 \bm{\Omega}
@@ -621,7 +623,7 @@ If the skew-symmetric matrix can be represented as $\bm{\Omega}$
 \end{bmatrix}
 \end{equation}
 
-and rearrange the terms
+and if we rearrange the terms as such:
 
 \begin{equation}{\label{eqn:C_dot_T_C_T_Omega}}
 \bigg[\Big[{\dot{\bm{C}}_B^{B/A}}\Big]^{\rm T} - \Big[{\bm{C}_B^{B/A}}\Big]^{\rm T} \bm{\Omega} \bigg]
@@ -639,7 +641,7 @@ and rearrange the terms
 \end{bmatrix}
 \end{equation}
 
-implies
+implies:
 
 \begin{equation}{\label{eqn:C_dot_T_C_T_Omega2}}
 \bigg[\Big[{\dot{\bm{C}}_B^{B/A}}\Big]^{\rm T} - \Big[{\bm{C}_B^{B/A}}\Big]^{\rm T} \bm{\Omega} \bigg]
@@ -647,7 +649,7 @@ implies
 \bm{0}
 \end{equation}
 
-Taking the transpose and using the relationship $\Omega^{\rm T} = - \Omega$, the kinematic differential equation for the direction cosine matrix can be written as,
+Taking the transpose and using the relationship $\Omega^{\rm T} = - \Omega$, the kinematic differential equation for the direction cosine matrix can be written as:
 
 \begin{equation}{\label{eqn:kinematicEquDQM}}
 {\dot{\bm{C}}_B^{B/A}} + \bm{\Omega} {\bm{C}_B^{B/A}}
@@ -655,7 +657,7 @@ Taking the transpose and using the relationship $\Omega^{\rm T} = - \Omega$, the
 \bm{0}
 \end{equation}
 
-Angular velocity components, given in the B reference frame can be written as
+Angular velocity components, given in the B reference frame, can be written as:
 
 \begin{align}{\label{eqn:angVelocityKinematics}}
 \begin{split}
@@ -667,7 +669,7 @@ Angular velocity components, given in the B reference frame can be written as
 
 From that point, derivation depends on the attitude parameters used. 
 When the direction cosines and their derivatives are substituted with their equivalents in terms of Euler angles, the result will give the time dependence of Euler angles. 
-But in this study, due to the reasons discussed before, quaternions are selected to represent the attitude, so the direction cosines will be written in terms of quaternions,
+In this study however, due to reasons already discussed, quaternions are selected to represent the attitude, so the direction cosines will be written in terms of quaternions:
 
 \begin{align}{\label{eqn:angVelocityQuaternion}}
 \begin{split}
@@ -677,13 +679,13 @@ But in this study, due to the reasons discussed before, quaternions are selected
 \end{split}
 \end{align}
 
-Fourth equation comes from the differentiation of the quaternion norm constraint;
+The fourth equation comes from the differentiation of the quaternion norm constraint:
 
 \begin{equation}{\label{eqn:kinematicEquDQM}}
 0 = 2 ( \dot{q}_0 q_0 + \dot{q}_1 q_1 + \dot{q}_2 q_2 + \dot{q}_3 q_3)
 \end{equation}
 
-Writing in matrix form;
+Writing in matrix form:
 
 \begin{equation}{\label{eqn:kinematicEquAngVel}}
 \begin{bmatrix}
@@ -709,7 +711,7 @@ q_0 & q_1 & q_2 & q_3 \\[0.2em]
 \end{bmatrix}
 \end{equation}
  
-As the matrix which is composed of quaternions is an orthonormal matrix, the kinematic equations of motion in terms of quaternions can be given as \cite{wie2008space}
+As the matrix, which is composed of quaternions, is an orthonormal matrix, the kinematic equations of motion in terms of quaternions can be given as \cite{wie2008space}:
 
 \begin{align} \label{eqn:kinematicArrange}
 \begin{split}
@@ -753,7 +755,7 @@ q_3\\[0.2em]
 \end{split}
 \end{align}
 
-And in a more compact form;
+In a more compact form:
 
 \begin{empheq}[box=\fbox]{align}{\label{eqn:compactKinematics}}
 \begin{split}
@@ -762,7 +764,7 @@ And in a more compact form;
 \end{split}
 \end{empheq}
 
-where
+where:
 
 \begin{equation}\label{skew_symmetric}
 \bm{x} ^ \times= \begin{bmatrix} 
@@ -772,7 +774,7 @@ x_3 & 0 & -x_1 \\
  \end{bmatrix}
 \end{equation}
 
-And finally the kinematic equations of motion for the aircraft in Eq.~\ref{eqn:kinematicArrange} (first equation row) can be rewritten as in Eq. \ref{eqn:kinematicArrangeYPR}, since first column of the matrix on the right side of the equation (first equation row in Eq.~\ref{eqn:kinematicArrange}) is multiplied by zero: 
+Finally the kinematic equations of motion for the aircraft in Eq.~\ref{eqn:kinematicArrange} (first equation row) can be rewritten as in Eq. \ref{eqn:kinematicArrangeYPR}, since the first column of the matrix on the right side of the equation (first equation row in Eq.~\ref{eqn:kinematicArrange}) is multiplied by zero: 
 
 \begin{equation} \label{eqn:kinematicArrangeYPR}
 \begin{bmatrix}
