@@ -867,7 +867,7 @@ The aim of SVM is to find an optimal hyperplane maximizing the margin, which is 
 \begin{figure}
 \begin{center}
 \includegraphics[width=9cm]{figures/svmHyperplane}    % The printed column width is 8.4 cm.
-\caption{SVM working principle} 
+\caption{SVM working principle: The aim of SVM is to find an optimal hyperplane maximizing the margin, which is the distance in between the boundaries, by extending them until hitting the first data points (support vectors)} 
 \label{fig:svmHyperplane}
 \end{center}
 \end{figure}
@@ -876,7 +876,7 @@ SVM implements the idea of having confidence in the prediction by using the conc
 Some other classification methods, such as logistic regression, output the probability of a new instance belonging to a particular class, thus inherently giving the confidence of the prediction as an output. 
 On the other hand, SVM does only output if the new instance's probability of belonging to a particular class, so does not give its confidence on this decision explicitly. % This needs reformulating - I don't understand what you want to say here
 Rather than including this confidence information as an output in terms of probabilities, this information is introduced with the functional and geometric margins. 
-Methods are available for caluclating the posterior probabilities, which is the probability that the new measurements belongs to its predicted class \cite{platt1999probabilistic}. 
+Methods are available for calculating the posterior probabilities, which is the probability that the new measurements belongs to its predicted class \cite{platt1999probabilistic}. 
 %An example of posterior probabilities showing new measurements' probabilities to belong to faulty class is given Fig.~\ref{fig:post_prob}. 
 
 The training data set includes labeled data where the label can belong to one of two possible cases. This data set is saved in a matrix $\bm{X} \in {\rm I\!R^{m \times n}}  $ where $m,n$ correspond to number of instances and features, respectively. The label information corresponding to the measurement instances is also fed to the SVM algorithm during the training phase as output vector $\bm{y} \in \{-1,1\}$. 
